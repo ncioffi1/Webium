@@ -21,9 +21,11 @@ import WebiumBrowser from './components/WebiumBrowser';
 function App() {
   // return <h1>HOWDY</h1>
   console.log("test");
-  <div className="App">
+  return (
+    <div className="App">
       <WebiumBrowser values="test" />
   </div>
+  )
 }
 
 export default App;
