@@ -1,0 +1,44 @@
+.signupForm {
+    font-weight: bold;
+    font-size: 18px;
+    border: 1px solid black;
+}
+
+.pad{
+    padding-left: 20px;
+}
+
+.signupErrors {
+    color: red;
+    padding-left: 20px;
+}
+
+.signupInput {
+    display:inline-block;
+    width:33%;
+    font-size: 18px;
+    border: 1px solid black;
+}
+
+.signupTitle {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.signupPlain {
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.signupButton {
+    font-weight: bold;
+    font-size: 18px;
+    border: 1px solid black;
+    background-color: lightgray;
+    
+}
+
+.signupPadding {
+    padding-bottom: 20px;
+}

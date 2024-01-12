@@ -1,0 +1,12 @@
+.navEle {
+    font-size: 18px;
+}
+
+li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.pad{
+    padding-left: 20px;
+}

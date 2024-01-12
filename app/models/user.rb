@@ -7,11 +7,21 @@
 #  email           :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  password_digest :string
-#  session_token   :string
+#  session_token   :string           not null
+#  password_digest :string           not null
 #
 class User < ApplicationRecord
-    validates :name, :email, presence: true
+    has_secure_password
+
+    validates :name, :email, presence: true, uniqueness: true
+    validates :name, length: { in: 3..40 }
+    validates :name, format: { without: URI::MailTo::EMAIL_REGEXP, message: "can't be an email" }
+    validates :email, length: { in: 3..100 }
+    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :session_token, presence: true, uniqueness: true
+    validates :password, length: { in: 6..40 }, allow_nil: true
+
+    before_validation :ensure_session_token
 
     has_many :articles,
         primary_key: :id,
@@ -37,4 +47,31 @@ class User < ApplicationRecord
         primary_key: :id,
         foreign_key: :user_id,
         class_name: :Clap
+
+    # private
+    def ensure_session_token
+        self.session_token ||= generate_unique_session_token
+    end
+
+    def generate_unique_session_token
+        while true
+            token = SecureRandom.urlsafe_base64
+            return token unless User.exists?(session_token: token)
+        end
+    end
+
+    def reset_session_token!
+        self.session_token = generate_unique_session_token
+        self.save!
+        session_token
+    end
+
+    def self.find_by_credentials(email, password)
+        user = User.find_by(email: email)
+        if user && user.authenticate(password)
+            return user
+        else
+            nil
+        end
+    end
 end

@@ -69,6 +69,7 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
+    bcrypt (3.1.20)
     better_errors (2.10.1)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
@@ -91,6 +92,9 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    jbuilder (2.11.5)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -172,11 +176,13 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt
   better_errors
   binding_of_caller
   bootsnap
   byebug
   faker
+  jbuilder
   pg (~> 1.1)
   pry-rails
   puma (~> 5.0)
