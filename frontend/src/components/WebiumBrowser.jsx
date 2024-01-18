@@ -10,6 +10,7 @@ import * as modalActions from '../store/modals.js';
 import './WebiumBrowser.css'
 import '../reset.css'
 import LoginModal from './session/LoginModal';
+import ShowForm from './Article/ShowForm.jsx';
 
 function WebiumBrowser({ values }) {
     // const [modalActive, setModalActive] = useState(false);
@@ -78,6 +79,7 @@ function WebiumBrowser({ values }) {
             ) : (
                 <>
                     <TopBar />
+                    <ShowForm />
                 </>
             ) }
         </>

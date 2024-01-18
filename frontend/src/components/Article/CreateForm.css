@@ -1,7 +1,62 @@
 
+.signupErrors {
+    color: red;
+    font-size: 14px;
+    font-family: "Roboto";
+    text-align: center;
+}
 
+.signupErrorHolder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.splashWhite2 {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 90px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* border: 1px red solid; */
+}
+
+.cPadTopBar {
+    padding-bottom: 90px;
+}
+
+.publishButton {
+    background-color: green;
+    color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 6px;
+    padding-top:  4px; 
+    border-radius: 20px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    /* border: 1px red solid; */
+}
+.pButtonHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+}
 .cPad1 {
-    padding-bottom: 80px;  
+    padding-bottom: 30px;  
 }
 
 .cHolder {
@@ -16,13 +71,19 @@
     opacity: 1; /* Firefox */
 }
 
+.cTest {
+    overflow: visible;
+    
+}
 .cTitle {
     width: 55%;
     line-height:  1.2;
+    /* box-sizing: border-box; */
     font-size:  40px;
     font-family: "Merriweather", serif;
     font-weight: 300;
     padding-bottom: 10px;
+    border: 1px red solid;
     color: black
 }
 
@@ -35,6 +96,7 @@
     /* padding-bottom: 20px; */
     color: black;
     overflow-y: hidden;
+    resize: none;
 
     /* min-height: 60px; */
     /* overflow-y: auto; */

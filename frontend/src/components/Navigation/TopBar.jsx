@@ -7,11 +7,18 @@ import SidebarModal from '../SessionModal/SidebarModal.jsx';
 import * as sidemodalActions from '../../store/sidemodals.js';
 import * as modalActions from '../../store/modals.js';
 
+import { Navigate } from 'react-router-dom';
+
 function TopBar() {
     const sessionUser = useSelector(state => state.session.user);
     const [searchValue, setSearchValue] = useState("");
+    const [writing, setWriting] = useState(false);
 
     const dispatch = useDispatch();
+
+    if (writing) {
+        return <Navigate to={"/articles/new"} replace={true}/>
+    }
 
     function handleSidebarClick(e) {
         e.preventDefault();
@@ -21,6 +28,7 @@ function TopBar() {
     function handleWrite(e) {
         e.preventDefault();
         // go to WRITE NEW ARTICLE page.
+        setWriting(true);
     }
 
     function getFirstLetter() {

@@ -11,7 +11,9 @@
 #  updated_at  :datetime         not null
 #
 class Article < ApplicationRecord
-
+    validates :title, length: {minimum: 1}
+    validates :content, length: {minimum: 1}
+    
     belongs_to :user,
         primary_key: :id,
         foreign_key: :user_id,

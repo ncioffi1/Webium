@@ -29,6 +29,11 @@ function ArticleForm() {
     // }, [writer])
 
     useEffect(() => {
+        dispatch(articleActions.clearCreatedArticle());
+        dispatch(articleActions.clearEditedArticle());
+    }, []);
+
+    useEffect(() => {
         if (writerId !== null) {
             dispatch(articleActions.fetchWriter(writerId));
         }
