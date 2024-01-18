@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as modalActions from '../../store/modals'
+import * as sessionActions from '../../store/session';
+
 import Modal from '../Modal/Modal';
 import { useNavigate, useParams } from 'react-router';
 
