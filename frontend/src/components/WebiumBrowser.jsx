@@ -5,7 +5,7 @@ import TopBar from './Navigation/TopBar.jsx';
 import SessionModal from './SessionModal/SessionModal';
 import SidebarModal from './SessionModal/SidebarModal.jsx';
 import * as sessionActions from '../store/session.js';
-
+import * as modalActions from '../store/modals.js';
 
 import './WebiumBrowser.css'
 import '../reset.css'
