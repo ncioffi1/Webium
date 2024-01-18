@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: Webium_production
-  username: Webium
-  password: <%= ENV["WEBIUM_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
