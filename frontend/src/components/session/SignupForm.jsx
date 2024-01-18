@@ -35,6 +35,13 @@ function SignupForm() {
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
+  
+  const handleDemo = (e) => {
+    e.preventDefault();
+    return dispatch(sessionActions.login({ 
+        email: "demoguy@webium.com", password: "password" 
+    }));
+  }
 
   return (
     <>
@@ -92,6 +99,10 @@ function SignupForm() {
         <div className="signupPadding"></div>
         <div className="pad">
           <button className="signupButton" type="submit">Sign Up</button>
+        </div>
+        <div className="signupPadding"></div>
+        <div className="pad">
+          <button className="signupButton" onClick={handleDemo}>Demo User</button>
         </div>
       </form>
     </>

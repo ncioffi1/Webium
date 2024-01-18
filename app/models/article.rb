@@ -20,10 +20,12 @@ class Article < ApplicationRecord
     has_many :comments,
         primary_key: :id,
         foreign_key: :article_id,
-        class_name: :Comment
+        class_name: :Comment,
+        dependent: :destroy
 
     has_many :claps,
         primary_key: :id,
         foreign_key: :article_id,
-        class_name: :Clap
+        class_name: :Clap,
+        dependent: :destroy
 end

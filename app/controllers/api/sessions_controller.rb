@@ -1,14 +1,7 @@
 class Api::SessionsController < ApplicationController
 
   def show
-    #   * `show`
-    #   * if there is a `current_user`: render `current_user` as JSON, under a
-    #     top-level key of `user`
-    #   * if there is not a `current_user`: render `{ user: nil }` as JSON
     @user = current_user
-    # if @user
-    #   @user = User.new()
-    # end
 
     if logged_in?
       if @user
@@ -30,17 +23,6 @@ class Api::SessionsController < ApplicationController
   end
 
   def create
-    # * `create`
-    #   * pass the credentials from the request body, stored under top level keys of
-    #     `credential` and `password`, to `User::find_by_credentials`; save the result
-    #     to `@user`
-    #   * if a user with matching credentials was found (i.e., `@user` is truthy):
-    #     * login `@user`
-    #     * render `@user` as JSON, under a top-level key of `user`
-    #   * if no user was found (i.e., `@user` is falsey):
-    #     * render `{ errors: ['The provided credentials were invalid.'] }` as JSON,
-    #       with a status of `:unauthorized`
-
     email = params[:email]
     password = params[:password]
 

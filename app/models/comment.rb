@@ -31,10 +31,12 @@ class Comment < ApplicationRecord
     has_many :replies,
         primary_key: :id,
         foreign_key: :parent_comment_id,
-        class_name: :Comment
+        class_name: :Comment,
+        dependent: :destroy
 
     has_many :claps,
         primary_key: :id,
         foreign_key: :comment_id,
-        class_name: :Clap
+        class_name: :Clap,
+        dependent: :destroy
 end

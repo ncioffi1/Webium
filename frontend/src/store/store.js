@@ -1,13 +1,19 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import articleReducer from './articleReducer';
+import articleReducer from './articles';
 import sessionReducer from './session';
 import thunk from 'redux-thunk';
+import modals from './modals';
+import modalsReducer from './modals';
+import sideModalsReducer from './sidemodals';
+
 // import pokemon from './pokemon';
 // import items from './items';
 
 const rootReducer = combineReducers({
-  articleState: articleReducer,
-  session: sessionReducer
+  article: articleReducer,
+  session: sessionReducer,
+  modals: modalsReducer,
+  sidemodals: sideModalsReducer
 });
 
 let enhancer;

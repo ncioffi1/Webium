@@ -5,14 +5,17 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import LoginForm from './components/session/LoginForm'
 import SignupForm from './components/session/SignupForm';
-import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Outlet, createBrowserRouter, RouterProvider, useParams } from 'react-router-dom';
 import WebiumBrowser from './components/WebiumBrowser';
 import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
+import Article from './components/Article/ArticleForm';
+import CreateForm from './components/Article/CreateForm';
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const paramId = useParams();
 
   useEffect(() => {
     dispatch(sessionActions.restoreSession()).then(() => {
@@ -20,11 +23,9 @@ function Layout() {
     });
   }, [dispatch]);
 
-  // NOTE: 
-  // need a Demo Login Button ...
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       {isLoaded && <Outlet />}
     </>
   );
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignupForm />
+      },
+      {
+        path: `/articles/:articleId`,
+        element: <Article />
+      },
+      {
+        path: `/articles/new`,
+        element: <CreateForm />
       }
     ]
   }

@@ -37,6 +37,13 @@ function LoginForm() {
       });
   };
 
+  const handleDemo = (e) => {
+    e.preventDefault();
+    return dispatch(sessionActions.login({ 
+        email: "demoguy@webium.com", password: "password" 
+    }));
+  }
+
   return (
     <>
       <h1 className="loginPlain">Log In</h1>
@@ -65,6 +72,8 @@ function LoginForm() {
         </label>
         <div className='loginPadding'></div>
         <button className="loginButton" type="submit">Log In</button>
+        <div className='loginPadding'></div>
+        <button className="loginButton" onClick={handleDemo}>Demo User</button>
       </form>
     </>
   );

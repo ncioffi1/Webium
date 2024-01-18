@@ -1,0 +1,179 @@
+#batch1 {
+    background-color:  purple
+}
+#batch2 {
+    background-color:  blue
+}
+#batch3 {
+    background-color:  goldenrod
+}
+#batch4 {
+    background-color:  magenta
+}
+#batch5 {
+    background-color:  teal
+}
+#batch6 {
+    background-color: green
+}
+
+.profile {
+    /* border: 1px solid red; */
+    width: 55%;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+}
+
+.profileTexts {
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 0.5; */
+}
+
+.userTopLine {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50%;
+    margin-left: 10px;
+}
+
+.userBotLine {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50%; 
+    margin-left: 10px;
+}
+
+.articleusername {
+    font-size: 16px;
+    font-family:  "Roboto";
+    font-weight:  400;
+    padding-right: 10px;
+    color: black;
+}
+
+.divider {
+    font-size: 16px;
+    font-family:  "Roboto";
+    font-weight:  500;
+}
+
+.articleuserfollow {
+    font-size: 16px;
+    font-family:  "Roboto";
+    font-weight: 400;
+    padding-right: 20px;
+    color:  green;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.articledate {
+    font-size: 16px;
+    font-family:  "Roboto";
+    padding-right: 20px;
+    color:  gray;
+}
+
+.iconBar{
+    display: flex;
+    flex-direction: row;
+    align-items:  center;
+    justify-content: left;
+    height:  50px;
+    width: 55%;
+}
+
+.articleIconHolder {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    font-size: 20px;
+    padding-left: 10px;
+    color: gray;
+    /* border: 1px solid red; */
+    height: 100%;
+    cursor: pointer;
+}
+
+.iconAmount {
+    font-family: "Roboto";
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    padding-left: 8px;
+    padding-right: 16px;
+}
+
+#aIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userdot2 {
+    height: 50px;
+    width: 50px;
+    background-color: purple;
+    border-radius: 50%;
+    font-family: "Roboto";
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    /* border: 1px solid red; */
+}
+
+.lineA {
+    border-bottom: 1px solid rgb(240, 240, 240);
+    width: 55%;
+}
+
+.linePad {
+    padding-bottom: 30px;
+}
+
+.aHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.aPad1 {
+    padding-bottom: 40px;  
+}
+
+.aPad2 {
+    padding-bottom:  30px;
+}
+
+.aTitle {
+    width: 55%;
+    line-height:  1.2;
+    font-size:  40px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+}
+
+.aContentHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.aContent {
+    width: 55%;
+    line-height: 1.8;
+    font-size:  18px;
+    font-family:  "Merriweather", serif;
+    font-weight:  300;
+    padding-bottom: 20px;
+}

@@ -26,27 +26,32 @@ class User < ApplicationRecord
     has_many :articles,
         primary_key: :id,
         foreign_key: :user_id,
-        class_name: :User
+        class_name: :Article,
+        dependent: :destroy
 
     has_many :followers, 
         primary_key: :id,
         foreign_key: :following_id,
-        class_name: :Follow
+        class_name: :Follow,
+        dependent: :destroy
 
     has_many :following, 
         primary_key: :id,
         foreign_key: :follower_id,
-        class_name: :Follow
+        class_name: :Follow,
+        dependent: :destroy
 
     has_many :comments,
         primary_key: :id,
         foreign_key: :user_id,
-        class_name: :Comment
+        class_name: :Comment,
+        dependent: :destroy
 
     has_many :claps,
         primary_key: :id,
         foreign_key: :user_id,
-        class_name: :Clap
+        class_name: :Clap,
+        dependent: :destroy
 
     # private
     def ensure_session_token
