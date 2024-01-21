@@ -22,6 +22,7 @@ function CreateForm() {
     const [errors, setErrors] = useState([]);
 
     const ref = useRef();
+    const ref2 = useRef();
 
     if (createdArticle !== undefined && createdArticle !== null) {
         return <Navigate to={`/articles/${createdArticle.id}`} replace={true} />
@@ -31,6 +32,15 @@ function CreateForm() {
         if (ref.current) {
           ref.current.style.height = "auto";
           ref.current.style.height = `${e.target.scrollHeight}px`;
+        }
+    };
+
+    const handleInput2 = (e) => {
+        if (ref2.current) {
+            ref2.current.style.height = "auto";
+            ref2.current.style.height = `${e.target.scrollHeight}px`;
+            console.log(ref2.current.style.height);
+            console.log(e.target.scrollHeight);
         }
     };
 
@@ -80,7 +90,7 @@ function CreateForm() {
             <div className="splashWhite2">
                 <div className="topbar">
                     <div className='topbarleft3'>
-                        <h1 className="splashtextlogo">Webium</h1>
+                        <Link to={"/"} className="splashtextlogo">Webium</Link>
                         <div className='searchbarholder'>
                             
                         </div>
@@ -106,7 +116,8 @@ function CreateForm() {
                 </ul>
                 <div className="cPad1"></div>
                 <div className="cHolder">
-                    <input className="cTitle" placeholder="Title" onChange={(e) => setTitle(e.target.value)}></input>
+                    <textarea ref={ref2} maxLength="80" onInput={handleInput2} rows={1} className="cTitle" placeholder="Title" onChange={(e) => setTitle(e.target.value)}></textarea>
+                    {/* <input className="cTitle" placeholder="Title" onChange={(e) => setTitle(e.target.value)}></input> */}
                     <textarea ref={ref} rows={1} onInput={handleInput} className="cContent" placeholder="Tell your story..." onChange={(e) => setContent(e.target.value)}></textarea>    
                 </div>
             </>

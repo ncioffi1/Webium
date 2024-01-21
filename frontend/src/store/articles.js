@@ -1,11 +1,13 @@
 import { csrfFetch, storeCSRFToken } from './csrf';
 
 const RECEIVE_USER = 'users/RECEIVE_USER'
+const RECEIVE_USERS = 'users/RECEIVE_USERS'
 const RECEIVE_ARTICLE = 'articles/RECEIVE_ARTICLE';
 const CREATE_ARTICLE = 'articles/CREATE_ARTICLE';
 const CLEAR_CREATE = 'articles/CLEAR_CREATE';
 const EDIT_ARTICLE = 'articles/EDIT_ARTICLE';
 const CLEAR_EDIT = 'articles/CLEAR_EDIT';
+const CLEAR_WRITERS = 'articles/CLEAR_WRITERS';
 const RECEIVE_ARTICLES = 'articles/RECEIVE_ARTICLES';
 const REMOVE_ARTICLE = 'articles/REMOVE_ARTICLE';
 // const SET_ARTICLES = 'article/setArticles';
@@ -15,6 +17,11 @@ const receiveUser = (user) => ({
   type: RECEIVE_USER,
   payload: user
 });
+
+const receiveUsers = (users) => ({
+  type: RECEIVE_USERS,
+  payload: users
+})
 
 const createArticle = (article) => ({
   type: CREATE_ARTICLE,
@@ -33,6 +40,11 @@ const editArticle = (article) => ({
 
 const clearEdit = () => ({
   type: CLEAR_EDIT,
+  payload: null
+})
+
+const clearWriters = () => ({
+  type: CLEAR_WRITERS,
   payload: null
 })
 
@@ -93,6 +105,10 @@ export const clearEditedArticle = () => async(dispatch) => {
   dispatch(clearEdit());
 }
 
+export const clearArticleWriters = () => async(dispatch) => {
+  dispatch(clearWriters());
+}
+
 export const selectWriter = (userId) => (state) => {
   if (state.article.writer === null) {
     return null;
@@ -101,13 +117,31 @@ export const selectWriter = (userId) => (state) => {
   }
 };
 
-export const selectArticlesArray = () => (state) => {
-  if (state.article === null) {
+export const selectWriters = (userId) => (state) => {
+  if (state.article.writers === null) {
     return null;
   } else {
+    return state.article.writers;
+  }
+};
+
+export const selectArticlesArray = () => (state) => {
+  if (state.article.articles === null) {
+    return null;
+  } else {
+    return state.article.articles;
+    // console.log("=====");
     // console.log(state.article);
-    // console.log(Object.values(state.article));
-    return Object.values(state.article);
+
+    // let aFilter = Object.keys(state.article)
+    //   .filter((key) => {
+    //     let k2 = parseInt(key);
+    //     return Number.isNaN(k2) === false;
+    //   })
+    //   .reduce((cur, key) => 
+    //   { return Object.assign(cur, { [key]: state.article[key] })}, {});
+
+    // return Object.values(aFilter);
   }
 }
 
@@ -118,6 +152,26 @@ export const fetchWriter = (userId) => async(dispatch) => {
     const user = await response.json();
     dispatch(receiveUser(user));
   }
+}
+
+export const fetchWriters = (writerIds) => async(dispatch) => {
+  let users = [];
+  // console.log(writerIds);
+  for (let i = 0; i < writerIds.length; i++) {
+    let response = await csrfFetch(`/api/users/${writerIds[i]}`)
+
+    if (response.ok) {
+      const user = await response.json();
+      users.push(user);
+    }
+  }
+  // console.log("! ! ! ===== ! ! !");
+  // console.log(users);
+  if (users.length === writerIds.length) {
+    // console.log("ready.");
+    dispatch(receiveUsers(users));
+  }
+  // dispatch(receiveUsers(users));
 }
  
 export const fetchArticle = (articleId) => async(dispatch) => {
@@ -171,6 +225,13 @@ const articleReducer = (state = {}, action) => {
       newState["writer"] = action.payload.user;
       return newState;
 
+    case RECEIVE_USERS:
+      // console.log("!!!====!!!")
+      // console.log(action.payload);
+      newState["writers"] = action.payload;
+      return newState;
+      // return newState;
+
     case CREATE_ARTICLE:
       newState["create"] = action.payload.article;
       return newState;
@@ -185,6 +246,10 @@ const articleReducer = (state = {}, action) => {
 
     case CLEAR_EDIT:
       newState["edit"] = null;
+      return newState;
+
+    case CLEAR_WRITERS:
+      newState["writers"] = undefined;
       return newState;
 
     case RECEIVE_ARTICLE:

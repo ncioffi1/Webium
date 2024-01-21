@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.1"
 
+gem "aws-sdk-s3"
 gem "faker"
 
 gem "bcrypt"

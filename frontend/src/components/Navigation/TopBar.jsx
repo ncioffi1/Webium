@@ -7,12 +7,13 @@ import SidebarModal from '../SessionModal/SidebarModal.jsx';
 import * as sidemodalActions from '../../store/sidemodals.js';
 import * as modalActions from '../../store/modals.js';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 
 function TopBar() {
     const sessionUser = useSelector(state => state.session.user);
     const [searchValue, setSearchValue] = useState("");
     const [writing, setWriting] = useState(false);
+    const [goToHome, setGoToHome] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -37,13 +38,24 @@ function TopBar() {
         return sessionUser.name[0];
     }
 
+    // function goHome() {
+    //     setGoToHome(true);
+    // }
+
+    // if (goToHome !== false) {
+    //     // // setGoToHome(false);
+    //     // console.log("NAVIGATING");
+    //     // // console.log(window.location);
+    //     // return <Navigate to={`/`} replace={true} />
+    // }
+
     return (
         <>
             {<SidebarModal />}
             <div className="splashWhite">
                 <div className="topbar">
                     <div className='topbarleft3'>
-                        <h1 className="splashtextlogo">Webium</h1>
+                        <Link to={"/"} className="splashtextlogo">Webium</Link>
                         <div className='searchbarholder'>
                             <div className='usersearchbar'>
                             <i className="fa-solid fa-magnifying-glass" id="searchIcon"></i>

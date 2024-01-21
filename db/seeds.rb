@@ -12,9 +12,15 @@
 # articles
 # follows
 
+require "open-uri"
+
 # CLEAR
 User.destroy_all
 Article.destroy_all
+
+puts "resetting primary keys..."
+ApplicationRecord.connection.reset_pk_sequence!('users')
+ApplicationRecord.connection.reset_pk_sequence!('articles')
 
 # USERS
 
@@ -37,6 +43,10 @@ article1 = Article.create!(
     title:  "hello",
     content:  "hello, this is a test.",
     date_posted: '12/01/2020'
+)
+article1.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/pexels-chevanon-photography-1108099.jpg"), 
+    filename: "dog.jpg"
 )
 
 article2 = Article.create!(

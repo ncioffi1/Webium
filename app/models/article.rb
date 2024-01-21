@@ -13,6 +13,8 @@
 class Article < ApplicationRecord
     validates :title, length: {minimum: 1}
     validates :content, length: {minimum: 1}
+
+    has_one_attached :photo
     
     belongs_to :user,
         primary_key: :id,

@@ -31,6 +31,7 @@ function ArticleForm() {
     useEffect(() => {
         dispatch(articleActions.clearCreatedArticle());
         dispatch(articleActions.clearEditedArticle());
+        dispatch(articleActions.clearArticleWriters());
     }, []);
 
     useEffect(() => {
@@ -150,18 +151,31 @@ function ArticleForm() {
                             <div className='linePad'></div>
                             <div className='lineA'></div>
                             <div className='iconBar'>
-                                <div className='articleIconHolder'>
-                                    <i className="fa-solid fa-hands-clapping" id='aIcon'></i>
-                                    <p className='iconAmount'>150</p>
+                                <div className='iconBarL'>
+                                    <div className='articleIconHolder'>
+                                        <i className="fa-solid fa-hands-clapping" id='aIcon'></i>
+                                        <p className='iconAmount'>150</p>
+                                    </div>
+                                    <div className='articleIconHolder'>
+                                        <i className="fa-regular fa-comment" id='aIcon'></i>
+                                        <p className='iconAmount'>150</p>
+                                    </div>
                                 </div>
-                                <div className='articleIconHolder'>
-                                    <i className="fa-regular fa-comment" id='aIcon'></i>
-                                    <p className='iconAmount'>150</p>
+                                <div className='iconBarR'>
+                                    <div className='articleIconHolder2'>
+                                        <i class="fa-solid fa-ellipsis" id="aIcon2"></i>
+                                        {/* <p>...</p> */}
+                                    </div>
                                 </div>
                             </div>
                             <div className='lineA'></div>
                             {/* <div className='linePad'></div> */}
                             <div className='aPad2'></div>
+                            <div className="aImageHolder"> 
+                            {/* to reactivate add article.photoUrl */}
+                            {/* to deactivate add "https://placehold.co/1600x800" */}
+                                <img src={"https://placehold.co/1600x800"} className="aImage"/>
+                            </div>
                             {articleContent === null ? (
                                 <>
                                 </>

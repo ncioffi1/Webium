@@ -133,12 +133,8 @@ function EditForm() {
                 <div className="splashWhite2">
                     <div className="topbar">
                         <div className='topbarleft3'>
-                            <h1 className="splashtextlogo">Webium</h1>
-                            <div className='searchbarholder'>
-                                
-                            </div>
-                            
-        
+                            <Link to={"/"} className="splashtextlogo">Webium</Link>
+                            <div className='searchbarholder'></div>
                         </div>
                         <div className="topbarright3">
                             <div className='pad1right'></div>
@@ -159,7 +155,7 @@ function EditForm() {
                     </ul>
                     <div className="cPad1"></div>
                     <div className="cHolder">
-                        <textarea ref={ref2} maxLength="60" onInput={handleInput2} rows={1} className="cTitle" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}></textarea>
+                        <textarea ref={ref2} maxLength="80" onInput={handleInput2} rows={1} className="cTitle" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}></textarea>
                         <textarea ref={ref} rows={1} onInput={handleInput} className="cContent" placeholder="Tell your story..." value={content} onChange={(e) => setContent(e.target.value)}></textarea>    
                     </div>
                 </>
