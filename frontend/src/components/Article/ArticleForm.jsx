@@ -8,6 +8,7 @@ import * as articleActions from "../../store/articles";
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
 import PopupModal from "../SessionModal/PopupModal.jsx";
+import CommentModal from "../SessionModal/CommentModal.jsx";
 function ArticleForm() {
 
     const sessionUser = useSelector(state => state.session.user);
@@ -150,6 +151,7 @@ function ArticleForm() {
                                 <TopBar />
                             )}
                         </>
+                        <CommentModal />
                         <div className='aPad1'></div>
                         <div className="aHolder">
                             <p className='aTitle'>{article.title}</p>

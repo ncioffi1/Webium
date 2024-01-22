@@ -6,6 +6,7 @@ import modals from './modals';
 import modalsReducer from './modals';
 import sideModalsReducer from './sidemodals';
 import popupModalsReducer from './popupmodals.js';
+import commentModalsReducer from './commentmodals.js';
 
 // import pokemon from './pokemon';
 // import items from './items';
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   modals: modalsReducer,
   sidemodals: sideModalsReducer,
-  popupmodals: popupModalsReducer
+  popupmodals: popupModalsReducer,
+  commentmodals: commentModalsReducer
 });
 
 let enhancer;
