@@ -14,6 +14,8 @@ import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { NavLink, useParams } from 'react-router-dom';
 
+import './CommentModal.css';
+
 
 function CommentModal() {
     const sessionUser = useSelector(state => state.session.user);
@@ -27,27 +29,33 @@ function CommentModal() {
     let modalRef = createRef();
 
     useEffect(() => {
-        if (popupmodalType) {
+        if (commentmodalType) {
             document.addEventListener("click", handleHide, {capture: true});
         } else {
             document.removeEventListener("click", handleHide, {capture: true});
         }
-    }, [popupmodalType])
+    }, [commentmodalType])
 
     function handleHide(e) {
         e.preventDefault();
-        if (e.target.className.includes('popup')) {
+        if (e.target.className.includes('comment') || e.target.className.includes('Comment')) {
+            return;
+        }
+        if (e.target.id.includes('content')) {
             return;
         }
 
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        // console.log("clicked");
+        console.log("handleHide");
         document.removeEventListener('click', handleHide, {capture: true});
-        dispatch(popupmodalActions.hidePopupModal());
+        dispatch(commentmodalActions.hideCommentModal());
     }
 
+    useEffect(() => {
+        console.log(commentmodalType)
+    }, [])
 
     if (!commentmodalType) {
         return null;
@@ -55,7 +63,19 @@ function CommentModal() {
         return (
             <>
                 <ModalComments>
-                    <p>Responses</p>
+                    <p className="p-comment">Responses</p>
+                    <span className="cCommentHolder">
+                        <div className="cCommentUserHolder">
+                            <div className="cCommentUserdot"></div>
+                            <p className="cCommentUsername">User Name</p>
+                        </div>
+                        <textarea className="cComment" placeholder="What are your thoughts?"></textarea>
+                        <button className="cPostComment">Respond</button>
+                    </span>
+
+                    <span className="commentLine"></span>
+
+                    {/* here, get an array of all this article's comments - then display them accordingly. */}
                 </ModalComments>
             </>
         )

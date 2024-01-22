@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import './ArticleForm.css';
 import { Navigate } from "react-router-dom";
 import * as articleActions from "../../store/articles";
+import * as commentmodalActions from "../../store/commentmodals.js";
+import * as popupmodalActions from "../../store/popupmodals.js";
 
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
 import PopupModal from "../SessionModal/PopupModal.jsx";
 import CommentModal from "../SessionModal/CommentModal.jsx";
+
 function ArticleForm() {
 
     const sessionUser = useSelector(state => state.session.user);
@@ -27,6 +30,12 @@ function ArticleForm() {
     function handlePopupClick(e) {
         e.preventDefault();
         dispatch(popupmodalActions.showPopupModal("popup"));
+    }
+
+    function handleCommentClick(e) {
+        e.preventDefault();
+        dispatch(commentmodalActions.showCommentModal("comment"));
+        console.log("CLICKED!!!!");
     }
     // if (article !== null) {
     //     const writer = useSelector(articleActions.selectWriter(article.userId));
@@ -177,7 +186,7 @@ function ArticleForm() {
                                         <i className="fa-solid fa-hands-clapping" id='aIcon'></i>
                                         <p className='iconAmount'>150</p>
                                     </div>
-                                    <div className='articleIconHolder'>
+                                    <div onClick={(e) => handleCommentClick(e)} className='articleIconHolder'>
                                         <i className="fa-regular fa-comment" id='aIcon'></i>
                                         <p className='iconAmount'>150</p>
                                     </div>
