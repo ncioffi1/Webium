@@ -10,6 +10,7 @@ import * as modalActions from './store/modals.js';
 import * as sidemodalActions from './store/sidemodals.js';
 import * as articleActions from './store/articles.js';
 import * as popupmodalActions from './store/popupmodals.js';
+import * as commentmodalActions from './store/commentmodals.js';
 
 const store = configureStore();
 
@@ -21,6 +22,7 @@ if (import.meta.env.MODE !== "production") {
   window.modalActions = modalActions;
   window.sidemodalActions = sidemodalActions;
   window.popupmodalActions = popupmodalActions;
+  window.commentmodalActions = commentmodalActions;
   window.articleActions = articleActions;
 }
 
