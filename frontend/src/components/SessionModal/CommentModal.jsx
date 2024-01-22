@@ -79,11 +79,22 @@ function CommentModal() {
                             <div className="cCommentUserdot"></div>
                             <div className="cCommentVertical">
                                 <p className="cCommentUsername">User Name</p>
-                                <p className='cCommentDatePosted'>3 days ago</p>
+                                <p className='cCommentDatePosted'>Date Posted</p>
                             </div>
+                            <i className="fa-solid fa-ellipsis" id="contentIcon2"></i>
+                            {/* <PopupModal /> */}
                         </div>       
                         <p className='aCommentText'>This is a comment.</p>
-
+                        <div className='cCommentLastRow'>
+                            <div className='commentIconHolder'>
+                                <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
+                                <p className='commentIconAmount'>150</p>
+                            </div>
+                            <div>
+                                <p className='cCommentReply'>Reply</p>
+                            </div>
+                        </div>
+                        
 
                         <span className="commentLine2"></span>
                     </div>
