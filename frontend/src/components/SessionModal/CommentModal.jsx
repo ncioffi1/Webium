@@ -67,13 +67,26 @@ function CommentModal() {
                     <span className="cCommentHolder">
                         <div className="cCommentUserHolder">
                             <div className="cCommentUserdot"></div>
-                            <p className="cCommentUsername">User Name</p>
+                            <p className="cCommentUsername">{sessionUser.name}</p>
                         </div>
                         <textarea className="cComment" placeholder="What are your thoughts?"></textarea>
                         <button className="cPostComment">Respond</button>
                     </span>
 
                     <span className="commentLine"></span>
+                    <div className='aComment'>
+                        <div className='cCommentUserHolder'>
+                            <div className="cCommentUserdot"></div>
+                            <div className="cCommentVertical">
+                                <p className="cCommentUsername">User Name</p>
+                                <p className='cCommentDatePosted'>3 days ago</p>
+                            </div>
+                        </div>       
+                        <p className='aCommentText'>This is a comment.</p>
+
+
+                        <span className="commentLine2"></span>
+                    </div>
 
                     {/* here, get an array of all this article's comments - then display them accordingly. */}
                 </ModalComments>
