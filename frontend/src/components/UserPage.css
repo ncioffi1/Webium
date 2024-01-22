@@ -1,0 +1,28 @@
+
+.uText {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    padding-left: 200px;
+    font-size: 40px;
+    font-family: "Roboto";
+    font-weight: 500;
+    /* z-index: -1; */
+    /* border: 2px solid red; */
+}
+
+.uLine {
+    position: absolute;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    margin-left: 200px;
+    /* padding-left: 20px; */
+    width: 55%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    /* border: 10px solid red; */
+    /* padding-top: 0px;
+    padding-bottom: 10px;   */
+    /* border: 2px solid red;  */
+}

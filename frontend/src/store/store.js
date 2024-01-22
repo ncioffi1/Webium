@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import modals from './modals';
 import modalsReducer from './modals';
 import sideModalsReducer from './sidemodals';
+import popupModalsReducer from './popupmodals.js';
 
 // import pokemon from './pokemon';
 // import items from './items';
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   article: articleReducer,
   session: sessionReducer,
   modals: modalsReducer,
-  sidemodals: sideModalsReducer
+  sidemodals: sideModalsReducer,
+  popupmodals: popupModalsReducer
 });
 
 let enhancer;

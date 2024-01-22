@@ -12,6 +12,7 @@ import * as sessionActions from './store/session';
 import Article from './components/Article/ArticleForm';
 import CreateForm from './components/Article/CreateForm';
 import EditForm from './components/Article/EditForm';
+import UserPage from './components/UserPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: `/articles/:articleId/edit`,
         element: <EditForm />
+      },
+      {
+        path: `/users/:userId`,
+        element: <UserPage />
       }
     ]
   }

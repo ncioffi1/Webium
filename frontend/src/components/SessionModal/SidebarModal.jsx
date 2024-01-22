@@ -7,6 +7,10 @@ import Modal from '../Modal/Modal';
 import * as sidemodalActions from '../../store/sidemodals.js'
 import * as sessionActions from '../../store/session.js';
 
+import { Navigate } from 'react-router-dom';
+
+import './SidebarModal.css';
+
 function SidebarModal() {
 
     const sessionUser = useSelector(state => state.session.user);
@@ -15,6 +19,8 @@ function SidebarModal() {
     const [email, setEmail] = useState("");
 
     let modalRef = createRef();
+
+    const [goToProfile, setGoToProfile] = useState(null);
 
     useEffect(() => {
         if (sessionUser) {
@@ -56,9 +62,21 @@ function SidebarModal() {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        console.log("clicked");
+        // console.log("clicked");
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(sidemodalActions.hideSidebarModal());
+    }
+
+    function handleProfileClick(e) {
+        e.preventDefault();
+        // console.log("CLICK!!!!");
+        // console.log(sessionUser);
+        setGoToProfile(true);
+    }
+
+    if (goToProfile) {
+        // console.log(goToProfile);
+        return <Navigate to={`/users/${sessionUser.id}`} replace={true}></Navigate>
     }
 
     if (!sidemodalType) {
@@ -68,10 +86,24 @@ function SidebarModal() {
         <>
             <ModalSide>
                 <div ref={modalRef} className="modal-backdrop"></div>
-                <div className='modal-text-holder1-side'>
-                    <p onClick={handleLogoutClick} className='modal-text1B-side'>Sign Out</p>
-                    <p className='modal-text1-side'>{email}</p>
+                <div className='modal-holder'>
+                    <div className='modal-text-holder1-side'>
+                            <div className='mSide1'>
+                                <div className='userIconHolder'>
+                                    <i onClick={(e) => handleProfileClick(e)} className="fa-regular fa-user" id="userIconside"></i>
+                                    <p onClick={(e) => handleProfileClick(e)} className='userTextside'>Profile</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='modal-text-holder1-side'>
+                            <div className='userLine'></div>
+                            <div className='mSide2'>
+                                <p onClick={handleLogoutClick} className='modal-text1B-side'>Sign Out</p>
+                                <p className='modal-text1-side'>{email}</p>
+                            </div>
+                        </div>
                 </div>
+                    
             </ModalSide>
         </>
         );

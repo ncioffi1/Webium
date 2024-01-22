@@ -9,6 +9,7 @@ import * as sessionActions from './store/session.js';
 import * as modalActions from './store/modals.js';
 import * as sidemodalActions from './store/sidemodals.js';
 import * as articleActions from './store/articles.js';
+import * as popupmodalActions from './store/popupmodals.js';
 
 const store = configureStore();
 
@@ -19,6 +20,7 @@ if (import.meta.env.MODE !== "production") {
   window.sessionActions = sessionActions;
   window.modalActions = modalActions;
   window.sidemodalActions = sidemodalActions;
+  window.popupmodalActions = popupmodalActions;
   window.articleActions = articleActions;
 }
 

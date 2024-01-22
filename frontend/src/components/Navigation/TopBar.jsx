@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import '../WebiumBrowser.css';
 import '../../reset.css';
@@ -38,6 +39,10 @@ function TopBar() {
         return sessionUser.name[0];
     }
 
+    function clickedWebium() {
+        console.log("clicked webium");
+    }
+
     // function goHome() {
     //     setGoToHome(true);
     // }
@@ -55,7 +60,7 @@ function TopBar() {
             <div className="splashWhite">
                 <div className="topbar">
                     <div className='topbarleft3'>
-                        <Link to={"/"} className="splashtextlogo">Webium</Link>
+                        <NavLink to={"/"} className="splashtextlogo" onClick={clickedWebium} replace={true}>Webium</NavLink>
                         <div className='searchbarholder'>
                             <div className='usersearchbar'>
                             <i className="fa-solid fa-magnifying-glass" id="searchIcon"></i>

@@ -17,7 +17,9 @@
     width: 100%;
     top: 0;
     left: 0;
+    /* border: 5px solid red; */
     border-bottom: 1px solid rgb(240, 240, 240);
+    z-index: -1;
 }
 
 .sTitle {
@@ -66,11 +68,15 @@
     color: white;
     /* border: 1px solid red; */
 }
+#sNormal {
+    cursor: default
+}
 .sName {
     padding-top: 4px;
     padding-left: 10px;
     font-family: "Roboto";
     font-size: 15px;
+    cursor: pointer;
 }
 .sDot {
     padding-top: 4px;
@@ -151,6 +157,7 @@
     border: 1px dotted blue;
     margin-left: 10px;
     margin-right: 10px;
+    z-index: -1;
 }
 .sHolder {
     

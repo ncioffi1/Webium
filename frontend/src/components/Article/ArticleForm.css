@@ -19,7 +19,7 @@
 
 .aImage {
     /* width: 55%; */
-    border: 1px solid red;
+    /* border: 1px solid red; */
     text-align:center;
     width:55%;
     display:block;
@@ -73,6 +73,7 @@
     font-weight:  400;
     padding-right: 10px;
     color: black;
+    cursor: pointer;
 }
 
 .divider {
@@ -119,7 +120,7 @@
     align-items:  center;
     justify-content: right;
     width: 50%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .articleIconHolder {
@@ -183,6 +184,7 @@
 .lineA {
     border-bottom: 1px solid rgb(240, 240, 240);
     width: 55%;
+    z-index: -1;
 }
 
 .linePad {

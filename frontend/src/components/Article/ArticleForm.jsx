@@ -7,17 +7,26 @@ import * as articleActions from "../../store/articles";
 
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
+import PopupModal from "../SessionModal/PopupModal.jsx";
 function ArticleForm() {
 
     const sessionUser = useSelector(state => state.session.user);
     // const articleUser = 
     const { articleId } = useParams();
     const [articleContent, setArticleContent] = useState(null);
-    const [author, setAuthor] = useState(null);
+    // const [author, setAuthor] = useState(null);
     const [writerId, setWriterId] = useState(null);
     const dispatch = useDispatch();
     const article = useSelector(articleActions.selectArticle(articleId));
     const writer = useSelector(articleActions.selectWriter(writerId));
+
+
+    const [goToUserPage, setGoToUserPage] = useState(null);
+
+    function handlePopupClick(e) {
+        e.preventDefault();
+        dispatch(popupmodalActions.showPopupModal("popup"));
+    }
     // if (article !== null) {
     //     const writer = useSelector(articleActions.selectWriter(article.userId));
     // }
@@ -109,6 +118,16 @@ function ArticleForm() {
         }
     }
 
+    function handleUserClick(e) {
+        e.preventDefault();
+
+        setGoToUserPage(true);
+    }
+
+    if (goToUserPage) {
+        return <Navigate to={`/users/${writerId}`} />
+    }
+
     return (
         <>
             {sessionUser === null ? (
@@ -139,7 +158,7 @@ function ArticleForm() {
                                 <div className="userdot2" id={setColor()}>{getFirstLetter()}</div>
                                 <div className='profileTexts'>
                                     <div className="userTopLine">
-                                        <p className='articleusername'>{getUserName()}</p>
+                                        <p className='articleusername' onClick={(e) => handleUserClick(e)}>{getUserName()}</p>
                                         <p className='divider'>·</p>
                                         <p className='articleuserfollow'>Follow </p>
                                     </div>
@@ -162,10 +181,16 @@ function ArticleForm() {
                                     </div>
                                 </div>
                                 <div className='iconBarR'>
-                                    <div className='articleIconHolder2'>
-                                        <i class="fa-solid fa-ellipsis" id="aIcon2"></i>
+                                    {sessionUser.id === writerId ? (
+                                        <div className='articleIconHolder2'>
+                                        <i onClick={(e) => handlePopupClick(e)} className="fa-solid fa-ellipsis" id="aIcon2"></i>
+                                        <PopupModal />
                                         {/* <p>...</p> */}
-                                    </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             <div className='lineA'></div>

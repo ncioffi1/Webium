@@ -14,7 +14,11 @@ function ShowForm() {
     const articles = useSelector(articleActions.selectArticlesArray());
     const writers = useSelector(articleActions.selectWriters());
 
+    const [pageUserId, setPageUserId] = useState(null);
+    const [goToUserPage, setGoToUserPage] = useState(null);
+
     useEffect(() => {
+        console.log("dispatching clearWriters");
         dispatch(articleActions.fetchArticles());
 
         dispatch(articleActions.clearArticleWriters());
@@ -67,6 +71,18 @@ function ShowForm() {
         return <Navigate to={`/articles/${goArticle}`} replace={true} />
     }
 
+    function handleUserClick(e, userId) {
+        e.preventDefault();
+
+        setPageUserId(userId);
+        setGoToUserPage(true);
+    }
+
+    if (goToUserPage) {
+        console.log(goToUserPage);
+        return <Navigate to={`/users/${pageUserId}`} />
+    }
+
     return (
         <>
             {writers === undefined ? (
@@ -77,13 +93,13 @@ function ShowForm() {
                     <div className="sParent">
                         <div className="sParent2">
                                 {articles.map(article => 
-                                    <div className="sP4">
+                                    <div key={article.id + "zz"}  className="sP4">
                                         <div key={article.id + "z"} className="sP3">
                                             <div key={article.id + "a"} className="sContentHolder">
                                                 <div key={article.id + "b"} className="sPad1"></div>
                                                 <div key={article.id + "c"} className="sPhotoLine">
                                                     <div key={article.id + "d"} className="sUserDot"></div>
-                                                    <p key={article.id + "e"} className='sName'>{getUserName(article.userId)}</p>
+                                                    <p onClick={(e) => handleUserClick(e, article.userId)} key={article.id + "e"} className='sName'>{getUserName(article.userId)}</p>
                                                     <p key={article.id + "f"} className='sDot'>·</p>
                                                     <p key={article.id + "g"} className='sDate'>{getDatePosted(article.datePosted)}</p>
                                                 </div>
@@ -97,7 +113,7 @@ function ShowForm() {
                                             {/* to deactivate add "https://placehold.co/800x800" */}
                                             <img src={"https://placehold.co/800x800"} key={article.id + "l"} className="sPhoto" />
                                         </div> 
-                                        <div className='sLine'></div>
+                                        <div key={article.id + "m"} className='sLine'></div>
                                     </div>
                                 )}
                         </div>

@@ -215,6 +215,16 @@ export const updateArticle = ({ articleId, title, content }) => async dispatch =
   return response;
 };
 
+export const deleteArticle = (articleId) => async dispatch => {
+  const response = await csrfFetch(`/api/articles/${articleId}`, {
+    method: "DELETE"
+  });
+
+  const message = await response.json();
+  dispatch(removeArticle(articleId));
+  return message;
+}
+
 
 
 const articleReducer = (state = {}, action) => {
