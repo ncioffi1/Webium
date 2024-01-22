@@ -90,7 +90,7 @@ function CommentModal() {
                                 <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
                                 <p className='commentIconAmount'>150</p>
                             </div>
-                            <div>
+                            <div className='commentReplyHolder'>
                                 <p className='cCommentReply'>Reply</p>
                             </div>
                         </div>
