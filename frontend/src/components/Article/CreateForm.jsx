@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import './CreateForm.css';
 import '../WebiumBrowser.css';
 import '../Navigation/TopBar.css';
-
+import FileInput from "./FileInput";
 import SidebarModal from "../SessionModal/SidebarModal";
 import * as sidemodalActions from "../../store/sidemodals";
 import * as articleActions from "../../store/articles";
@@ -91,11 +91,10 @@ function CreateForm() {
                 <div className="topbar">
                     <div className='topbarleft3'>
                         <Link to={"/"} className="splashtextlogo">Webium</Link>
+                        <FileInput />
                         <div className='searchbarholder'>
                             
                         </div>
-                        
-    
                     </div>
                     <div className="topbarright3">
                         <div className='pad1right'></div>
