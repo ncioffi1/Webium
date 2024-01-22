@@ -1,5 +1,24 @@
 
 
 .fInput {
-    border: 5px solid red;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    height: 60px;
+    width: 400px;
+    /* margin-left: 0;
+    margin-right: 0; */
+    /* padding-left: 200px; */
+}
+
+.fText {
+    font-family: "Roboto";
+    padding-bottom: 6px;
+    color: black
+}
+.fFile {
+    font-family: "Roboto";
+    color: gray
 }

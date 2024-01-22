@@ -11,6 +11,8 @@ import SidebarModal from "../SessionModal/SidebarModal";
 import * as sidemodalActions from "../../store/sidemodals";
 import * as articleActions from "../../store/articles";
 
+import "./FileInput.css";
+
 function CreateForm() {
     const sessionUser = useSelector(state => state.session.user);
     // const article = useSelector(state => state.article)
@@ -23,6 +25,19 @@ function CreateForm() {
 
     const ref = useRef();
     const ref2 = useRef();
+
+    // file stuff
+    const [file, setFile] = useState(null);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+      };
+    const uploadFile = (e) => {
+        console.log(file);
+    }
+
+    //
+
 
     if (createdArticle !== undefined && createdArticle !== null) {
         return <Navigate to={`/articles/${createdArticle.id}`} replace={true} />
@@ -58,10 +73,17 @@ function CreateForm() {
     }
 
     function handlePublish() {
-        console.log(title);
-        console.log(content);
+        // console.log("&&&&&&&&&&&");
+        // console.log(title);
+        // console.log(content);
+        let photo = null;
+        if (file) {
+            photo = file;
+        }
+        // console.log(photo);
+        // console.log("&&&&&&&&&&&");
 
-        dispatch(articleActions.postArticle({ title, content }))
+        dispatch(articleActions.postArticle({ title, content, photo }))
         .catch(async (res) => {
             let data;
             try {
@@ -91,9 +113,15 @@ function CreateForm() {
                 <div className="topbar">
                     <div className='topbarleft3'>
                         <Link to={"/"} className="splashtextlogo">Webium</Link>
-                        <FileInput />
                         <div className='searchbarholder'>
                             
+                        </div>
+                    </div>
+                    <div className="fInput">
+                        <div>
+                            <p className='fText'>Upload Article Photo:</p>
+                            <input className='fFile' type="file" onChange={handleFileChange} />
+                            {/* <button onClick={uploadFile}>Upload</button> */}
                         </div>
                     </div>
                     <div className="topbarright3">

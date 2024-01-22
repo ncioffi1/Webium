@@ -194,20 +194,43 @@ export const fetchArticles = () => async(dispatch) => {
 
 const initialState = { article: null};
 
-export const postArticle = ({ title, content }) => async dispatch => {
+export const postArticle = ({ title, content, photo }) => async dispatch => {
+  console.log(title);
+  console.log(content);
+  console.log(photo);
+  console.log("===========");
+  const formData = new FormData();
+  formData.append('article[title]', title);
+  formData.append('article[content]', content);
+  if (photo) {
+    formData.append('article[photo]', photo);
+  }
+  console.log("===========");
+  console.log(formData);
+  console.log("===========");
+
   const response = await csrfFetch("/api/articles/", {
     method: "POST",
-    body: JSON.stringify({ title, content })
+    body: formData
+    // body: JSON.stringify({ title, content, photo })
   });
   const article = await response.json();
   dispatch(createArticle(article));
   return response;
 };
 
-export const updateArticle = ({ articleId, title, content }) => async dispatch => {
+export const updateArticle = ({ articleId, title, content, photo }) => async dispatch => {
+  const formData = new FormData();
+  formData.append('article[title]', title);
+  formData.append('article[content]', content);
+  if (photo) {
+    formData.append('article[photo]', photo);
+  }
+
   const response = await csrfFetch(`/api/articles/${articleId}`, {
     method: "PATCH",
-    body: JSON.stringify({ title, content })
+    body: formData
+    // body: JSON.stringify({ title, content, photo })
   });
 
   const article = await response.json();

@@ -13,6 +13,8 @@ import SidebarModal from "../SessionModal/SidebarModal";
 import * as sidemodalActions from "../../store/sidemodals";
 import * as articleActions from "../../store/articles";
 
+import "./FileInput.css";
+
 function EditForm() {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
@@ -22,6 +24,7 @@ function EditForm() {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [photoUrl, setPhotoUrl] = useState("");
     const [loaded, setLoaded] = useState(false);
 
     const [errors, setErrors] = useState([]);
@@ -29,6 +32,16 @@ function EditForm() {
     const ref = useRef();
     const ref2 = useRef();
 
+    // adding photos
+    const [file, setFile] = useState(null);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+      };
+    const uploadFile = (e) => {
+        console.log(file);
+    }
+    
 
     const handleInput = (e) => {
         if (ref.current) {
@@ -53,6 +66,8 @@ function EditForm() {
         if (article !== null) {
             setTitle(article.title);
             setContent(article.content);
+            setPhotoUrl(article.photoUrl);
+            // console.log(article.photoUrl);
         }
     }, [article])
 
@@ -87,7 +102,12 @@ function EditForm() {
     }
 
     function handlePublish() {
-        dispatch(articleActions.updateArticle({ articleId, title, content }))
+        let photo = null;
+        if (file) {
+            photo = file;
+        }
+
+        dispatch(articleActions.updateArticle({ articleId, title, content, photo }))
         .catch(async (res) => {
             let data;
             try {
@@ -134,7 +154,15 @@ function EditForm() {
                     <div className="topbar">
                         <div className='topbarleft3'>
                             <Link to={"/"} className="splashtextlogo">Webium</Link>
+                            
                             <div className='searchbarholder'></div>
+                        </div>
+                        <div className="fInput">
+                            <div>
+                                <p className='fText'>Change Article Photo:</p>
+                                <input className='fFile' type="file" onChange={handleFileChange} />
+                                {/* <button onClick={uploadFile}>Upload</button> */}
+                            </div>
                         </div>
                         <div className="topbarright3">
                             <div className='pad1right'></div>
