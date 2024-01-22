@@ -23,7 +23,7 @@ class Comment < ApplicationRecord
         foreign_key: :article_id,
         class_name: :Article
 
-    belongs_to :parent_comment,
+    belongs_to :parent_comment, optional: true,
         primary_key: :id,
         foreign_key: :parent_comment_id,
         class_name: :Comment

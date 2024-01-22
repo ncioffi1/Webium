@@ -17,10 +17,12 @@ require "open-uri"
 # CLEAR
 User.destroy_all
 Article.destroy_all
+Comment.destroy_all
 
 puts "resetting primary keys..."
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('articles')
+ApplicationRecord.connection.reset_pk_sequence!('comments')
 
 # USERS
 
@@ -146,3 +148,32 @@ article10 = Article.create!(
     Keep it green, keep it clean!",
     date_posted: '21/12/2006'
 )
+
+comment1 = Comment.create!(
+    user_id:  greg.id,
+    comment:  "Wow!  This was a great read.  Loved it!  \nHope to see more articles from you soon!",
+    article_id:  article5.id,
+    parent_comment_id: nil
+)
+
+comment2 = Comment.create!(
+    user_id:  aaron.id,
+    comment:  "Agreed.  Enjoyed reading the article!",
+    article_id:  article5.id,
+    parent_comment_id:  comment1.id
+)
+
+comment3 = Comment.create!(
+    user_id:  frankie.id,
+    comment:  "Wasn't a fan of this one, personally.",
+    article_id:  article5.id,
+    parent_comment_id: nil
+)
+
+comment4 = Comment.create!(
+    user_id:  jessica.id,
+    comment:  "Great article!",
+    article_id:  article5.id,
+    parent_comment_id:  nil
+)
+
