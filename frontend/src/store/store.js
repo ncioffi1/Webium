@@ -7,7 +7,7 @@ import modalsReducer from './modals';
 import sideModalsReducer from './sidemodals';
 import popupModalsReducer from './popupmodals.js';
 import commentModalsReducer from './commentmodals.js';
-
+import commentReducer from './comments.js';
 // import pokemon from './pokemon';
 // import items from './items';
 
@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
   modals: modalsReducer,
   sidemodals: sideModalsReducer,
   popupmodals: popupModalsReducer,
-  commentmodals: commentModalsReducer
+  commentmodals: commentModalsReducer,
+  comment: commentReducer
 });
 
 let enhancer;

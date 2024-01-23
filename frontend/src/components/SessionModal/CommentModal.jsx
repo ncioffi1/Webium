@@ -6,7 +6,8 @@ import ModalPopup from '../Modal/ModalPopup';
 import ModalSide from '../Modal/ModalSide';
 import Modal from '../Modal/Modal';
 
-import * as commentmodalActions from '../../store/commentmodals.js'
+import * as commentActions from "../../store/comments.js";
+import * as commentmodalActions from '../../store/commentmodals.js';
 // import * as sidemodalActions from '../../store/sidemodals.js'
 import * as sessionActions from '../../store/session.js';
 
@@ -22,9 +23,43 @@ function CommentModal() {
     const dispatch = useDispatch();
     const { articleId } = useParams();
     const commentmodalType = useSelector(state => state.commentmodals.type);
-    const [editing, setEditing] = useState(false);
-    const [deleting, setDeleting] = useState(false);
+    // const [editing, setEditing] = useState(false);
+    // const [deleting, setDeleting] = useState(false);
     // const sidemodalType = useSelector(state => state.sidemodals.type);
+    const [writerIds, setWriterIds] = useState([]);
+    const [articleComments, setArticleComments] = useState(null);
+    const comments = useSelector(state => state.comment.comments);
+    const writers = useSelector(commentActions.selectWriters());
+
+    useEffect(() => {
+        if (comments !== null && comments !== undefined) {
+            // set article comments
+            // filter comments to ones that have articleId as the article_id
+            let mComments = comments.filter((comment) => parseInt(comment.articleId) === parseInt(articleId));
+            setArticleComments(mComments);
+        }
+    }, [comments]);
+
+    useEffect(() => {
+        if (articleComments !== null && articleComments !== undefined) {
+            if (articleComments.length !== 0) {
+                setWriterIds(articleComments.map((comment) => comment.userId));
+            } else {
+                setWriterIds([]);
+            }
+        }
+    }, [articleComments])
+
+    useEffect(() => {
+        dispatch(commentActions.fetchComments());
+    }, []);
+
+    useEffect(() => {
+        if (writerIds.length !== 0) {
+            console.log(writerIds);
+            dispatch(commentActions.fetchWriters(writerIds));
+        }
+    }, [writerIds])
 
     let modalRef = createRef();
 
@@ -57,7 +92,30 @@ function CommentModal() {
         console.log(commentmodalType)
     }, [])
 
+    function getUserName(userId) {
+        // console.log("CALL!!!");
+        // console.log(writers);
+        
+        if (writers !== undefined) {
+            for (let i = 0; i < writers.length; i++) {
+                if (writers[i].user.id === userId) {
+                    return writers[i].user.name;
+                }
+            }
+            return "User Name"
+        }
+    }
+
     if (!commentmodalType) {
+        // console.log("commentmodal type");
+        return null;
+    } else if (articleComments === undefined || articleComments === null) {
+        // console.log("article commments");
+        // console.log(articleComments);
+        return null;
+    } else if (writerIds.length !== 0 && (writers === null || writers === undefined)) {
+        // console.log("writers");
+        // console.log(articleComments);
         return null;
     } else {
         return (
@@ -74,30 +132,31 @@ function CommentModal() {
                     </span>
 
                     <span className="commentLine"></span>
-                    <div className='aComment'>
-                        <div className='cCommentUserHolder'>
-                            <div className="cCommentUserdot"></div>
-                            <div className="cCommentVertical">
-                                <p className="cCommentUsername">User Name</p>
-                                <p className='cCommentDatePosted'>Date Posted</p>
+                    {articleComments.map((comment) => 
+                        <div className='aComment'>
+                            <div className='cCommentUserHolder'>
+                                <div className="cCommentUserdot"></div>
+                                <div className="cCommentVertical">
+                                    <p className="cCommentUsername">{getUserName(comment.userId)}</p>
+                                    <p className='cCommentDatePosted'>Date Posted</p>
+                                </div>
+                                <i className="fa-solid fa-ellipsis" id="contentIcon2"></i>
+                                {/* <PopupModal /> */}
+                            </div>       
+                            <p className='aCommentText'>{comment.comment}</p>
+                            <div className='cCommentLastRow'>
+                                <div className='commentIconHolder'>
+                                    <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
+                                    <p className='commentIconAmount'>150</p>
+                                </div>
+                                <div className='commentReplyHolder'>
+                                    <p className='cCommentReply'>Reply</p>
+                                </div>
                             </div>
-                            <i className="fa-solid fa-ellipsis" id="contentIcon2"></i>
-                            {/* <PopupModal /> */}
-                        </div>       
-                        <p className='aCommentText'>This is a comment.</p>
-                        <div className='cCommentLastRow'>
-                            <div className='commentIconHolder'>
-                                <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
-                                <p className='commentIconAmount'>150</p>
-                            </div>
-                            <div className='commentReplyHolder'>
-                                <p className='cCommentReply'>Reply</p>
-                            </div>
+                            <span className="commentLine2"></span>
                         </div>
-                        
-
-                        <span className="commentLine2"></span>
-                    </div>
+                    )}
+                    
 
                     {/* here, get an array of all this article's comments - then display them accordingly. */}
                 </ModalComments>

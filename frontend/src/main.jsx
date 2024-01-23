@@ -11,6 +11,7 @@ import * as sidemodalActions from './store/sidemodals.js';
 import * as articleActions from './store/articles.js';
 import * as popupmodalActions from './store/popupmodals.js';
 import * as commentmodalActions from './store/commentmodals.js';
+import * as commentActions from './store/comments.js';
 
 const store = configureStore();
 
@@ -24,6 +25,7 @@ if (import.meta.env.MODE !== "production") {
   window.popupmodalActions = popupmodalActions;
   window.commentmodalActions = commentmodalActions;
   window.articleActions = articleActions;
+  window.commentActions = commentActions;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
