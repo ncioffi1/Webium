@@ -8,6 +8,8 @@ import sideModalsReducer from './sidemodals';
 import popupModalsReducer from './popupmodals.js';
 import commentModalsReducer from './commentmodals.js';
 import commentReducer from './comments.js';
+import popupModalsCommentReducer from './popupmodalscomment.js';
+
 // import pokemon from './pokemon';
 // import items from './items';
 
@@ -17,6 +19,7 @@ const rootReducer = combineReducers({
   modals: modalsReducer,
   sidemodals: sideModalsReducer,
   popupmodals: popupModalsReducer,
+  popupmodalscomment: popupModalsCommentReducer,
   commentmodals: commentModalsReducer,
   comment: commentReducer
 });

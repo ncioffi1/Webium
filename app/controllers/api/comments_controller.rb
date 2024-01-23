@@ -17,9 +17,11 @@ class Api::CommentsController < ApplicationController
         # @article.date_posted = Time.now.strftime("%d/%m/%Y")
 
         if @comment.save
+            puts @comment
+            puts "TESTING!!!"
             render :show
         else  
-            render json: { errors: @article.errors.full_messages }, status: :unprocessable_entity
+            render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -35,7 +37,7 @@ class Api::CommentsController < ApplicationController
     end
 
     def destroy
-        @comment = Article.find(params[:id])
+        @comment = Comment.find(params[:id])
         @comment.destroy
         
         render json: {message: 'success'}
@@ -43,6 +45,6 @@ class Api::CommentsController < ApplicationController
 
     private
     def comment_params
-        params.require(:comment).permit(:comment, :user_id, :article_id, :parent_comment_id)
+        params.require(:comment).permit(:commentbody, :user_id, :article_id, :parent_comment_id)
     end
 end

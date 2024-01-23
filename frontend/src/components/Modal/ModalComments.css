@@ -23,8 +23,9 @@
   #modal-content-comments {
     position: absolute;
     background-color: white;
-    /* border: 2px solid gray; */
+    /* border: 2px solid red; */
     border: 2px solid rgb(240, 240, 240);
+    overflow-y: auto;
     border-radius: 0px;
     
     top: 0;

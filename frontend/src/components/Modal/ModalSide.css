@@ -44,9 +44,11 @@
     top: 80px;
     right: 50px;
 
-    width: 30%;
+    /* width: 30%; */
+    width: 400px;
+    height: 180px;
     /* height: 80%; */
-    height: 20%;
+    /* height: 20%; */
     z-index: 10;
   }
   

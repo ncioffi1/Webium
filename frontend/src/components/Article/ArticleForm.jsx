@@ -23,7 +23,7 @@ function ArticleForm() {
     const dispatch = useDispatch();
     const article = useSelector(articleActions.selectArticle(articleId));
     const writer = useSelector(articleActions.selectWriter(writerId));
-
+    
 
     const [goToUserPage, setGoToUserPage] = useState(null);
 
@@ -210,7 +210,7 @@ function ArticleForm() {
                             <div className="aImageHolder"> 
                             {/* to reactivate add article.photoUrl */}
                             {/* to deactivate add "https://placehold.co/1600x800" */}
-                                <img src={"https://placehold.co/1600x800"} className="aImage"/>
+                                <img src={article.photoUrl} className="aImage"/>
                             </div>
                             {articleContent === null ? (
                                 <>

@@ -4,14 +4,14 @@
 #
 #  id                :bigint           not null, primary key
 #  user_id           :integer          not null
-#  comment           :text             not null
+#  commentbody       :text             not null
 #  article_id        :integer          not null
 #  parent_comment_id :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
 class Comment < ApplicationRecord
-    validates :user_id, :comment, :article_id, presence: true
+    validates :user_id, :commentbody, :article_id, presence: true
 
     belongs_to :user,
         primary_key: :id,

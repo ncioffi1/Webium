@@ -151,28 +151,28 @@ article10 = Article.create!(
 
 comment1 = Comment.create!(
     user_id:  greg.id,
-    comment:  "Wow!  This was a great read.  Loved it!  \nHope to see more articles from you soon!",
+    commentbody:  "Wow!  This was a great read.  Loved it!  \nHope to see more articles from you soon!",
     article_id:  article5.id,
     parent_comment_id: nil
 )
 
 comment2 = Comment.create!(
     user_id:  aaron.id,
-    comment:  "Agreed.  Enjoyed reading the article!",
+    commentbody:  "Agreed.  Enjoyed reading the article!",
     article_id:  article5.id,
     parent_comment_id:  comment1.id
 )
 
 comment3 = Comment.create!(
     user_id:  frankie.id,
-    comment:  "Wasn't a fan of this one, personally.",
+    commentbody:  "Wasn't a fan of this one, personally.",
     article_id:  article5.id,
     parent_comment_id: nil
 )
 
 comment4 = Comment.create!(
     user_id:  jessica.id,
-    comment:  "Great article!",
+    commentbody:  "Great article!",
     article_id:  article5.id,
     parent_comment_id:  nil
 )
