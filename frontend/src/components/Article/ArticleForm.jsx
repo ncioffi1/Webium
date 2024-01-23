@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import * as articleActions from "../../store/articles";
 import * as commentmodalActions from "../../store/commentmodals.js";
 import * as popupmodalActions from "../../store/popupmodals.js";
+import * as clapActions from "../../store/claps.js";
 
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
@@ -23,7 +24,11 @@ function ArticleForm() {
     const dispatch = useDispatch();
     const article = useSelector(articleActions.selectArticle(articleId));
     const writer = useSelector(articleActions.selectWriter(writerId));
-    
+    // const commentState = useSelector(state => state.comment);
+    const comments = useSelector(state => state.comment.comments);
+    const claps = useSelector(state => state.clap.claps);
+    const [articleClaps, setArticleClaps] = useState(null);
+    const [articleComments, setArticleComments] = useState(null);
 
     const [goToUserPage, setGoToUserPage] = useState(null);
 
@@ -37,6 +42,42 @@ function ArticleForm() {
         dispatch(commentmodalActions.showCommentModal("comment"));
         console.log("CLICKED!!!!");
     }
+
+    useEffect(() => {
+        dispatch(clapActions.fetchClaps());
+    }, [])
+
+    useEffect(() => {
+        if (claps !== undefined && claps !== null) {
+            console.log("CLAPS:");
+            console.log(claps);
+            let mClaps = claps.filter((clap) => parseInt(clap.articleId) === parseInt(articleId));
+            setArticleClaps(mClaps)
+        } else if (claps === undefined) {
+            setArticleClaps([]);
+        }
+    }, [claps])
+
+    useEffect(() => {
+        if (articleClaps !== null && articleClaps !== undefined) {
+            console.log(articleClaps);
+        }
+    }, [articleClaps])
+
+    useEffect(() => {
+        if (comments !== null && comments !== undefined) {
+            let mComments = comments.filter((comment) => parseInt(comment.articleId) === parseInt(articleId));
+            let sComments = mComments.sort(function(a, b) {
+                return (a.id - b.id);
+            })
+            // console.log("HIT: comments being set");
+            setArticleComments(sComments);
+        } 
+        else if (comments === undefined) {
+            // console.log("HIT: comments undefined");
+            setArticleComments([]);
+        }
+    }, [comments])
     // if (article !== null) {
     //     const writer = useSelector(articleActions.selectWriter(article.userId));
     // }
@@ -92,13 +133,13 @@ function ArticleForm() {
 
     function getDatePosted() {
         let date0 = article.datePosted;
-        console.log(date0);
+        // console.log(date0);
         let date1 = Date.parse(date0 + " 12:00:00 GMT");
-        console.log(date1);
+        // console.log(date1);
         let date2 = new Date(date1);
-        console.log(date2);
+        // console.log(date2);
         let date3 = date2.toLocaleDateString('en-US');
-        console.log(date3);
+        // console.log(date3);
         return date3;
     }
 
@@ -128,6 +169,14 @@ function ArticleForm() {
         }
     }
 
+    function getCommentAmount() {
+        if (articleComments.length === 0) {
+            return "";
+        } else {
+            return articleComments.length;
+        }
+    }
+
     function handleUserClick(e) {
         e.preventDefault();
 
@@ -136,6 +185,10 @@ function ArticleForm() {
 
     if (goToUserPage) {
         return <Navigate to={`/users/${writerId}`} />
+    }
+
+    if (articleComments === null || articleComments === undefined) {
+        return null;
     }
 
     return (
@@ -188,7 +241,7 @@ function ArticleForm() {
                                     </div>
                                     <div onClick={(e) => handleCommentClick(e)} className='articleIconHolder'>
                                         <i className="fa-regular fa-comment" id='aIcon'></i>
-                                        <p className='iconAmount'>150</p>
+                                        <p className='iconAmount'>{getCommentAmount()}</p>
                                     </div>
                                 </div>
                                 <div className='iconBarR'>
@@ -210,7 +263,7 @@ function ArticleForm() {
                             <div className="aImageHolder"> 
                             {/* to reactivate add article.photoUrl */}
                             {/* to deactivate add "https://placehold.co/1600x800" */}
-                                <img src={article.photoUrl} className="aImage"/>
+                                <img src={"https://placehold.co/1600x800"} className="aImage"/>
                             </div>
                             {articleContent === null ? (
                                 <>
@@ -224,7 +277,7 @@ function ArticleForm() {
                             )}
                             
                             {/* <p className='aContent'>{article.content}</p> */}
-                            <Link to={`/`}>Back</Link>
+                            {/* <Link to={`/`}>Back</Link> */}
                         </div>
                     </>
                 )}

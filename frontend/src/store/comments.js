@@ -5,9 +5,12 @@ const RECEIVE_COMMENTS = 'comments/RECEIVE_COMMENTS';
 const REMOVE_COMMENT = 'comments/REMOVE_COMMENT';
 const RECEIVE_COMMENTERS = 'users/RECEIVE_COMMENTERS'
 const CREATE_COMMENT = 'comments/CREATE_COMMENT';
+const EDIT_COMMENT = 'comments/EDIT_COMMENT';
 const EDITING_COMMENT = 'comments/EDITING_COMMENT';
 const CLEAR_CREATE = 'comments/CLEAR_CREATE';
 const CLEAR_DELETE = 'comments/CLEAR_DELETE';
+const CLEAR_EDITING = 'comments/CLEAR_EDITING';
+const CLEAR_EDIT = 'comments/CLEAR_EDIT';
 
 const receiveComment = (comment) => ({
     type: RECEIVE_COMMENT,
@@ -34,6 +37,11 @@ const createComment = (comment) => ({
     payload: comment
 });
 
+const editComment = (comment) => ({
+    type: EDIT_COMMENT,
+    payload: comment
+})
+
 const clearCreate = () => ({
     type: CLEAR_CREATE,
     payload: null
@@ -43,14 +51,18 @@ const clearDelete = () => ({
     type: CLEAR_DELETE,
     payload: null
 });
+const clearEditing = () => ({
+    type: CLEAR_EDITING,
+    payload: null
+})
 const clearEdit = () => ({
     type: CLEAR_EDIT,
     payload: null
 })
 
-const setEditingComment = (commentId) => ({
+const setEditingComment = (comment) => ({
     type: EDITING_COMMENT,
-    payload: commentId
+    payload: comment
 })
 
 export const clearCreatedComment = () => async(dispatch) => {
@@ -60,7 +72,10 @@ export const clearDeletedComment = () => async(dispatch) => {
   dispatch(clearDelete());
 }
 export const clearEditingComment = () => async(dispatch) => {
-  dispatch(clearEdit());
+  dispatch(clearEditing());
+}
+export const clearEditComment = () => async(dispatch) => {
+    dispatch(clearEdit());
 }
 
 export const selectArticle = (articleId) => (state) => {
@@ -102,8 +117,8 @@ export const fetchWriters = (writerIds) => async(dispatch) => {
     }
   }
 
-export const editingComment = (commentId) => async(dispatch) => {
-    dispatch(setEditingComment(commentId));
+export const editingComment = (comment) => async(dispatch) => {
+    dispatch(setEditingComment(comment));
 }
 
 export const fetchComment = (commentId) => async(dispatch) => {
@@ -141,6 +156,22 @@ export const postComment = ({ comment, userId, articleId, parentCommentId }) => 
     return response;
   };
 
+  export const updateComment = ({ commentId, commentbody, user_id, article_id, parent_comment_id }) => async dispatch => {
+    console.log("====TEST====");
+    console.log(commentId);
+    console.log(commentbody);
+
+    
+    const response = await csrfFetch(`/api/comments/${commentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ commentbody, user_id, article_id, parent_comment_id })
+    });
+  
+    const comment = await response.json();
+    dispatch(editComment(comment));
+    return response;
+  };
+
 export const deleteComment = (commentId) => async dispatch => {
     // console.log("HIT!");
     const response = await csrfFetch(`/api/comments/${commentId}`, {
@@ -163,6 +194,14 @@ const commentReducer = (state = {}, action) => {
         case CLEAR_DELETE:
             newState["delete"] = null;
             return newState;
+        
+        case CLEAR_EDITING:
+            newState["editing"] = null;
+            return newState;
+            
+        case CLEAR_EDIT:
+            newState["edit"] = null;
+            return newState;
 
         case EDITING_COMMENT:
             newState["editing"] = action.payload;
@@ -171,6 +210,11 @@ const commentReducer = (state = {}, action) => {
         case CREATE_COMMENT: 
             newState.comments[action.payload.comment.id] = action.payload.comment;
             newState["create"] = action.payload;
+            return newState;
+
+        case EDIT_COMMENT:
+            newState.comments[action.payload.comment.id] = action.payload.comment;
+            newState["edit"] = action.payload;
             return newState;
 
         case RECEIVE_COMMENT:

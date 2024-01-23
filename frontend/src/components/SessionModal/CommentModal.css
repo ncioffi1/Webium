@@ -9,6 +9,20 @@
     font-size: 20px;
 }
 
+.cCommentButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 0;
+    padding-bottom: 0px;
+}
+.commentBuffer {
+    padding-bottom: 10px;
+    /* border: 2px solid red; */
+}
+
 .cCommentHolder {
     /* padding-left: 20px; */
     /* border: 2px solid red; */
@@ -48,19 +62,26 @@
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    /* display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center; */
-    /* left: 10px; */
-    /* margin: 0 right; */
     text-align: center;
     background-color: green;
     color: white;
     font-family: "Roboto";
     font-size: 14px;
     border-radius: 20px;
-    /* border: 2px solid red; */
+}
+.cPostComment2 {
+    width: 80px;
+    height: 32px;
+    margin-left: auto; 
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    /* background-color: green; */
+    color: black;
+    font-family: "Roboto";
+    font-size: 14px;
+    border-radius: 20px;
 }
 
 .cCommentUserHolder {

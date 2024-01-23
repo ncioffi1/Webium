@@ -18,11 +18,13 @@ require "open-uri"
 User.destroy_all
 Article.destroy_all
 Comment.destroy_all
+Clap.destroy_all
 
 puts "resetting primary keys..."
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('articles')
 ApplicationRecord.connection.reset_pk_sequence!('comments')
+ApplicationRecord.connection.reset_pk_sequence!('claps')
 
 # USERS
 
@@ -176,4 +178,178 @@ comment4 = Comment.create!(
     article_id:  article5.id,
     parent_comment_id:  nil
 )
+
+comment5 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "I really enjoyed reading this article. It provided valuable insights and was well-written. Looking forward to more content like this!",
+  article_id: article1.id,
+  parent_comment_id: nil
+)
+
+comment6 = Comment.create!(
+  user_id: 1,
+  commentbody: "This article caught my attention with its interesting subject matter. The author did a great job presenting the information. Thumbs up!",
+  article_id: article2.id,
+  parent_comment_id: nil
+)
+
+comment7 = Comment.create!(
+  user_id: 1,
+  commentbody: "Kudos to the writer! The content was well-researched and presented in a way that kept me engaged throughout. Well done!",
+  article_id: article3.id,
+  parent_comment_id: nil
+)
+
+comment8 = Comment.create!(
+  user_id: 1,
+  commentbody: "I found this article to be really informative. The author covered the topic thoroughly, and I appreciated the depth of analysis. Great content!",
+  article_id: article4.id,
+  parent_comment_id: nil
+)
+
+comment9 = Comment.create!(
+  user_id: 1,
+  commentbody: "Thoroughly enjoyed this piece. The writing style is captivating, and the insights provided are valuable. Looking forward to more from this author!",
+  article_id: article5.id,
+  parent_comment_id: nil
+)
+
+comment10 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "The author presented some insightful perspectives in this article. I appreciate the thoughtfulness and clarity in the writing. Impressive!",
+  article_id: article6.id,
+  parent_comment_id: nil
+)
+
+comment11 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "Bravo! This article was a fantastic read. The content was well-organized, and the author's expertise shone through. Thumbs up!",
+  article_id: article7.id,
+  parent_comment_id: nil
+)
+
+comment12 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "Fantastic job on this one! The author's writing style is engaging, making it easy to connect with the content. Well said!",
+  article_id: article8.id,
+  parent_comment_id: nil
+)
+
+comment13 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "Impressive work! I really liked the way the author approached the topic. The depth of analysis adds a lot of value to the content. Keep it up!",
+  article_id: article9.id,
+  parent_comment_id: nil
+)
+
+comment14 = Comment.create!(
+  user_id: greg.id,
+  commentbody: "Great job! This article provided valuable insights in an easily digestible format. Looking forward to more content from this source!",
+  article_id: article10.id,
+  parent_comment_id: nil
+)
+
+comment15 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "I'm truly impressed by this article. The author covered the topic comprehensively, and the writing style kept me engaged from start to finish. Well done!",
+  article_id: article5.id,
+  parent_comment_id: nil
+)
+
+comment16 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "Loved the insights shared in this piece. The author's perspective adds a unique flavor to the content, making it a standout read. Kudos!",
+  article_id: article6.id,
+  parent_comment_id: nil
+)
+
+comment17 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "Well said! This article articulated the subject matter beautifully. The thoughtful analysis and clear presentation make it a valuable read. Thumbs up!",
+  article_id: article7.id,
+  parent_comment_id: nil
+)
+
+comment18 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "Impressive work! The depth of information provided in this article is commendable. The author's expertise shines through, making it a top-notch piece of content.",
+  article_id: article8.id,
+  parent_comment_id: nil
+)
+
+comment19 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "Keep up the fantastic work! This article was a joy to read, and the author's writing style made the content easily relatable. Well done!",
+  article_id: article9.id,
+  parent_comment_id: nil
+)
+
+comment20 = Comment.create!(
+  user_id: jessica.id,
+  commentbody: "Another great job! The insights presented in this article are valuable, and the overall presentation is excellent. Looking forward to more content from this source!",
+  article_id: article10.id,
+  parent_comment_id: nil
+)
+
+# Evan likes 8 articles
+clap1 = Clap.create!(user_id: evan.id, article_id: article1.id, comment_id: nil)
+clap2 = Clap.create!(user_id: evan.id, article_id: article2.id, comment_id: nil)
+clap3 = Clap.create!(user_id: evan.id, article_id: article3.id, comment_id: nil)
+clap4 = Clap.create!(user_id: evan.id, article_id: article4.id, comment_id: nil)
+clap5 = Clap.create!(user_id: evan.id, article_id: article6.id, comment_id: nil)
+clap6 = Clap.create!(user_id: evan.id, article_id: article7.id, comment_id: nil)
+clap7 = Clap.create!(user_id: evan.id, article_id: article8.id, comment_id: nil)
+clap8 = Clap.create!(user_id: evan.id, article_id: article9.id, comment_id: nil)
+
+# Aaron likes 10 articles
+clap9 = Clap.create!(user_id: aaron.id, article_id: article1.id, comment_id: nil)
+clap10 = Clap.create!(user_id: aaron.id, article_id: article2.id, comment_id: nil)
+clap11 = Clap.create!(user_id: aaron.id, article_id: article3.id, comment_id: nil)
+clap12 = Clap.create!(user_id: aaron.id, article_id: article4.id, comment_id: nil)
+clap13 = Clap.create!(user_id: aaron.id, article_id: article5.id, comment_id: nil)
+clap14 = Clap.create!(user_id: aaron.id, article_id: article6.id, comment_id: nil)
+clap15 = Clap.create!(user_id: aaron.id, article_id: article7.id, comment_id: nil)
+clap16 = Clap.create!(user_id: aaron.id, article_id: article8.id, comment_id: nil)
+clap17 = Clap.create!(user_id: aaron.id, article_id: article9.id, comment_id: nil)
+clap18 = Clap.create!(user_id: aaron.id, article_id: article10.id, comment_id: nil)
+
+# Bob likes 8 articles
+clap19 = Clap.create!(user_id: bob.id, article_id: article1.id, comment_id: nil)
+clap20 = Clap.create!(user_id: bob.id, article_id: article3.id, comment_id: nil)
+clap21 = Clap.create!(user_id: bob.id, article_id: article4.id, comment_id: nil)
+clap22 = Clap.create!(user_id: bob.id, article_id: article5.id, comment_id: nil)
+clap23 = Clap.create!(user_id: bob.id, article_id: article6.id, comment_id: nil)
+clap24 = Clap.create!(user_id: bob.id, article_id: article7.id, comment_id: nil)
+clap25 = Clap.create!(user_id: bob.id, article_id: article8.id, comment_id: nil)
+clap26 = Clap.create!(user_id: bob.id, article_id: article9.id, comment_id: nil)
+
+# Carl likes 8 articles
+clap27 = Clap.create!(user_id: carl.id, article_id: article1.id, comment_id: nil)
+clap28 = Clap.create!(user_id: carl.id, article_id: article2.id, comment_id: nil)
+clap29 = Clap.create!(user_id: carl.id, article_id: article4.id, comment_id: nil)
+clap30 = Clap.create!(user_id: carl.id, article_id: article5.id, comment_id: nil)
+clap31 = Clap.create!(user_id: carl.id, article_id: article6.id, comment_id: nil)
+clap32 = Clap.create!(user_id: carl.id, article_id: article7.id, comment_id: nil)
+clap33 = Clap.create!(user_id: carl.id, article_id: article8.id, comment_id: nil)
+clap34 = Clap.create!(user_id: carl.id, article_id: article9.id, comment_id: nil)
+
+# Daniel likes 6 articles
+clap35 = Clap.create!(user_id: daniel.id, article_id: article1.id, comment_id: nil)
+clap36 = Clap.create!(user_id: daniel.id, article_id: article2.id, comment_id: nil)
+clap37 = Clap.create!(user_id: daniel.id, article_id: article3.id, comment_id: nil)
+clap38 = Clap.create!(user_id: daniel.id, article_id: article5.id, comment_id: nil)
+clap39 = Clap.create!(user_id: daniel.id, article_id: article6.id, comment_id: nil)
+clap40 = Clap.create!(user_id: daniel.id, article_id: article7.id, comment_id: nil)
+
+# users:
+# demo
+# aaron 
+# bob 
+# carl
+# daniel 
+# evan 
+# frankie 
+# greg
+# holly
+# ivan 
 

@@ -33,7 +33,7 @@ function PopupModalComment(props) {
 
     useEffect(() => {
         if (popupmodalType) {
-            // console.log(popupmodalType);
+            console.log(popupmodalType);
             document.addEventListener("click", handleHide, {capture: true});
         } else {
             document.removeEventListener("click", handleHide, {capture: true});
@@ -63,8 +63,9 @@ function PopupModalComment(props) {
 
     function handleEdit(e) {
         e.preventDefault();
-        console.log('edit comment')
-        dispatch(commentActions.editingComment(props.id));
+        console.log('edit comment');
+        console.log(props);
+        dispatch(commentActions.editingComment(props.comment));
         dispatch(popupModalCommentActions.hidePopupModalComment());
         // setEditing(true);
     }
@@ -91,7 +92,7 @@ function PopupModalComment(props) {
 
     if (!popupmodalType) {
         return null;
-    } else if (popupmodalType === props.id) {
+    } else if (popupmodalType.id === props.id) {
         return (
         <>
             <ModalPopupComment>

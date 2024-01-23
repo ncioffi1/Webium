@@ -31,7 +31,8 @@ function CommentModal() {
     // const sidemodalType = useSelector(state => state.sidemodals.type);
     const [writerIds, setWriterIds] = useState([]);
     const [articleComments, setArticleComments] = useState(null);
-    const [newComment, setNewComment] = useState(null);
+    const [newComment, setNewComment] = useState("");
+    const [editedComment, setEditedComment] = useState("");
     const [errors, setErrors] = useState([]);
     const [newParentCommentId, setNewParentCommentId] = useState(null);
     const comments = useSelector(state => state.comment.comments);
@@ -39,11 +40,12 @@ function CommentModal() {
     const create = useSelector(state => state.comment.create);
     const deleted = useSelector(state => state.comment.delete);
     const editing = useSelector(state => state.comment.editing);
-
+    const edit = useSelector(state => state.comment.edit);
+    
     useEffect(() => {
         if (create !== null && create !== undefined) {
             // console.log("FOUND");
-            setNewComment(null);
+            setNewComment("");
             // console.log(newComment);
             dispatch(commentActions.fetchComments());
             dispatch(commentActions.clearCreatedComment());
@@ -59,9 +61,19 @@ function CommentModal() {
     }, [deleted])
 
     useEffect(() => {
+        if (edit !== null && edit !== undefined) {
+            console.log("found edit!");
+            dispatch(commentActions.fetchComments());
+            dispatch(commentActions.clearEditComment());
+        }
+    }, [edit])
+
+    useEffect(() => {
         if (editing !== null && editing !== undefined) {
             console.log("FOUND EDITING!!!");
             console.log(editing);
+            console.log(editing.commentbody);
+            setEditedComment(editing.commentbody);
         }
     }, [editing])
 
@@ -70,7 +82,10 @@ function CommentModal() {
             // set article comments
             // filter comments to ones that have articleId as the article_id
             let mComments = comments.filter((comment) => parseInt(comment.articleId) === parseInt(articleId));
-            setArticleComments(mComments);
+            let sComments = mComments.sort(function(a, b) {
+                return (a.id - b.id);
+            })
+            setArticleComments(sComments);
         }
     }, [comments]);
 
@@ -127,9 +142,9 @@ function CommentModal() {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        console.log(e.target);
-        console.log(e.target.className);
-        console.log("handleHide");
+        // console.log(e.target);
+        // console.log(e.target.className);
+        // console.log("handleHide");
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(commentmodalActions.hideCommentModal());
     }
@@ -148,13 +163,13 @@ function CommentModal() {
         }
     }
 
-    function handlePopupModalComment(e, commentId) {
+    function handlePopupModalComment(e, comment) {
         e.preventDefault();
-        console.log("CLICKY!");
-        console.log(commentId);
-        dispatch(popupModalCommentActions.showPopupModalComment(commentId));
+        // console.log("CLICKY!");
+        // console.log(comment);
+        dispatch(popupModalCommentActions.showPopupModalComment(comment));
 
-        console.log(e.target);
+        // console.log(e.target);
         let rect = e.target.getBoundingClientRect();
         console.log(rect.top, rect.right, rect.bottom, rect.left);
     }
@@ -201,14 +216,41 @@ function CommentModal() {
                 return;
             }
           });
+        
+        setNewComment("");
+    }
+
+    function handleCommentCancel() {
+        dispatch(commentActions.clearEditingComment());
+    }
+
+    function handleCommentUpdate(e, comment) {
+        e.preventDefault();
+        // dispatch(commentActions.updateComment);
+        dispatch(commentActions.clearEditingComment());
+        let commentId = comment.id;
+        let commentbody = editedComment;
+        let user_id = comment.userId;
+        let article_id = comment.articleId;
+        let parent_comment_id = comment.parentCommentId;
+
+        dispatch(commentActions.updateComment({ commentId, commentbody, user_id, article_id, parent_comment_id}))
+    }
+
+    function checkEditing() {
+        if (editing !== null && editing !== undefined) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     if (!commentmodalType) {
-        console.log("commentmodal type");
+        // console.log("commentmodal type");
         return null;
     } else if (articleComments === undefined || articleComments === null) {
-        console.log("article commments");
-        console.log(articleComments);
+        // console.log("article commments");
+        // console.log(articleComments);
         return null;
     } 
     // else if (writerIds.length !== 0 && (writers === null || writers === undefined)) {
@@ -226,34 +268,51 @@ function CommentModal() {
                             <div className="cCommentUserdot"></div>
                             <p className="cCommentUsername">{sessionUser.name}</p>
                         </div>
-                        <textarea className="cComment" placeholder="What are your thoughts?" onChange={(e) => setNewComment(e.target.value)}></textarea>
+                        <textarea className="cComment" placeholder="What are your thoughts?" onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
                         <button onClick={handlePublish} className="cPostComment">Respond</button>
                     </span>
 
                     <span className="commentLine"></span>
                     {articleComments.map((comment) => 
-                        <div className='aComment'>
-                            <div className='cCommentUserHolder'>
-                                <div className="cCommentUserdot"></div>
-                                <div className="cCommentVertical">
-                                    <p className="cCommentUsername">{getUserName(comment.userId)}</p>
-                                    <p className='cCommentDatePosted'>Date Posted</p>
-                                </div>
-                                <PopupModalComment id={comment.id} comment={comment}/>
-                                <i onClick={(e) => handlePopupModalComment(e, comment.id)} className="fa-solid fa-ellipsis" id="contentIcon2"></i>
-                            </div>       
-                            <p className='aCommentText'>{comment.commentbody}</p>
-                            <div className='cCommentLastRow'>
-                                <div className='commentIconHolder'>
-                                    <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
-                                    <p className='commentIconAmount'>150</p>
-                                </div>
-                                <div className='commentReplyHolder'>
-                                    <p className='cCommentReply'>Reply</p>
-                                </div>
+                            <div className='aComment'>
+                                {checkEditing() && editing.id === comment.id ? (
+                                    <>
+                                        <span className="cCommentHolder">
+                                            <textarea className="cComment" onChange={(e) => setEditedComment(e.target.value)} value={editedComment}></textarea>
+                                            <span className="cCommentButtons">
+                                                <button onClick={handleCommentCancel} className="cPostComment2">Cancel</button>
+                                                <button onClick={(e) => handleCommentUpdate(e, comment)} className="cPostComment">Update</button>
+                                            </span>
+                                        </span>
+                                        {/* <p>Test!</p> */}
+                                        <div className="commentBuffer"></div>
+                                        <span className="commentLine2"></span>
+                                    </>
+                                ) : (
+                                    <>
+                                         <div className='cCommentUserHolder'>
+                                            <div className="cCommentUserdot"></div>
+                                            <div className="cCommentVertical">
+                                                <p className="cCommentUsername">{getUserName(comment.userId)}</p>
+                                                <p className='cCommentDatePosted'>Date Posted</p>
+                                            </div>
+                                            <PopupModalComment id={comment.id} comment={comment}/>
+                                            <i onClick={(e) => handlePopupModalComment(e, comment)} className="fa-solid fa-ellipsis" id="contentIcon2"></i>
+                                        </div>       
+                                        <p className='aCommentText'>{comment.commentbody}</p>
+                                        <div className='cCommentLastRow'>
+                                            <div className='commentIconHolder'>
+                                                <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
+                                                <p className='commentIconAmount'>150</p>
+                                            </div>
+                                            <div className='commentReplyHolder'>
+                                                <p className='cCommentReply'>Reply</p>
+                                            </div>
+                                        </div>
+                                        <span className="commentLine2"></span>
+                                    </>
+                                )}
                             </div>
-                            <span className="commentLine2"></span>
-                        </div>
                     )}
                     
 

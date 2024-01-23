@@ -9,6 +9,7 @@ import popupModalsReducer from './popupmodals.js';
 import commentModalsReducer from './commentmodals.js';
 import commentReducer from './comments.js';
 import popupModalsCommentReducer from './popupmodalscomment.js';
+import clapReducer from './claps.js';
 
 // import pokemon from './pokemon';
 // import items from './items';
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   popupmodals: popupModalsReducer,
   popupmodalscomment: popupModalsCommentReducer,
   commentmodals: commentModalsReducer,
-  comment: commentReducer
+  comment: commentReducer,
+  clap: clapReducer
 });
 
 let enhancer;
