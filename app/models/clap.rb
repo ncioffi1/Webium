@@ -16,12 +16,12 @@ class Clap < ApplicationRecord
         foreign_key: :user_id,
         class_name: :User
 
-    belongs_to :article,
+    belongs_to :article, optional: true,
         primary_key: :id,
         foreign_key: :article_id,
         class_name: :Article
 
-    belongs_to :comment,
+    belongs_to :comment, optional: true,
         primary_key: :id,
         foreign_key: :comment_id,
         class_name: :Comment

@@ -24,7 +24,7 @@ puts "resetting primary keys..."
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('articles')
 ApplicationRecord.connection.reset_pk_sequence!('comments')
-ApplicationRecord.connection.reset_pk_sequence!('claps')
+# ApplicationRecord.connection.reset_pk_sequence!('claps')
 
 # USERS
 
@@ -292,6 +292,7 @@ comment20 = Comment.create!(
 )
 
 # Evan likes 8 articles
+# clap1 = Clap.create!(user_id: 1, article_id: 1, comment_id: nil)
 clap1 = Clap.create!(user_id: evan.id, article_id: article1.id, comment_id: nil)
 clap2 = Clap.create!(user_id: evan.id, article_id: article2.id, comment_id: nil)
 clap3 = Clap.create!(user_id: evan.id, article_id: article3.id, comment_id: nil)

@@ -8,6 +8,7 @@ import Modal from '../Modal/Modal';
 
 import PopupModalComment from './PopupModalComment.jsx';
 
+import * as clapActions from "../../store/claps.js";
 import * as commentActions from "../../store/comments.js";
 import * as commentmodalActions from '../../store/commentmodals.js';
 import * as popupModalCommentActions from '../../store/popupmodalscomment.js';
@@ -41,6 +42,68 @@ function CommentModal() {
     const deleted = useSelector(state => state.comment.delete);
     const editing = useSelector(state => state.comment.editing);
     const edit = useSelector(state => state.comment.edit);
+
+    const claps = useSelector(state => state.clap.claps);
+    const clapped = useSelector(state => state.clap.clapped)
+    // const [commentClaps, setCommentClaps] = useState(null);
+
+    function handleClapClick(e, comment) {
+        e.preventDefault();
+        // max 50 claps.
+        let commentClaps = claps.filter((clap) => clap.commentId === comment.id);
+        let userClaps = commentClaps.filter((clap) => clap.userId === sessionUser.id);
+
+        if (userClaps.length >= 50) {
+            return;
+        }
+
+        let userId = sessionUser.id;
+        let commentId = comment.id
+        let articleId = null;
+
+        dispatch(clapActions.postClap({ userId, articleId, commentId }))
+        .catch(async (res) => {
+            let data;
+            try {
+              // .clone() essentially allows you to read the response body twice
+              data = await res.clone().json();
+            } catch {
+              data = await res.text(); // Will hit this case if, e.g., server is down
+            }
+
+            if (data?.errors) {
+                setErrors(data.errors);
+                return;
+            } else if (data) {
+                setErrors([data]);
+                return;
+            } else {
+                setErrors([res.statusText]);
+                return;
+            }
+          });
+        // console.log("Clapped!");
+    }
+
+    useEffect(() => {
+        dispatch(clapActions.fetchClaps());
+    }, [])
+
+    useEffect(() => {
+        if (clapped !== null && clapped !== undefined) {
+            dispatch(clapActions.clearClapped());
+            dispatch(clapActions.fetchClaps());
+        }
+    }, [clapped])
+
+    function getClapAmount(comment) {
+        let commentClaps = claps.filter((clap) => clap.commentId === comment.id);
+        if (commentClaps.length === 0) {
+            return "";
+        } else {
+            return commentClaps.length;
+        }
+    }
     
     useEffect(() => {
         if (create !== null && create !== undefined) {
@@ -301,9 +364,9 @@ function CommentModal() {
                                         </div>       
                                         <p className='aCommentText'>{comment.commentbody}</p>
                                         <div className='cCommentLastRow'>
-                                            <div className='commentIconHolder'>
+                                            <div onClick={((e) => handleClapClick(e, comment))} className='commentIconHolder'>
                                                 <i className="fa-solid fa-hands-clapping" id='contentIcon3'></i>
-                                                <p className='commentIconAmount'>150</p>
+                                                <p className='commentIconAmount'>{getClapAmount(comment)}</p>
                                             </div>
                                             <div className='commentReplyHolder'>
                                                 <p className='cCommentReply'>Reply</p>

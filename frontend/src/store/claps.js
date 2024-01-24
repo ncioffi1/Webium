@@ -3,6 +3,8 @@
 const RECEIVE_CLAP = 'claps/RECEIVE_CLAP';
 const RECEIVE_CLAPS = 'claps/RECEIVE_CLAPS';
 const REMOVE_CLAP = 'claps/REMOVE_CLAP';
+const CREATE_CLAP = 'claps/CREATE_CLAP';
+const CLEAR_CLAPPED = 'claps/CLEAR_CLAPPED';
 
 const receiveClap = (clap) => ({
     type: RECEIVE_CLAP,
@@ -19,6 +21,20 @@ const removeClap = (clapId) => ({
     payload: clapId
 });
 
+const createClap = (clap) => ({
+    type: CREATE_CLAP,
+    payload: clap
+});
+
+const clearingClapped = () => ({
+    type: CLEAR_CLAPPED,
+    payload: null
+})
+
+export const clearClapped = () => async(dispatch) => {
+    dispatch(clearingClapped());
+}
+
 export const fetchClap = (clapId) => async(dispatch) => {
     const response = await csrfFetch(`/api/claps/${clapId}`)
 
@@ -30,14 +46,33 @@ export const fetchClap = (clapId) => async(dispatch) => {
 
 export const fetchClaps = () => async(dispatch) => {
     const response = await csrfFetch(`/api/claps/`)
-    // console.log("!!!!=====!!!!!");
-    // console.log("fetch");
+    console.log("!!!!=====!!!!!");
+    console.log("fetch");
     
     if (response.ok) {
     const claps = await response.json();
+    console.log(claps);
     dispatch(receiveClaps(claps));
     }
 }
+
+export const postClap = ({ userId, articleId, commentId }) => async dispatch => {
+    console.log(userId);
+    console.log(articleId);
+    console.log(commentId);
+    let user_id = userId;
+    let article_id = articleId;
+    let comment_id = commentId;
+    const response = await csrfFetch("/api/claps/", {
+      method: "POST",
+      body: JSON.stringify({ user_id, article_id, comment_id })
+    });
+
+    const myClap = await response.json();
+    dispatch(createClap(myClap));
+    // console.log(response);
+    return response;
+  };
 
 const clapReducer = (state = {}, action) => {
     let newState = {...state};
@@ -57,6 +92,16 @@ const clapReducer = (state = {}, action) => {
             // newState["delete"] = true;
             delete newState[action.commentId];
             return newState;
+
+        case CREATE_CLAP:
+            newState.claps[action.payload.clap.id] = action.payload.clap;
+            newState["clapped"] = action.payload;
+            return newState;
+        
+        case CLEAR_CLAPPED:
+            newState["clapped"] = null;
+            return newState;
+
         default:
             return state;
     }

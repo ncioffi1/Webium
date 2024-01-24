@@ -27,10 +27,13 @@ function ArticleForm() {
     // const commentState = useSelector(state => state.comment);
     const comments = useSelector(state => state.comment.comments);
     const claps = useSelector(state => state.clap.claps);
+    const clapped = useSelector(state => state.clap.clapped)
     const [articleClaps, setArticleClaps] = useState(null);
     const [articleComments, setArticleComments] = useState(null);
+    const [errors, setErrors] = useState(null);
 
     const [goToUserPage, setGoToUserPage] = useState(null);
+
 
     function handlePopupClick(e) {
         e.preventDefault();
@@ -43,24 +46,70 @@ function ArticleForm() {
         console.log("CLICKED!!!!");
     }
 
+    function handleClapClick(e) {
+        e.preventDefault();
+
+        // max 50 claps.
+        let userClaps = articleClaps.filter((clap) => clap.userId === sessionUser.id);
+        // console.log("++++++++++++++");
+        // console.log(userClaps.length);
+        if (userClaps.length >= 50) {
+            return;
+        }
+
+        let userId = sessionUser.id;
+        let commentId = null;
+
+        dispatch(clapActions.postClap({ userId, articleId, commentId }))
+        .catch(async (res) => {
+            let data;
+            try {
+              // .clone() essentially allows you to read the response body twice
+              data = await res.clone().json();
+            } catch {
+              data = await res.text(); // Will hit this case if, e.g., server is down
+            }
+
+            if (data?.errors) {
+                setErrors(data.errors);
+                return;
+            } else if (data) {
+                setErrors([data]);
+                return;
+            } else {
+                setErrors([res.statusText]);
+                return;
+            }
+          });
+        // console.log("Clapped!");
+    }
+
     useEffect(() => {
         dispatch(clapActions.fetchClaps());
     }, [])
 
     useEffect(() => {
         if (claps !== undefined && claps !== null) {
-            console.log("CLAPS:");
-            console.log(claps);
+            // console.log("CLAPS:");
+            // console.log(claps);
             let mClaps = claps.filter((clap) => parseInt(clap.articleId) === parseInt(articleId));
-            setArticleClaps(mClaps)
+            setArticleClaps(mClaps);
         } else if (claps === undefined) {
             setArticleClaps([]);
         }
     }, [claps])
 
     useEffect(() => {
+        if (clapped !== null && clapped !== undefined) {
+            dispatch(clapActions.clearClapped());
+            dispatch(clapActions.fetchClaps());
+        }
+    }, [clapped])
+
+    useEffect(() => {
         if (articleClaps !== null && articleClaps !== undefined) {
-            console.log(articleClaps);
+            // console.log("ARTICLE CLAPS");
+            // console.log(articleClaps);
         }
     }, [articleClaps])
 
@@ -105,11 +154,11 @@ function ArticleForm() {
     }, [articleId])
 
     useEffect(() => {
-        console.log(article);
+        // console.log(article);
         if (article !== null) {
             let arr1 = article.content.split("\n");
             let arr2 = arr1.filter((paragraph) => /[a-z0-9]/i.test(paragraph));
-            console.log(arr2);
+            // console.log(arr2);
             setArticleContent(arr2);
             setWriterId(article.userId);
         }
@@ -176,6 +225,13 @@ function ArticleForm() {
             return articleComments.length;
         }
     }
+    function getClapAmount() {
+        if (articleClaps.length === 0) {
+            return "";
+        } else {
+            return articleClaps.length;
+        }
+    }
 
     function handleUserClick(e) {
         e.preventDefault();
@@ -235,9 +291,9 @@ function ArticleForm() {
                             <div className='lineA'></div>
                             <div className='iconBar'>
                                 <div className='iconBarL'>
-                                    <div className='articleIconHolder'>
+                                    <div onClick={(e) => handleClapClick(e)} className='articleIconHolder'>
                                         <i className="fa-solid fa-hands-clapping" id='aIcon'></i>
-                                        <p className='iconAmount'>150</p>
+                                        <p className='iconAmount'>{getClapAmount()}</p>
                                     </div>
                                     <div onClick={(e) => handleCommentClick(e)} className='articleIconHolder'>
                                         <i className="fa-regular fa-comment" id='aIcon'></i>
