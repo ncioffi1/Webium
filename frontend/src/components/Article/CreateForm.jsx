@@ -28,14 +28,32 @@ function CreateForm() {
 
     // file stuff
     const [file, setFile] = useState(null);
+    const [photoUrlPreview, setPhotoUrlPreview] = useState(null);
     const handleFileChange = (e) => {
+        console.log("HIT!!!");
         const file = e.target.files[0];
         setFile(file);
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => setPhotoUrlPreview(fileReader.result);
+        } else {
+            setPhotoUrlPreview(null);
+        }
       };
     const uploadFile = (e) => {
         console.log(file);
     }
 
+    useEffect(() => {
+        // console.log("!!=======!!");
+        // console.log(photoUrlPreview);
+    }, [photoUrlPreview])
+
+    let preview = null;
+    if (photoUrlPreview) {
+        preview = <img className="fImage2" src={photoUrlPreview} alt="" />;
+    } 
     //
 
 
@@ -69,7 +87,9 @@ function CreateForm() {
     function getFirstLetter() {
         // console.log(sessionUser);
         // console.log(sessionUser.name);
-        return sessionUser.name[0];
+        if (sessionUser !== null && sessionUser !== undefined) {
+            return sessionUser.name[0];
+        }
     }
 
     function handlePublish() {
@@ -106,7 +126,9 @@ function CreateForm() {
           });
     }
 
-    return (
+    if (sessionUser === null || sessionUser === undefined) {
+        return <Navigate to={"/"}/>
+    } return (
         <>
             {<SidebarModal />}
             <div className="splashWhite2">
@@ -115,13 +137,6 @@ function CreateForm() {
                         <Link to={"/"} className="splashtextlogo">Webium</Link>
                         <div className='searchbarholder'>
                             
-                        </div>
-                    </div>
-                    <div className="fInput">
-                        <div>
-                            <p className='fText'>Upload Article Photo:</p>
-                            <input className='fFile' type="file" onChange={handleFileChange} />
-                            {/* <button onClick={uploadFile}>Upload</button> */}
                         </div>
                     </div>
                     <div className="topbarright3">
@@ -146,6 +161,32 @@ function CreateForm() {
                     <textarea ref={ref2} maxLength="80" onInput={handleInput2} rows={1} className="cTitle" placeholder="Title" onChange={(e) => setTitle(e.target.value)}></textarea>
                     {/* <input className="cTitle" placeholder="Title" onChange={(e) => setTitle(e.target.value)}></input> */}
                     <textarea ref={ref} rows={1} onInput={handleInput} className="cContent" placeholder="Tell your story..." onChange={(e) => setContent(e.target.value)}></textarea>    
+                </div>
+
+                <div className="fPad"></div>
+                <div className="fInput">
+                    <div>
+                        <p className='fText'>Upload Article Photo:</p>
+                        <label className='fFile' >Select File
+                            <input type="file" onChange={handleFileChange} />
+                        </label>
+                        
+                        {/* <button onClick={uploadFile}>Upload</button> */}
+                    </div>
+                    {photoUrlPreview === null ? (
+                        <>
+                            <div className="fImage">
+                                <p className="fText2">Include an image in your story to make it more inviting to readers.</p>
+                            </div>
+                            
+                        </>
+                    ) : (
+                        <>
+                            <div className="fImage2Holder">
+                                {preview}
+                            </div>
+                        </>
+                    )}
                 </div>
             </>
         </>

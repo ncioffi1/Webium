@@ -29,16 +29,60 @@ ApplicationRecord.connection.reset_pk_sequence!('comments')
 # USERS
 
 demo = User.create!(name: "Demo Guy", email: "demoguy@webium.com", password: 'password')
+demo.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/demo.jpg"), 
+    filename: "demo.jpg"
+)
 aaron = User.create!(name: "Aaron Aaronson", email: "aaa@webium.com", password: 'password')
+aaron.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/aaron.jpg"), 
+    filename: "aaron.jpg"
+)
 bob = User.create!(name: "Bob Williams", email: "bbb@webium.com", password: 'password')
+bob.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/bob.jpg"), 
+    filename: "bob.jpg"
+)
 carl = User.create!(name: "Carl Jones",email: "ccc@webium.com", password: 'password')
+carl.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/carl.jpg"), 
+    filename: "carl.jpg"
+)
 daniel = User.create!(name: "Daniel Daniels", email: "ddd@webium.com", password: 'password')
+daniel.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/daniel.jpg"), 
+    filename: "daniel.jpg"
+)
 evan = User.create!(name: "Evan Smith", email: "eee@webium.com", password: 'password')
+evan.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/evan.jpg"), 
+    filename: "evan.jpg"
+)
 frankie = User.create!(name: "Frankie Michaels", email: "fff@webium.com", password: 'password')
+frankie.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/frankie.jpg"), 
+    filename: "frankie.jpg"
+)
 greg = User.create!(name: "Greg Smith",  email: "ggg@webium.com", password: 'password')
+greg.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/greg.jpg"), 
+    filename: "greg.jpg"
+)
 holly = User.create!(name: "Holly Winters",  email: "hhh@webium.com", password: 'password')
+holly.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/holly.jpg"), 
+    filename: "holly.jpg"
+)
 ivan = User.create!(name: "Ivan Worvich", email: "iii@webium.com", password: 'password')
+ivan.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/ivan.jpg"), 
+    filename: "ivan.jpg"
+)
 jessica = User.create!(name: "Jessica Bell", email: "jjj@webium.com", password: 'password')
+jessica.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/jessica.jpg"), 
+    filename: "jessica.jpg"
+)
 
 # # ARTICLES
 
@@ -49,8 +93,8 @@ article1 = Article.create!(
     date_posted: '12/01/2020'
 )
 article1.photo.attach(
-    io: URI.open("https://webium-seeds.s3.amazonaws.com/pexels-chevanon-photography-1108099.jpg"), 
-    filename: "dog.jpg"
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/maltese.jpg"), 
+    filename: "maltese.jpg"
 )
 
 article2 = Article.create!(
@@ -64,6 +108,10 @@ article2 = Article.create!(
     Indoor gardening aligns with sustainable living. By cultivating your own plants, you contribute to a greener planet. Caring for indoor plants is a small yet impactful step towards fostering an eco-friendly lifestyle.
     In the realm of indoor gardening, the benefits extend beyond visual appeal. It's a practice rooted in real-world advantages – cleaner air, reduced stress, and a daily breath of fresh air, cultivating tranquility in your everyday life.",
     date_posted: '11/01/2021'
+)
+article2.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/indoor-gardening.jpg"), 
+    filename: "indoor-gardening.jpg"
 )
 
 article3 = Article.create!(
@@ -80,12 +128,21 @@ article3 = Article.create!(
     In conclusion, bullet journaling is not just a planner; it's a canvas of infinite possibilities. Embrace the artistic freedom it offers, stay consistent in your own way, and let your personality shine through every page. As you navigate this creative organizational method, remember that your bullet journal is as unique as you are. So, go ahead!  Explore, create, and enjoy the journey of bullet journaling.",
     date_posted: '05/02/2023'
 )
+article3.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/bullet-journaling.jpg"), 
+    filename: "bullet-journaling.jpg"
+)
+
 
 article4 = Article.create!(
     user_id: greg.id,
     title:  "From Couch to 5K: A Beginner's Guide to Running",
     content:  "Embarking on a running journey from the cozy confines of your couch to conquering a 5K can be a transformative experience for both your body and mind. In this guide, we'll explore the essential steps for beginners to kickstart their running routine and gradually build up to the coveted 5K finish line.\n\nBefore you lace up your running shoes, it's crucial to start with a solid plan. Begin with brisk walks to condition your body and gradually introduce short running intervals. This gradual approach minimizes the risk of injury and allows your muscles to adapt to the demands of running.\n\nInvesting in proper running gear can make a significant difference in your comfort and performance. A good pair of running shoes, moisture-wicking clothing, and a supportive sports bra are essentials. Consider consulting with experts at a local running store to find the perfect shoes for your foot type.\n\nBuilding stamina is a key component of transitioning from a sedentary lifestyle to running a 5K. Start with a manageable pace and duration, focusing on consistent progress. As your endurance improves, gradually increase running intervals and reduce walking periods until you can sustain continuous running for the entire 5K distance.\n\nSetting realistic and achievable goals is essential for staying motivated. Break down your running journey into smaller milestones, such as completing a certain distance without stopping or improving your pace. Celebrate these achievements to stay inspired throughout your training.\n\nTo support your running journey, incorporate strength training exercises to build muscular endurance. Targeting key muscle groups, such as your core, legs, and hips, enhances your overall running performance and reduces the risk of injuries.\n\nPay attention to your body's signals and prioritize rest and recovery. Soreness is normal, but persistent pain may indicate overtraining. Incorporate rest days into your schedule and consider activities like yoga or stretching to enhance flexibility and prevent injuries.\n\nJoining a running group or seeking support from friends and family can provide motivation and accountability. Sharing your progress and challenges with others who are on a similar journey creates a sense of camaraderie and fosters a supportive community.\n\nAs you approach your 5K goal, visualize yourself crossing the finish line. The sense of accomplishment and the physical and mental benefits of regular running will be your reward. Embrace the journey, celebrate your successes, and remember that every step brings you closer to achieving your running aspirations.\n\nIn conclusion, the transition from couch to 5K is a rewarding endeavor that requires dedication, patience, and self-compassion. By following this beginner's guide, you'll not only transform your physical fitness but also discover the joy and empowerment that running brings to your life.",
     date_posted: '09/01/2024'
+)
+article4.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/running.jpg"), 
+    filename: "running.jpg"
 )
 
 article5 = Article.create!(
@@ -94,6 +151,10 @@ article5 = Article.create!(
     content: "Are you tired of the same old, predictable recipes? Do you crave excitement in the kitchen? It's time for culinary rebels to unite and embrace the art of chaos cooking. In this guide, we'll explore unconventional recipes that break free from traditional norms, inviting you to unleash your creativity and redefine the culinary experience.\n\nDitch the precise measurements and let your instincts guide you. Chaos cooking is about embracing spontaneity and experimenting with flavors. Start with a base ingredient, trust your taste buds, and build a masterpiece without the constraints of a recipe.\n\nOne chaos cooking favorite is the 'Anything-Goes Stir-Fry.' Raid your fridge and toss together a medley of vegetables, proteins, and sauces. The result? A symphony of flavors and textures that defy culinary conventions. Don't be afraid to combine unexpected ingredients – the more, the merrier!\n\nFor those with a sweet tooth, try the 'Kitchen Sink Cookies.' Gather an assortment of leftover sweets, from chocolate chips to crushed candies, and fold them into cookie dough. Every bite is a delightful surprise, and no two cookies will ever be the same. It's cookie chaos at its finest.\n\nSpice up your breakfast routine with a 'Rebel Omelette.' Raid your pantry for spices, cheeses, and whatever veggies you have on hand. There's no need to follow a recipe – just let your taste buds guide you. This breakfast masterpiece is a celebration of freedom and flavor.\n\nChaos cooking extends beyond dishes; it's a mindset. Break away from conventional plating and presentation. Embrace the messy, asymmetrical, and eclectic. The goal is to create an experience that transcends the ordinary and stimulates all the senses.\n\nGather fellow culinary rebels for a chaos cooking potluck. Encourage each participant to bring their own chaotic creation, and let the tasting adventure begin. Share stories, swap cooking tips, and revel in the delicious rebellion against culinary norms.\n\nAs you embark on your chaos cooking journey, remember that there are no rules – only possibilities. Let your creativity run wild, and savor the joy of breaking free from the culinary constraints. Culinary rebels, unite! Embrace chaos cooking, and let every meal be a daring exploration of flavors and imagination.",
     date_posted:  '04/06/2023'
 )
+article5.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/chaotic-cooking.jpg"), 
+    filename: "chaotic-cooking.jpg"
+)
 
 article6 = Article.create!(
     user_id:  carl.id,
@@ -101,12 +162,20 @@ article6 = Article.create!(
     content: "Ever wanted to go places super fast, like in the movies? Well, teleportation might not be real yet, but why not make your own teleportation devices for the weekend? This guide will tell you how, and it's gonna be super fun!\n\nThe 'Teleportation-in-a-Box' project is like, for beginners. Grab an old box, some blinky lights, and let's get creative! Make the box look like space or something, and now it's a portal. Blink, blink, teleportation party!\n\nFor folks who like tech stuff, there's the 'Quantum Leap Wristwatch.' All you need is a watch, some more lights, and a bit of code magic. You won't actually go to space, but people will be like, 'Whoa, cool watch!' And you'll be the star.\n\nFeeling artsy? Try the 'Canvas of Portals.' Paint a picture that looks like a door to faraway lands. Stare at it, and imagine you're there. It's like a vacation for your eyes, right in your room!\n\nThen there's the 'Mirror of Reflections.' Take an old mirror, draw some cool stuff around it, and stare at yourself. Imagine you're in another world. It's teleportation, but with a mirror twist. So simple, even I get it!\n\nRemember, these DIY teleportation devices won't really take you anywhere, but they'll make your weekend awesome. Get your friends, get your family, and let's have a super cool time making these fun projects. You might not go to space, but you'll definitely go to a place of fun and imagination!",
     date_posted:  '01/05/2023'
 )
+article6.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/teleportation-device.jpg"), 
+    filename: "teleportation-device.jpg"
+)
 
 article7 = Article.create!(
     user_id:  jessica.id,
     title: "Love in Parallel Universes: The Quantum Dating Guide",
     content: "Finding love can feel like jumping between parallel universes, right? Well, why not mix romance with a bit of quantum theory? This Quantum Dating Guide is here to help you navigate the multiverse of relationships.\n\nEver thought about meeting your soulmate from another universe? With 'Quantum Speed Dating,' you get to meet multiple versions of potential partners in one night. It's like Tinder but with a twist – different realities! Swipe right across dimensions and find the perfect match.\n\nIf you're more of a traditional dater, try 'Entangled Hearts Dinner.' Cook a romantic meal, set the ambiance, and connect with your partner on a deeper level. It's like the quantum entanglement of emotions – when you're in sync, no distance can keep you apart.\n\nFeeling adventurous? Take a trip to 'The Wormhole Café.' A unique spot where each table is in a different universe. You and your date can experience multiple realities while sipping on your favorite beverages. It's a date and an adventure all in one!\n\nFor those who like surprises, there's 'Schrodinger's Date Box.' Prepare two boxes, each with a different date idea. Your partner chooses one, and the uncertainty adds a thrilling element to your date night. Will it be a movie night or a stargazing adventure? Only the universe knows!\n\nSo, if you're tired of conventional dating and want to explore love in parallel universes, give these quantum-inspired ideas a try. Love might just be a jump away in the vast expanse of the multiverse!",
     date_posted:  '01/10/2023'
+)
+article7.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/love-rocks.jpg"), 
+    filename: ".jpg"
 )
 
 article8 = Article.create!(
@@ -120,6 +189,10 @@ article8 = Article.create!(
     As our journey to sustainable delights unfolds, remember, embrace the beauty of eco-friendly living. It's not a sacrifice; it's a harmonious collaboration with nature. Dance through life with an eco-friendly rhythm, and let each step be a joyful leap towards a greener future.
     Until our paths cross again, may your days be filled with sustainable joys and your hearts with boundless eco-enthusiasm!",
     date_posted:  '02/01/2024'
+)
+article8.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/eco-friendly.jpg"), 
+    filename: "eco-friendly.jpg"
 )
 
 article9 = Article.create!(
@@ -136,6 +209,10 @@ article9 = Article.create!(
     Happy gardening, city dwellers!",
     date_posted: '09/06/2022'
 )
+article9.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/eco-city.jpg"), 
+    filename: "eco-city.jpg"
+)
 
 
 article10 = Article.create!(
@@ -149,6 +226,10 @@ article10 = Article.create!(
     As we conclude our eco-friendly escapade, remember, it's not about being perfect. It's about making conscious choices that align with our values. The eco-warrior within us knows that every small change adds up to create a massive impact. So, let's continue this journey together, one sustainable step at a time.
     Keep it green, keep it clean!",
     date_posted: '21/12/2006'
+)
+article10.photo.attach(
+    io: URI.open("https://webium-seeds.s3.amazonaws.com/eco-warrior.jpg"), 
+    filename: "eco-warrior.jpg"
 )
 
 comment1 = Comment.create!(

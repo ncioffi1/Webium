@@ -7,6 +7,8 @@ import * as articleActions from "../../store/articles";
 import * as commentmodalActions from "../../store/commentmodals.js";
 import * as popupmodalActions from "../../store/popupmodals.js";
 import * as clapActions from "../../store/claps.js";
+import * as modalActions from "../../store/modals.js";
+import * as userActions from "../../store/users.js";
 
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
@@ -16,17 +18,14 @@ import CommentModal from "../SessionModal/CommentModal.jsx";
 function ArticleForm() {
 
     const sessionUser = useSelector(state => state.session.user);
-    // const articleUser = 
     const { articleId } = useParams();
     const [articleContent, setArticleContent] = useState(null);
-    // const [author, setAuthor] = useState(null);
     const [writerId, setWriterId] = useState(null);
     const dispatch = useDispatch();
     const article = useSelector(articleActions.selectArticle(articleId));
-    const writer = useSelector(articleActions.selectWriter(writerId));
-    // const commentState = useSelector(state => state.comment);
-    const comments = useSelector(state => state.comment.comments);
-    const claps = useSelector(state => state.clap.claps);
+    const author = useSelector(userActions.selectWriter(writerId));
+    const comments = useSelector(state => state.comment.articleComments);
+    const claps = useSelector(state => state.clap.articleClaps);
     const clapped = useSelector(state => state.clap.clapped)
     const [articleClaps, setArticleClaps] = useState(null);
     const [articleComments, setArticleComments] = useState(null);
@@ -85,14 +84,8 @@ function ArticleForm() {
     }
 
     useEffect(() => {
-        dispatch(clapActions.fetchClaps());
-    }, [])
-
-    useEffect(() => {
         if (claps !== undefined && claps !== null) {
-            // console.log("CLAPS:");
-            // console.log(claps);
-            let mClaps = claps.filter((clap) => parseInt(clap.articleId) === parseInt(articleId));
+            let mClaps = Object.values(claps).filter((clap) => parseInt(clap.articleId) === parseInt(articleId));
             setArticleClaps(mClaps);
         } else if (claps === undefined) {
             setArticleClaps([]);
@@ -102,23 +95,14 @@ function ArticleForm() {
     useEffect(() => {
         if (clapped !== null && clapped !== undefined) {
             dispatch(clapActions.clearClapped());
-            dispatch(clapActions.fetchClaps());
+            dispatch(articleActions.fetchArticle(articleId));
         }
     }, [clapped])
 
     useEffect(() => {
-        if (articleClaps !== null && articleClaps !== undefined) {
-            // console.log("ARTICLE CLAPS");
-            // console.log(articleClaps);
-        }
-    }, [articleClaps])
-
-    useEffect(() => {
         if (comments !== null && comments !== undefined) {
             let mComments = comments.filter((comment) => parseInt(comment.articleId) === parseInt(articleId));
-            let sComments = mComments.sort(function(a, b) {
-                return (a.id - b.id);
-            })
+            let sComments = mComments.sort(function(a, b) {return (a.id - b.id); })
             // console.log("HIT: comments being set");
             setArticleComments(sComments);
         } 
@@ -127,27 +111,12 @@ function ArticleForm() {
             setArticleComments([]);
         }
     }, [comments])
-    // if (article !== null) {
-    //     const writer = useSelector(articleActions.selectWriter(article.userId));
-    // }
-
-    // useEffect(() => {
-    //     if (writer !== undefined) {
-    //         console.log(writer.name);
-    //     }
-    // }, [writer])
 
     useEffect(() => {
         dispatch(articleActions.clearCreatedArticle());
         dispatch(articleActions.clearEditedArticle());
         dispatch(articleActions.clearArticleWriters());
     }, []);
-
-    useEffect(() => {
-        if (writerId !== null) {
-            dispatch(articleActions.fetchWriter(writerId));
-        }
-    }, [writerId])
 
     useEffect(() => {
         dispatch(articleActions.fetchArticle(articleId));
@@ -165,18 +134,14 @@ function ArticleForm() {
     }, [article])
 
     function getFirstLetter() {
-        // console.log(sessionUser);
-        // console.log(sessionUser.name);
-        return writer.name[0];
-    }
-
-    function setRandomClass() {
-
+        if (author !== undefined && author !== null) {
+            return author.name[0];
+        }
     }
 
     function getUserName() {
-        if (writer !== undefined) {
-            return writer.name;
+        if (author !== undefined) {
+            return author.name;
         }
     }
 
@@ -255,7 +220,7 @@ function ArticleForm() {
                 </>
             ) : (
                 <>
-                    {(article === null || writer === undefined) ? (
+                    {(article === null || author === undefined) ? (
                     <>
                         
                     </>
@@ -266,7 +231,7 @@ function ArticleForm() {
                                 <>
                                 </>
                             ) : (
-                                <TopBar />
+                                <TopBar canNav={true}/>
                             )}
                         </>
                         <CommentModal />
@@ -319,7 +284,7 @@ function ArticleForm() {
                             <div className="aImageHolder"> 
                             {/* to reactivate add article.photoUrl */}
                             {/* to deactivate add "https://placehold.co/1600x800" */}
-                                <img src={"https://placehold.co/1600x800"} className="aImage"/>
+                                <img src={article.photoUrl} className="aImage"/>
                             </div>
                             {articleContent === null ? (
                                 <>

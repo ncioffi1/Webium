@@ -49,9 +49,9 @@ function WebiumBrowser({ values }) {
     
     return (
         <>
-            {<SessionModal />}
             {sessionUser === null ? (
                 <>
+                    {<SessionModal />}
                     <div className="splash">
                         <div className="topbar">
                             <h1 className="splashtextlogo">Webium</h1>
@@ -78,7 +78,6 @@ function WebiumBrowser({ values }) {
                 </>
             ) : (
                 <>
-                    <TopBar />
                     <ShowForm />
                 </>
             ) }

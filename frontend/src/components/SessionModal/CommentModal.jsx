@@ -8,6 +8,7 @@ import Modal from '../Modal/Modal';
 
 import PopupModalComment from './PopupModalComment.jsx';
 
+import * as articleActions from "../../store/articles.js";
 import * as clapActions from "../../store/claps.js";
 import * as commentActions from "../../store/comments.js";
 import * as commentmodalActions from '../../store/commentmodals.js';
@@ -36,21 +37,22 @@ function CommentModal() {
     const [editedComment, setEditedComment] = useState("");
     const [errors, setErrors] = useState([]);
     const [newParentCommentId, setNewParentCommentId] = useState(null);
-    const comments = useSelector(state => state.comment.comments);
+    const comments = useSelector(state => state.comment.articleComments);
+    // const articleClaps = useSelector(state => state.clap.articleClaps);
+    const allClaps = useSelector(state => state.clap.allClaps);
+    const clapped = useSelector(state => state.clap.clapped);
+
     const writers = useSelector(commentActions.selectWriters());
     const create = useSelector(state => state.comment.create);
     const deleted = useSelector(state => state.comment.delete);
     const editing = useSelector(state => state.comment.editing);
     const edit = useSelector(state => state.comment.edit);
 
-    const claps = useSelector(state => state.clap.claps);
-    const clapped = useSelector(state => state.clap.clapped)
-    // const [commentClaps, setCommentClaps] = useState(null);
-
     function handleClapClick(e, comment) {
         e.preventDefault();
         // max 50 claps.
-        let commentClaps = claps.filter((clap) => clap.commentId === comment.id);
+        let aClaps = Object.values(allClaps);
+        let commentClaps = aClaps.filter((clap) => clap.commentId === comment.id);
         let userClaps = commentClaps.filter((clap) => clap.userId === sessionUser.id);
 
         if (userClaps.length >= 50) {
@@ -82,12 +84,7 @@ function CommentModal() {
                 return;
             }
           });
-        // console.log("Clapped!");
     }
-
-    useEffect(() => {
-        dispatch(clapActions.fetchClaps());
-    }, [])
 
     useEffect(() => {
         if (clapped !== null && clapped !== undefined) {
@@ -97,7 +94,11 @@ function CommentModal() {
     }, [clapped])
 
     function getClapAmount(comment) {
-        let commentClaps = claps.filter((clap) => clap.commentId === comment.id);
+        // console.log("!============!");
+        // console.log(comment);
+        // console.log(claps);
+        let aClaps = Object.values(allClaps);
+        let commentClaps = aClaps.filter((clap) => clap.commentId === comment.id);
         if (commentClaps.length === 0) {
             return "";
         } else {
@@ -107,35 +108,33 @@ function CommentModal() {
     
     useEffect(() => {
         if (create !== null && create !== undefined) {
-            // console.log("FOUND");
             setNewComment("");
-            // console.log(newComment);
-            dispatch(commentActions.fetchComments());
+            // dispatch(commentActions.fetchComments());
+            dispatch(articleActions.fetchArticle(articleId));
             dispatch(commentActions.clearCreatedComment());
         }
     }, [create])
 
     useEffect(() => {
         if (deleted !== null && deleted !== undefined) {
-            console.log("FOUND DELETE!");
-            dispatch(commentActions.fetchComments());
+            // console.log("FOUND DELETE!");
+            // dispatch(commentActions.fetchComments());
+            dispatch(articleActions.fetchArticle(articleId));
             dispatch(commentActions.clearDeletedComment());
         }
     }, [deleted])
 
     useEffect(() => {
         if (edit !== null && edit !== undefined) {
-            console.log("found edit!");
-            dispatch(commentActions.fetchComments());
+            // console.log("found edit!");
+            // dispatch(commentActions.fetchComments());
+            dispatch(articleActions.fetchArticle(articleId));
             dispatch(commentActions.clearEditComment());
         }
     }, [edit])
 
     useEffect(() => {
         if (editing !== null && editing !== undefined) {
-            console.log("FOUND EDITING!!!");
-            console.log(editing);
-            console.log(editing.commentbody);
             setEditedComment(editing.commentbody);
         }
     }, [editing])
@@ -167,12 +166,13 @@ function CommentModal() {
         dispatch(commentActions.clearCreatedComment());
         dispatch(commentActions.clearDeletedComment());
         dispatch(commentActions.clearEditingComment());
-        dispatch(commentActions.fetchComments());
+        dispatch(articleActions.fetchArticle(articleId));
+        dispatch(clapActions.fetchClaps());
+        // dispatch(commentActions.fetchComments());
     }, []);
 
     useEffect(() => {
         if (writerIds.length !== 0) {
-            console.log(writerIds);
             dispatch(commentActions.fetchWriters(writerIds));
         }
     }, [writerIds])
@@ -205,9 +205,7 @@ function CommentModal() {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        // console.log(e.target);
-        // console.log(e.target.className);
-        // console.log("handleHide");
+
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(commentmodalActions.hideCommentModal());
     }
@@ -360,7 +358,14 @@ function CommentModal() {
                                                 <p className='cCommentDatePosted'>Date Posted</p>
                                             </div>
                                             <PopupModalComment id={comment.id} comment={comment}/>
-                                            <i onClick={(e) => handlePopupModalComment(e, comment)} className="fa-solid fa-ellipsis" id="contentIcon2"></i>
+                                            {comment.userId === sessionUser.id ? (
+                                                <>
+                                                    <i onClick={(e) => handlePopupModalComment(e, comment)} className="fa-solid fa-ellipsis" id="contentIcon2"></i>
+                                                </>
+                                            ) : (
+                                                <>
+                                                </>
+                                            )}
                                         </div>       
                                         <p className='aCommentText'>{comment.commentbody}</p>
                                         <div className='cCommentLastRow'>

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as articleActions from "../../store/articles";
 import { Navigate } from 'react-router-dom';
 
+import TopBar from '../Navigation/TopBar';
+
 import './ShowForm.css';
 
 function ShowForm() {
@@ -22,6 +24,8 @@ function ShowForm() {
         dispatch(articleActions.fetchArticles());
 
         dispatch(articleActions.clearArticleWriters());
+
+        dispatch(modalActions.hideModal());
     }, [])
 
     useEffect(() => {
@@ -90,6 +94,14 @@ function ShowForm() {
                 </>
             ) : (
                 <>
+                    <>
+                        {sessionUser === null ? (
+                            <>
+                            </>
+                        ) : (
+                            <TopBar canNav={false}/>
+                        )}
+                    </>
                     <div className="sParent">
                         <div className="sParent2">
                                 {articles.map(article => 
@@ -111,7 +123,7 @@ function ShowForm() {
                                             </div> 
                                             {/* to reactivate add article.photoUrl */}
                                             {/* to deactivate add "https://placehold.co/800x800" */}
-                                            <img src={"https://placehold.co/800x800"} key={article.id + "l"} className="sPhoto" />
+                                            <img src={article.photoUrl} key={article.id + "l"} className="sPhoto" />
                                         </div> 
                                         <div key={article.id + "m"} className='sLine'></div>
                                     </div>

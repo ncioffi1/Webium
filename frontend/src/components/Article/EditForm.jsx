@@ -34,13 +34,37 @@ function EditForm() {
 
     // adding photos
     const [file, setFile] = useState(null);
+    const [photoUrlPreview, setPhotoUrlPreview] = useState(null);
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setFile(file);
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => setPhotoUrlPreview(fileReader.result);
+        } else {
+            setPhotoUrlPreview(null);
+        }
       };
     const uploadFile = (e) => {
         console.log(file);
     }
+
+    useEffect(() => {
+        // console.log("!!=======!!");
+        // console.log(photoUrlPreview);
+    }, [photoUrlPreview])
+
+    let preview = null;
+    let previewExisting = null;
+    if (photoUrlPreview) {
+        preview = <img className="fImage2" src={photoUrlPreview} alt="" />;
+    } 
+    if (photoUrl) {
+        previewExisting = <img className="fImage2" src={photoUrl} alt="" />;
+    }
+
+    /////
     
 
     const handleInput = (e) => {
@@ -129,6 +153,11 @@ function EditForm() {
             }
           });
     }
+    
+
+    if (sessionUser === null || sessionUser === undefined) {
+        return <Navigate to={"/"}/>
+    }
 
     if (editedArticle !== undefined && editedArticle !== null) {
         return <Navigate to={`/articles/${editedArticle.id}`} replace={true} />
@@ -141,6 +170,7 @@ function EditForm() {
         }
     }
 
+    
     return (
         <>
             {article === null ? (
@@ -156,13 +186,6 @@ function EditForm() {
                             <Link to={"/"} className="splashtextlogo">Webium</Link>
                             
                             <div className='searchbarholder'></div>
-                        </div>
-                        <div className="fInput">
-                            <div>
-                                <p className='fText'>Change Article Photo:</p>
-                                <input className='fFile' type="file" onChange={handleFileChange} />
-                                {/* <button onClick={uploadFile}>Upload</button> */}
-                            </div>
                         </div>
                         <div className="topbarright3">
                             <div className='pad1right'></div>
@@ -186,11 +209,45 @@ function EditForm() {
                         <textarea ref={ref2} maxLength="80" onInput={handleInput2} rows={1} className="cTitle" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}></textarea>
                         <textarea ref={ref} rows={1} onInput={handleInput} className="cContent" placeholder="Tell your story..." value={content} onChange={(e) => setContent(e.target.value)}></textarea>    
                     </div>
+
+                    <div className="fPad"></div>
+                    <div className="fInput">
+                        <div>
+                            <p className='fText'>Change Article Photo:</p>
+                            <label className='fFile' >Select File
+                                <input type="file" onChange={handleFileChange} />
+                            </label>
+                        </div>
+                        {photoUrlPreview === null ? (
+                            <>
+                                {photoUrl === null ? (
+                                    <>
+                                        <div className="fImage">
+                                            <p className="fText2">Include an image in your story to make it more inviting to readers.</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="fImage2Holder">
+                                            {previewExisting}
+                                        </div>
+                                    </>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <div className="fImage2Holder">
+                                    {preview}
+                                </div>
+                            </>
+                        )}
+                    </div>
                 </>
             </>
             )}
         </>
     )
+    
 }
 
 export default EditForm;

@@ -33,7 +33,7 @@ if (!modalType) return null;
 if (sessionUser) {
     dispatch(modalActions.hideModal());  // if you're logged in, turn off modal.
     clearModal();
-    document.removeEventListener("click", handleHide, {capture: true});
+    // document.removeEventListener("click", handleHide, {capture: true});
     return null;
 }
 // don't render the SessionModal if a user is already logged in
@@ -45,13 +45,6 @@ function clearModal() {
     setConfirmPassword("");
     setErrors([]);
 }
-
- const goBack = (e) => {
-    e.preventDefault();
-    clearModal();
-    dispatch(modalActions.hideModal());
-    document.removeEventListener("click", handleHide, {capture: true});
- }
 
  
 
@@ -118,15 +111,22 @@ const handleSwitchToSignup = (e) => {
 }
 
 function handleHide(e) {
-    e.preventDefault();
-    console.log(e.target);
     if (e.target.id === 'modal-background') {
         goBack(e);
     }
 }
+function goBack(e) {
+    e.preventDefault();
+    console.log(e.target);
+    clearModal();
+    dispatch(modalActions.hideModal());
+    document.removeEventListener("click", handleHide, {capture: true});
+}
 
 if (!modalType) {
-    return null
+    return null;
+} else if (sessionUser) {
+    return null;
 } else {
  return (
    <Modal >
@@ -134,9 +134,6 @@ if (!modalType) {
         <div className="iconHolder">
             <i className="fa-solid fa-x" id="xButton" onClick={goBack}></i>
         </div>
-        {/* <div className="center">
-            <button className='back-button' onClick={goBack}>Back</button>
-        </div> */}
         <div className="pad1"></div>
        
        {modalType === "login" ? (

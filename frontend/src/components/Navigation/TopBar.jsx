@@ -10,17 +10,20 @@ import * as modalActions from '../../store/modals.js';
 
 import { Navigate, Link } from 'react-router-dom';
 
-function TopBar() {
+function TopBar(props) {
     const sessionUser = useSelector(state => state.session.user);
     const [searchValue, setSearchValue] = useState("");
     const [writing, setWriting] = useState(false);
+    const [clickedWebium, setClickedWebium] = useState(false);
+
     const [goToHome, setGoToHome] = useState(false);
 
     const dispatch = useDispatch();
 
-    if (writing) {
-        return <Navigate to={"/articles/new"} replace={true}/>
-    }
+    useEffect(() => {
+        setWriting(false);
+        setClickedWebium(false);
+    }, [])
 
     function handleSidebarClick(e) {
         e.preventDefault();
@@ -36,11 +39,18 @@ function TopBar() {
     function getFirstLetter() {
         // console.log(sessionUser);
         // console.log(sessionUser.name);
-        return sessionUser.name[0];
+        if (sessionUser !== null && sessionUser !== undefined) {
+            // console.log("SESSION USER:");
+            // console.log(sessionUser);
+            return sessionUser.name[0];
+        }
     }
 
-    function clickedWebium() {
-        console.log("clicked webium");
+    function clickWebium(e) {
+        e.preventDefault();
+
+        console.log("clicked webium!!!");
+        setClickedWebium(true);
     }
 
     // function goHome() {
@@ -54,35 +64,48 @@ function TopBar() {
     //     // return <Navigate to={`/`} replace={true} />
     // }
 
-    return (
-        <>
-            {<SidebarModal />}
-            <div className="splashWhite">
-                <div className="topbar">
-                    <div className='topbarleft3'>
-                        <NavLink to={"/"} className="splashtextlogo" onClick={clickedWebium} replace={true}>Webium</NavLink>
-                        <div className='searchbarholder'>
-                            <div className='usersearchbar'>
-                            <i className="fa-solid fa-magnifying-glass" id="searchIcon"></i>
-                                <input className='search' value={searchValue} placeholder="Search" onChange={(e) => setSearchValue(e.target.value)}/>
+    if (writing) {
+        console.log("GO TO NEW ARTICLE!");
+        // return <Navigate to={"/"}/>
+        return <Navigate to={"/articles/new"}/>
+    } 
+    else if (clickedWebium && props.canNav) {
+        console.log("GO TO HOME PAGE!");
+        console.log(clickedWebium);
+        return <Navigate to={"/"}/>
+    }
+    else {
+        return (
+            <>
+                {<SidebarModal />}
+                <div className="splashWhite">
+                    <div className="topbar">
+                        <div className='topbarleft3'>
+                            {/* <Link to={"/"} className="splashtextlogo">Webium</Link> */}
+                            <p className="splashtextlogo" onClick={(e) => clickWebium(e)}>Webium</p>
+                            <div className='searchbarholder'>
+                                <div className='usersearchbar'>
+                                <i className="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+                                    <input className='search' value={searchValue} placeholder="Search" onChange={(e) => setSearchValue(e.target.value)}/>
+                                </div>
                             </div>
+                            
+        
                         </div>
-                        
-    
-                    </div>
-                    <div className="topbarright3">
-                        <div className='write' onClick={handleWrite}>
-                            <i className="fa-regular fa-pen-to-square" id="writeIcon"></i>
-                            <p className='writeText'>Write</p>
+                        <div className="topbarright3">
+                            <div className='write' onClick={handleWrite}>
+                                <i className="fa-regular fa-pen-to-square" id="writeIcon"></i>
+                                <p className='writeText'>Write</p>
+                            </div>
+                            <div className='pad1right'></div>
+                            <button onClick={handleSidebarClick} className="userdot">{getFirstLetter()}</button>
                         </div>
-                        <div className='pad1right'></div>
-                        <button onClick={handleSidebarClick} className="userdot">{getFirstLetter()}</button>
                     </div>
+                    <div className="line2"></div>
                 </div>
-                <div className="line2"></div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
 
 export default TopBar;

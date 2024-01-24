@@ -110,7 +110,7 @@ function ShowUserForm() {
                                                     </div> 
                                                     {/* to reactivate add article.photoUrl */}
                                                     {/* to deactivate add "https://placehold.co/800x800" */}
-                                                    <img src={"https://placehold.co/800x800"} key={article.id + "l"} className="sPhoto" />
+                                                    <img src={article.photoUrl} key={article.id + "l"} className="sPhoto" />
                                                 </div> 
                                                 <div key={article.id + "m"} className='sLine'></div>
                                             </div>

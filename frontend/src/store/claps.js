@@ -1,4 +1,5 @@
 
+import { RECEIVE_ARTICLE } from "./articles";
 
 const RECEIVE_CLAP = 'claps/RECEIVE_CLAP';
 const RECEIVE_CLAPS = 'claps/RECEIVE_CLAPS';
@@ -46,20 +47,15 @@ export const fetchClap = (clapId) => async(dispatch) => {
 
 export const fetchClaps = () => async(dispatch) => {
     const response = await csrfFetch(`/api/claps/`)
-    console.log("!!!!=====!!!!!");
-    console.log("fetch");
     
     if (response.ok) {
-    const claps = await response.json();
-    console.log(claps);
-    dispatch(receiveClaps(claps));
+    const allClaps = await response.json();
+    console.log(allClaps);
+    dispatch(receiveClaps(allClaps));
     }
 }
 
 export const postClap = ({ userId, articleId, commentId }) => async dispatch => {
-    console.log(userId);
-    console.log(articleId);
-    console.log(commentId);
     let user_id = userId;
     let article_id = articleId;
     let comment_id = commentId;
@@ -78,6 +74,11 @@ const clapReducer = (state = {}, action) => {
     let newState = {...state};
   
     switch (action.type) {
+        case RECEIVE_ARTICLE:
+            newState["articleClaps"] = {...action.payload.claps};
+            // newState["articleClaps"] = {...action.payload.claps};
+            return newState;
+
         case RECEIVE_CLAP:
             console.log(action.payload);
             // newState.comment.comments[action.payload.comment.id]
@@ -85,7 +86,8 @@ const clapReducer = (state = {}, action) => {
             return newState;
     
         case RECEIVE_CLAPS:
-            newState = {...action.payload};
+            // newState = {...action.payload};
+            newState["allClaps"] = {...action.payload.claps};
             return newState;
     
         case REMOVE_CLAP:
@@ -94,7 +96,9 @@ const clapReducer = (state = {}, action) => {
             return newState;
 
         case CREATE_CLAP:
-            newState.claps[action.payload.clap.id] = action.payload.clap;
+            console.log("======");
+            console.log(newState);
+            newState.articleClaps[action.payload.clap.id] = action.payload.clap;
             newState["clapped"] = action.payload;
             return newState;
         

@@ -1,5 +1,9 @@
 
 
+.fPad {
+    padding-top: 200px;
+}
+
 .fInput {
     /* border: 1px solid red; */
     box-shadow: 0px 0px 10px 2px  rgb(240, 240, 240);
@@ -7,19 +11,78 @@
     flex-direction: column;
     align-items: left;
     justify-content: center;
-    height: 60px;
-    width: 400px;
-    /* margin-left: 0;
-    margin-right: 0; */
+    /* height: 60px; */
+    width: 55%;
+    min-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    /* padding-left: 20px; */
     /* padding-left: 200px; */
 }
 
 .fText {
     font-family: "Roboto";
+    font-weight: 500;
+    padding-left: 20px;
     padding-bottom: 6px;
     color: black
 }
+input[type="file"] {
+    display: none;
+}
 .fFile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     font-family: "Roboto";
-    color: gray
+    color: white;
+    height: 40px;
+    width: 120px;
+    border-radius: 20px;
+    background-color: green;
+    word-wrap: break-word;
+    margin-top: 8px;
+    margin-left: 20px;
+    /* padding-top: 20px;
+    padding-bottom: 20px; */
+    /* padding-left: 20px; */
+}
+.fImage {
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 400px;
+}
+
+.fImage2Holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.fImage2 {
+    height: 400px;
+    width: 100%;
+}
+.fText2 {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: "Roboto";
+    color: gray;
 }

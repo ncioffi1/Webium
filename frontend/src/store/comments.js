@@ -1,4 +1,5 @@
 import { csrfFetch, storeCSRFToken } from './csrf';
+import { RECEIVE_ARTICLE } from './articles';
 
 const RECEIVE_COMMENT= 'comments/RECEIVE_COMMENT';
 const RECEIVE_COMMENTS = 'comments/RECEIVE_COMMENTS';
@@ -187,6 +188,10 @@ const commentReducer = (state = {}, action) => {
     let newState = {...state};
   
     switch (action.type) {
+        case RECEIVE_ARTICLE:
+            newState["articleComments"] = action.payload.comments;
+            return newState;
+
         case CLEAR_CREATE:
             newState["create"] = null;
             return newState;
@@ -208,12 +213,12 @@ const commentReducer = (state = {}, action) => {
             return newState;
 
         case CREATE_COMMENT: 
-            newState.comments[action.payload.comment.id] = action.payload.comment;
+            newState.articleComments[action.payload.comment.id] = action.payload.comment;
             newState["create"] = action.payload;
             return newState;
 
         case EDIT_COMMENT:
-            newState.comments[action.payload.comment.id] = action.payload.comment;
+            newState.articleComments[action.payload.comment.id] = action.payload.comment;
             newState["edit"] = action.payload;
             return newState;
 
@@ -224,7 +229,7 @@ const commentReducer = (state = {}, action) => {
             return newState;
     
         case RECEIVE_COMMENTS:
-            newState = {...action.payload};
+            // newState = {...action.payload};
             return newState;
     
         case REMOVE_COMMENT:

@@ -2,7 +2,7 @@ import { csrfFetch, storeCSRFToken } from './csrf';
 
 const RECEIVE_USER = 'users/RECEIVE_USER'
 const RECEIVE_USERS = 'users/RECEIVE_USERS'
-const RECEIVE_ARTICLE = 'articles/RECEIVE_ARTICLE';
+export const RECEIVE_ARTICLE = 'articles/RECEIVE_ARTICLE';
 const CREATE_ARTICLE = 'articles/CREATE_ARTICLE';
 const CLEAR_CREATE = 'articles/CLEAR_CREATE';
 const EDIT_ARTICLE = 'articles/EDIT_ARTICLE';
@@ -130,18 +130,6 @@ export const selectArticlesArray = () => (state) => {
     return null;
   } else {
     return state.article.articles;
-    // console.log("=====");
-    // console.log(state.article);
-
-    // let aFilter = Object.keys(state.article)
-    //   .filter((key) => {
-    //     let k2 = parseInt(key);
-    //     return Number.isNaN(k2) === false;
-    //   })
-    //   .reduce((cur, key) => 
-    //   { return Object.assign(cur, { [key]: state.article[key] })}, {});
-
-    // return Object.values(aFilter);
   }
 }
 
@@ -287,6 +275,7 @@ const articleReducer = (state = {}, action) => {
 
     case RECEIVE_ARTICLE:
       newState[action.payload.article.id] = action.payload.article;
+      newState["author"] = action.payload.author;
       return newState;
 
     case RECEIVE_ARTICLES:

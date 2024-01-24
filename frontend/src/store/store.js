@@ -10,11 +10,13 @@ import commentModalsReducer from './commentmodals.js';
 import commentReducer from './comments.js';
 import popupModalsCommentReducer from './popupmodalscomment.js';
 import clapReducer from './claps.js';
+import usersReducer from './users.js';
 
 // import pokemon from './pokemon';
 // import items from './items';
 
 const rootReducer = combineReducers({
+  users: usersReducer,
   article: articleReducer,
   session: sessionReducer,
   modals: modalsReducer,
