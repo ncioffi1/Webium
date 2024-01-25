@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as articleActions from "../../store/articles";
+import * as modalActions from "../../store/modals";
 import { Navigate } from 'react-router-dom';
 
 import TopBar from '../Navigation/TopBar';
