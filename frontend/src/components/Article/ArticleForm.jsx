@@ -235,10 +235,10 @@ function ArticleForm() {
     function handleFollow(e) {
         e.preventDefault();
         // console.log("CLICKED FOLLOW!");
-        
+
         let status = "FOLLOW";
         let followId = null;
-
+        
         for (let i = 0; i < followers.length; i++) {
             if (followers[i].followerId === sessionUser.id) {
                 if (followers[i].followingId === parseInt(writerId)) {
