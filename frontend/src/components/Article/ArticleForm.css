@@ -184,6 +184,20 @@
     color: white;
     /* border: 1px solid red; */
 }
+.userdot3 {
+    height: 50px;
+    width: 50px;
+    min-height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    font-family: "Roboto";
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    /* border: 1px solid red; */
+}
 
 .lineA {
     border-bottom: 1px solid rgb(240, 240, 240);

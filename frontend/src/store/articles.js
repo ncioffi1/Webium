@@ -1,7 +1,7 @@
 import { csrfFetch, storeCSRFToken } from './csrf';
 
-const RECEIVE_USER = 'users/RECEIVE_USER'
-const RECEIVE_USERS = 'users/RECEIVE_USERS'
+const RECEIVE_USER = 'articles/RECEIVE_USER'
+const RECEIVE_USERS = 'articles/RECEIVE_USERS'
 export const RECEIVE_ARTICLE = 'articles/RECEIVE_ARTICLE';
 const CREATE_ARTICLE = 'articles/CREATE_ARTICLE';
 const CLEAR_CREATE = 'articles/CLEAR_CREATE';
@@ -279,7 +279,10 @@ const articleReducer = (state = {}, action) => {
       return newState;
 
     case RECEIVE_ARTICLES:
-      newState = {...action.payload};
+      // console.log("!!!!!!!!");
+      // console.log(action.payload);
+      newState["articles"] = action.payload.articles;
+      // newState = {...action.payload};
       return newState;
 
     case REMOVE_ARTICLE:

@@ -2,10 +2,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as articleActions from "../../store/articles";
+import * as userActions from "../../store/users";
 import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-import './ShowForm.css';
+import './ShowUserForm.css';
 
 function ShowUserForm() {
     const sessionUser = useSelector(state => state.session.user);
@@ -17,43 +18,39 @@ function ShowUserForm() {
     const [userName, setUserName] = useState(null);
     const articles = useSelector(articleActions.selectArticlesArray());
     const writer = useSelector(articleActions.selectWriter(userId));
+    const user = useSelector(state => state.users.user);
+    const followers = useSelector(state => state.users.followers);
+    const following = useSelector(state => state.users.following);
 
     useEffect(() => {
-        console.log("dispatching clearWriters");
         dispatch(articleActions.fetchArticles());
-
         // dispatch(articleActions.clearArticleWriters());
     }, [])
 
     useEffect(() => {
         if (userId !== null) {
             dispatch(articleActions.fetchWriter(userId));
+            dispatch(userActions.fetchUser(userId));
         }
     }, [userId])
 
     useEffect(() => {
         if (articles !== null && articles !== undefined) {
             if (writer !== null && writer !== undefined) {
-                setUserArticles(articles.filter((article) => article.userId === writer.id));
-                console.log("=========");
-                console.log(userArticles);
+                let myArticles = Object.values(articles);
+                let myArticles2 = myArticles.filter((article) => article.userId === writer.id);
+                setUserArticles(myArticles2);
                 setUserName(writer.name);
             }
-            
-            // if (writerIds.length === 0) {
-            //     setWriterIds(articles.map((article) => article.userId));
-            // }
         }
     }, [articles, writer]);
 
-    // function getUserName() {
-    //     if (writer !== undefined && writer !== null) {
-    //         console.log(writer.name);
-    //         return writer.name;
-    //     } else {
-    //         return "User Name";
-    //     }
-    // }
+    function getPhotoUrl() {
+        if (writer !== undefined && writer !== null) {
+            return writer.photoUrl;
+            // return writer.user.photoUrl;
+        }
+    }
 
     function getDatePosted(datePosted) {
         let date0 = datePosted;
@@ -74,6 +71,12 @@ function ShowUserForm() {
 
     if (goArticle !== null) {
         return <Navigate to={`/articles/${goArticle}`} replace={true} />
+    }
+
+    if (writer === undefined || writer === null) {
+        console.log("No writer :(");
+        console.log(writer);
+        return;
     }
 
     return (
@@ -97,7 +100,8 @@ function ShowUserForm() {
                                                     <div key={article.id + "a"} className="sContentHolder">
                                                         <div key={article.id + "b"} className="sPad1"></div>
                                                         <div key={article.id + "c"} className="sPhotoLine">
-                                                            <div key={article.id + "d"} className="sUserDot"></div>
+                                                            <img src={getPhotoUrl()} className="sUserDot2"/>
+                                                            {/* <div key={article.id + "d"} className="sUserDot"></div> */}
                                                             <p key={article.id + "e"} className='sName' id="sNormal">{userName}</p>
                                                             <p key={article.id + "f"} className='sDot'>·</p>
                                                             <p key={article.id + "g"} className='sDate'>{getDatePosted(article.datePosted)}</p>
@@ -117,6 +121,8 @@ function ShowUserForm() {
                                         )}
                                 </div>
                             </div>
+                            <div className="sVerticalLine"></div>
+                            <div className="sProfileHolder"></div>
                         </>
                     )};
                 </>

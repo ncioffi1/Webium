@@ -55,6 +55,18 @@
     text-align: center;
     color: white;
 }
+.userdotSidebar {
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    /* background-color: purple; */
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    /* font-family: "Roboto";
+    font-size: 25px; */
+    /* color: white; */
+}
 
 .button1 {
     background-color: black;

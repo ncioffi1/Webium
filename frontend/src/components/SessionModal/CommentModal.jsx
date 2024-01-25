@@ -306,6 +306,17 @@ function CommentModal() {
         }
     }
 
+    function getPhotoUrl(userId) {
+        if (writers !== undefined) {
+            for (let i = 0; i < writers.length; i++) {
+                if (writers[i].user.id === userId) {
+                    return writers[i].user.photoUrl;
+                }
+            }
+            return null;
+        }
+    }
+
     if (!commentmodalType) {
         // console.log("commentmodal type");
         return null;
@@ -326,7 +337,8 @@ function CommentModal() {
                     <p className="p-comment">Responses</p>
                     <span className="cCommentHolder">
                         <div className="cCommentUserHolder">
-                            <div className="cCommentUserdot"></div>
+                            <img src={sessionUser.photoUrl} className="cCommentUserdot2"/>
+                            {/* <div className="cCommentUserdot"></div> */}
                             <p className="cCommentUsername">{sessionUser.name}</p>
                         </div>
                         <textarea className="cComment" placeholder="What are your thoughts?" onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
@@ -352,7 +364,8 @@ function CommentModal() {
                                 ) : (
                                     <>
                                          <div className='cCommentUserHolder'>
-                                            <div className="cCommentUserdot"></div>
+                                            <img src={getPhotoUrl(comment.userId)} className="cCommentUserdot2"/>
+                                            {/* <div className="cCommentUserdot"></div> */}
                                             <div className="cCommentVertical">
                                                 <p className="cCommentUsername">{getUserName(comment.userId)}</p>
                                                 <p className='cCommentDatePosted'>Date Posted</p>

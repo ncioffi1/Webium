@@ -1,5 +1,19 @@
 import { RECEIVE_ARTICLE } from "./articles";
+const RECEIVE_USER= 'users/RECEIVE_USER';
 
+const receiveUser = (user) => ({
+  type: RECEIVE_USER,
+  payload: user
+});
+
+export const fetchUser = (userId) => async(dispatch) => {
+  const response = await csrfFetch(`/api/users/${userId}`)
+
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(receiveUser(user));
+  }
+}
 
 export const selectWriter = (userId) => (state) => {
     // console.log("=====");
@@ -11,6 +25,8 @@ export const selectWriter = (userId) => (state) => {
     }
   };
 
+// export const 
+
 
 const usersReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -18,6 +34,11 @@ const usersReducer = (state = {}, action) => {
     const newState = { ...state };
 
     switch (action.type) {
+        case RECEIVE_USER:
+            newState["user"] = action.payload.user;
+            newState["followers"] = action.payload.followers;
+            newState["following"] = action.payload.following;
+            return newState;
         case RECEIVE_ARTICLE:
             newState[action.payload.author.id] = action.payload.author;
             return newState;

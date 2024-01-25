@@ -19,12 +19,15 @@ User.destroy_all
 Article.destroy_all
 Comment.destroy_all
 Clap.destroy_all
+Follow.destroy_all
 
 puts "resetting primary keys..."
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('articles')
 ApplicationRecord.connection.reset_pk_sequence!('comments')
-# ApplicationRecord.connection.reset_pk_sequence!('claps')
+ApplicationRecord.connection.reset_pk_sequence!('claps')
+ApplicationRecord.connection.reset_pk_sequence!('follows')
+
 
 # USERS
 
@@ -422,6 +425,53 @@ clap37 = Clap.create!(user_id: daniel.id, article_id: article3.id, comment_id: n
 clap38 = Clap.create!(user_id: daniel.id, article_id: article5.id, comment_id: nil)
 clap39 = Clap.create!(user_id: daniel.id, article_id: article6.id, comment_id: nil)
 clap40 = Clap.create!(user_id: daniel.id, article_id: article7.id, comment_id: nil)
+
+follow1 = Follow.create!(following_id: aaron.id, follower_id: bob.id)
+follow2 = Follow.create!(following_id: aaron.id, follower_id: carl.id)
+follow3 = Follow.create!(following_id: aaron.id, follower_id: daniel.id)
+follow4 = Follow.create!(following_id: aaron.id, follower_id: evan.id)
+follow5 = Follow.create!(following_id: aaron.id, follower_id: frankie.id)
+follow6 = Follow.create!(following_id: aaron.id, follower_id: greg.id)
+follow7 = Follow.create!(following_id: aaron.id, follower_id: holly.id)
+follow8 = Follow.create!(following_id: aaron.id, follower_id: ivan.id)
+
+follow9 = Follow.create!(following_id: bob.id, follower_id: aaron.id)
+follow10 = Follow.create!(following_id: bob.id, follower_id: carl.id)
+follow11 = Follow.create!(following_id: bob.id, follower_id: daniel.id)
+follow12 = Follow.create!(following_id: bob.id, follower_id: evan.id)
+follow13 = Follow.create!(following_id: bob.id, follower_id: frankie.id)
+follow14 = Follow.create!(following_id: bob.id, follower_id: greg.id)
+follow15 = Follow.create!(following_id: bob.id, follower_id: holly.id)
+follow16 = Follow.create!(following_id: bob.id, follower_id: ivan.id)
+
+follow17 = Follow.create!(following_id: carl.id, follower_id: aaron.id)
+follow18 = Follow.create!(following_id: carl.id, follower_id: bob.id)
+follow19 = Follow.create!(following_id: carl.id, follower_id: daniel.id)
+follow20 = Follow.create!(following_id: carl.id, follower_id: evan.id)
+follow21 = Follow.create!(following_id: carl.id, follower_id: frankie.id)
+follow22 = Follow.create!(following_id: carl.id, follower_id: greg.id)
+follow23 = Follow.create!(following_id: carl.id, follower_id: holly.id)
+follow24 = Follow.create!(following_id: carl.id, follower_id: ivan.id)
+
+follow25 = Follow.create!(following_id: daniel.id, follower_id: aaron.id)
+follow26 = Follow.create!(following_id: daniel.id, follower_id: bob.id)
+follow27 = Follow.create!(following_id: daniel.id, follower_id: carl.id)
+follow28 = Follow.create!(following_id: daniel.id, follower_id: evan.id)
+follow29 = Follow.create!(following_id: daniel.id, follower_id: frankie.id)
+follow30 = Follow.create!(following_id: daniel.id, follower_id: greg.id)
+follow31 = Follow.create!(following_id: daniel.id, follower_id: holly.id)
+follow32 = Follow.create!(following_id: daniel.id, follower_id: ivan.id)
+
+follow33 = Follow.create!(following_id: frankie.id, follower_id: aaron.id)
+follow34 = Follow.create!(following_id: frankie.id, follower_id: bob.id)
+follow35 = Follow.create!(following_id: frankie.id, follower_id: carl.id)
+follow36 = Follow.create!(following_id: frankie.id, follower_id: daniel.id)
+
+follow37 = Follow.create!(following_id: ivan.id, follower_id: aaron.id)
+follow38 = Follow.create!(following_id: ivan.id, follower_id: bob.id)
+
+follow39 = Follow.create!(following_id: holly.id, follower_id: carl.id)
+follow40 = Follow.create!(following_id: holly.id, follower_id: daniel.id)
 
 # users:
 # demo

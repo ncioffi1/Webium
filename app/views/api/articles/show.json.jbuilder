@@ -6,6 +6,8 @@ end
 
 json.author do
     json.extract! @article.user, :id, :name, :email
+
+    json.photoUrl @article.user.photo.attached? ? @article.user.photo.url : nil
 end
 
 json.claps do

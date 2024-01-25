@@ -96,8 +96,6 @@ const clapReducer = (state = {}, action) => {
             return newState;
 
         case CREATE_CLAP:
-            console.log("======");
-            console.log(newState);
             newState.articleClaps[action.payload.clap.id] = action.payload.clap;
             newState["clapped"] = action.payload;
             return newState;

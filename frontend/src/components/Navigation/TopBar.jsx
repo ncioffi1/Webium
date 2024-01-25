@@ -98,7 +98,8 @@ function TopBar(props) {
                                 <p className='writeText'>Write</p>
                             </div>
                             <div className='pad1right'></div>
-                            <button onClick={handleSidebarClick} className="userdot">{getFirstLetter()}</button>
+                            <img onClick={handleSidebarClick} src={sessionUser.photoUrl} className="userdotSidebar"/>
+                            {/* <button onClick={handleSidebarClick} className="userdot">{getFirstLetter()}</button> */}
                         </div>
                     </div>
                     <div className="line2"></div>

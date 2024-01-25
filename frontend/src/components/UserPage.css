@@ -1,8 +1,13 @@
+.uHolder {
+    width: 50%;
+    margin-left: 200px;
+    /* border: 5px solid salmon; */
+}
 
 .uText {
     padding-top: 60px;
     padding-bottom: 60px;
-    padding-left: 200px;
+    /* padding-left: 200px; */
     font-size: 40px;
     font-family: "Roboto";
     font-weight: 500;
@@ -11,18 +16,14 @@
 }
 
 .uLine {
-    position: absolute;
+    position: relative;
     border-bottom: 1px solid rgb(240, 240, 240);
-    margin-left: 200px;
-    /* padding-left: 20px; */
-    width: 55%;
+    /* margin-left: 200px; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 100%;
     z-index: -1;
-    /* border: 10px solid red; */
-    /* padding-top: 0px;
-    padding-bottom: 10px;   */
-    /* border: 2px solid red;  */
+    /* border: 10px solid maroon; */
 }

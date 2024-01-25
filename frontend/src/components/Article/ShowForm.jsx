@@ -54,6 +54,17 @@ function ShowForm() {
         }
     }
 
+    function getPhotoUrl(userId) {
+        if (writers !== undefined) {
+            for (let i = 0; i < writers.length; i++) {
+                if (writers[i].user.id === userId) {
+                    return writers[i].user.photoUrl;
+                }
+            }
+            return null;
+        }
+    }
+
     function getDatePosted(datePosted) {
         let date0 = datePosted;
         // console.log(date0);
@@ -110,7 +121,8 @@ function ShowForm() {
                                             <div key={article.id + "a"} className="sContentHolder">
                                                 <div key={article.id + "b"} className="sPad1"></div>
                                                 <div key={article.id + "c"} className="sPhotoLine">
-                                                    <div key={article.id + "d"} className="sUserDot"></div>
+                                                    <img src={getPhotoUrl(article.userId)} className="sUserDot2"/>
+                                                    {/* <div key={article.id + "d"} className="sUserDot"></div> */}
                                                     <p onClick={(e) => handleUserClick(e, article.userId)} key={article.id + "e"} className='sName'>{getUserName(article.userId)}</p>
                                                     <p key={article.id + "f"} className='sDot'>·</p>
                                                     <p key={article.id + "g"} className='sDate'>{getDatePosted(article.datePosted)}</p>

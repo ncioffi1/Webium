@@ -26,7 +26,7 @@ function ArticleForm() {
     const author = useSelector(userActions.selectWriter(writerId));
     const comments = useSelector(state => state.comment.articleComments);
     const claps = useSelector(state => state.clap.articleClaps);
-    const clapped = useSelector(state => state.clap.clapped)
+    const clapped = useSelector(state => state.clap.clapped);
     const [articleClaps, setArticleClaps] = useState(null);
     const [articleComments, setArticleComments] = useState(null);
     const [errors, setErrors] = useState(null);
@@ -240,7 +240,8 @@ function ArticleForm() {
                             <p className='aTitle'>{article.title}</p>
                             <div className='aPad2'></div>
                             <div className='profile'>
-                                <div className="userdot2" id={setColor()}>{getFirstLetter()}</div>
+                                {/* <div className="userdot2" id={setColor()}>{getFirstLetter()}</div> */}
+                                <img src={author.photoUrl} className="userdot3"/>
                                 <div className='profileTexts'>
                                     <div className="userTopLine">
                                         <p className='articleusername' onClick={(e) => handleUserClick(e)}>{getUserName()}</p>

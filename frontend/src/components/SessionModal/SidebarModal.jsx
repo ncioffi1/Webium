@@ -88,22 +88,21 @@ function SidebarModal() {
                 <div ref={modalRef} className="modal-backdrop"></div>
                 <div className='modal-holder'>
                     <div className='modal-text-holder1-side'>
-                            <div className='mSide1'>
-                                <div className='userIconHolder'>
-                                    <i onClick={(e) => handleProfileClick(e)} className="fa-regular fa-user" id="userIconside"></i>
-                                    <p onClick={(e) => handleProfileClick(e)} className='userTextside'>Profile</p>
-                                </div>
+                        <div className='mSide1'>
+                            <div className='userIconHolder'>
+                                <i onClick={(e) => handleProfileClick(e)} className="fa-regular fa-user" id="userIconside"></i>
+                                <p onClick={(e) => handleProfileClick(e)} className='userTextside'>Profile</p>
                             </div>
                         </div>
-                        <div className='modal-text-holder1-side'>
-                            <div className='userLine'></div>
-                            <div className='mSide2'>
-                                <p onClick={handleLogoutClick} className='modal-text1B-side'>Sign Out</p>
-                                <p className='modal-text1-side'>{email}</p>
-                            </div>
+                    </div>
+                    <div className='modal-text-holder1-side'>
+                        <div className='userLine'></div>
+                        <div className='mSide2'>
+                            <p onClick={handleLogoutClick} className='modal-text1B-side'>Sign Out</p>
+                            <p className='modal-text1-side'>{email}</p>
                         </div>
+                    </div>
                 </div>
-                    
             </ModalSide>
         </>
         );
