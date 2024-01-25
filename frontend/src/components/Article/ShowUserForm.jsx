@@ -128,6 +128,8 @@ function ShowUserForm() {
     }
     function handleFollow(e) {
         e.preventDefault();
+        // console.log("CLICKED FOLLOW!");
+
         let status = "FOLLOW";
         let followId = null;
         // check if sessionUser is already following user.

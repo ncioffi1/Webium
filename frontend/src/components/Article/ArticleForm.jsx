@@ -234,6 +234,8 @@ function ArticleForm() {
     }
     function handleFollow(e) {
         e.preventDefault();
+        // console.log("CLICKED FOLLOW!");
+        
         let status = "FOLLOW";
         let followId = null;
 
@@ -328,12 +330,12 @@ function ArticleForm() {
                                                 {checkIfAlreadyFollowing() ? (
                                                     <>
                                                         <p className='divider'>·</p>
-                                                        <p onClick={(e) => handleFollow(e)} className='articleuserfollow2'>Following</p>
+                                                        <button onClick={(e) => handleFollow(e)} className='articleuserfollow2'>Following</button>
                                                     </>
                                                 ) : (
                                                     <>
                                                         <p className='divider'>·</p>
-                                                        <p onClick={(e) => handleFollow(e)} className='articleuserfollow'>Follow </p>
+                                                        <button onClick={(e) => handleFollow(e)} className='articleuserfollow'>Follow </button>
                                                     </>
                                                 )}
                                             </>
