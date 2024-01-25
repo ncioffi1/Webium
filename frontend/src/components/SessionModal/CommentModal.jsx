@@ -317,6 +317,10 @@ function CommentModal() {
         }
     }
 
+    if (sessionUser === null) {
+        return;
+    }
+
     if (!commentmodalType) {
         // console.log("commentmodal type");
         return null;
@@ -324,13 +328,7 @@ function CommentModal() {
         // console.log("article commments");
         // console.log(articleComments);
         return null;
-    } 
-    // else if (writerIds.length !== 0 && (writers === null || writers === undefined)) {
-    //     console.log("writers");
-    //     console.log(articleComments);
-    //     return null;
-    // } 
-    else {
+    } else {
         return (
             <>
                 <ModalComments>

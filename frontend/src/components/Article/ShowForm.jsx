@@ -99,6 +99,9 @@ function ShowForm() {
         console.log(goToUserPage);
         return <Navigate to={`/users/${pageUserId}`} />
     }
+    if (sessionUser === null) {
+        return;
+    }
 
     return (
         <>

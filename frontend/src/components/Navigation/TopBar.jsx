@@ -63,6 +63,9 @@ function TopBar(props) {
     //     // // console.log(window.location);
     //     // return <Navigate to={`/`} replace={true} />
     // }
+    if (sessionUser === null || sessionUser === undefined) {
+        return <Navigate to={"/"}/>
+    }
 
     if (writing) {
         console.log("GO TO NEW ARTICLE!");

@@ -170,6 +170,9 @@ function EditForm() {
         }
     }
 
+    if (sessionUser === null) {
+        return;
+    }
     
     return (
         <>

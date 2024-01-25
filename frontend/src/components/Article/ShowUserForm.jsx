@@ -193,6 +193,9 @@ function ShowUserForm() {
     if (userFollowers === undefined || userFollowers === null) {
         return;
     }
+    if (sessionUser === null || sessionUser === undefined) {
+        return;
+    }
 
     return (
         <>
