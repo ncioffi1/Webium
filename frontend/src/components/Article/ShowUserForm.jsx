@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as articleActions from "../../store/articles";
 import * as userActions from "../../store/users";
+import * as followActions from "../../store/follows";
 import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +14,6 @@ function ShowUserForm() {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const { userId } = useParams();
-
     const [goArticle, setGoArticle] = useState(null);
     const [goUser, setGoUser] = useState(null);
     const [userArticles, setUserArticles] = useState(null);
@@ -23,19 +23,41 @@ function ShowUserForm() {
     const user = useSelector(state => state.users.user);
     const followers = useSelector(state => state.users.followers);
     const following = useSelector(state => state.users.following);
+    const [userFollowers, setUserFollowers] = useState(null);
     const users = useSelector(state => state.users.users);
+    const created = useSelector(state => state.follow.create);
+    const deleted = useSelector(state => state.follow.delete);
 
     useEffect(() => {
         dispatch(articleActions.fetchArticles());
         dispatch(userActions.fetchUsers());
-        // dispatch(articleActions.clearArticleWriters());
     }, [])
+
+    useEffect(() => {
+        if (created !== null && created !== undefined) {
+            dispatch(followActions.clearCreatedFollow());
+            dispatch(userActions.fetchUser(userId));
+        }
+    }, [created]);
+
+    useEffect(() => {
+        if (deleted !== null && deleted !== undefined) {
+            dispatch(followActions.clearDeletedFollow());
+            dispatch(userActions.fetchUser(userId));
+        }
+    }, [deleted]);
+
+    useEffect(() => {
+        if (followers !== null && followers !== undefined) {
+            setUserFollowers(followers);
+        }
+    }, [followers])
 
     useEffect(() => {
         if (userId !== null) {
             dispatch(articleActions.fetchWriter(userId));
             dispatch(userActions.fetchUser(userId));
-            console.log("CHANGE DETECTED");
+            setUserFollowers(null);
             setGoUser(null);
             setGoArticle(null);
         }
@@ -61,19 +83,18 @@ function ShowUserForm() {
 
     function getDatePosted(datePosted) {
         let date0 = datePosted;
-        // console.log(date0);
         let date1 = Date.parse(date0 + " 12:00:00 GMT");
-        // console.log(date1);
         let date2 = new Date(date1);
-        // console.log(date2);
         let date3 = date2.toLocaleDateString('en-US');
-        // console.log(date3);
         return date3;
     }
     function getFollowersCount() {
         if (followers !== null && followers !== undefined) {
+            // console.log("FOUND FOLLOWERS");
+            // console.log(followers.length);
             return followers.length;
         } else {
+            // console.log("UNFOUND...");
             return 0;
         }
     }
@@ -105,9 +126,45 @@ function ShowUserForm() {
         }        
         return null;
     }
+    function handleFollow(e) {
+        e.preventDefault();
+        let status = "FOLLOW";
+        let followId = null;
+        // check if sessionUser is already following user.
+
+        for (let i = 0; i < followers.length; i++) {
+            if (followers[i].followerId === sessionUser.id) {
+                if (followers[i].followingId === parseInt(userId)) {
+                    // console.log("HEY!  You're already following this user.");
+                    status = "UNFOLLOW";
+                    followId = followers[i].id;
+                }
+            }
+        }
+
+        if (status === "FOLLOW") {
+            // console.log("Following!");
+            let follower_id = sessionUser.id;
+            let following_id = userId;  
+            dispatch(followActions.postFollow({follower_id, following_id}));
+        } else if (status === "UNFOLLOW") {
+            // console.log("Unfollowing!");
+            dispatch(followActions.deleteFollow(followId));
+        }
+    }
+
+    function checkIfAlreadyFollowing() {
+        for (let i = 0; i < followers.length; i++) {
+            if (followers[i].followerId === sessionUser.id) {
+                if (followers[i].followingId === parseInt(userId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     function goToArticle(articleId) {
-        console.log(articleId);
         setGoArticle(articleId);
     }
     function goToUser(e, userId) {
@@ -124,8 +181,14 @@ function ShowUserForm() {
     }
 
     if (writer === undefined || writer === null) {
-        console.log("No writer :(");
-        console.log(writer);
+        // console.log("No writer :(");
+        // console.log(writer);
+        return;
+    }
+    if (user === undefined || user === null) {
+        return;
+    }
+    if (userFollowers === undefined || userFollowers === null) {
         return;
     }
 
@@ -183,9 +246,23 @@ function ShowUserForm() {
                                     {/* <div className="pUserdot"></div> */}
                                     <p className="pUsername">{userName}</p>
                                     <p className="pThin">{getFollowersCount()} Followers</p>
-
-                                    <button className="pButton">Follow</button>
-
+                                    {sessionUser.id === parseInt(userId) ? (
+                                        <>
+                                            
+                                        </>
+                                    ) : (
+                                        <>
+                                            {checkIfAlreadyFollowing() ? (
+                                                <>
+                                                    <button onClick={(e) => handleFollow(e)} className="pButton2">Unfollow</button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button onClick={(e) => handleFollow(e)} className="pButton">Follow</button>
+                                                </>
+                                            )}
+                                        </>
+                                    )}
                                     <p className="pFollowing">Following ({getFollowingCount()})</p>
                                     {getFollowingCount() === 0 ? (
                                         <>

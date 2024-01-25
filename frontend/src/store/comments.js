@@ -133,8 +133,6 @@ export const fetchComment = (commentId) => async(dispatch) => {
 
 export const fetchComments = () => async(dispatch) => {
     const response = await csrfFetch(`/api/comments/`)
-    // console.log("!!!!=====!!!!!");
-    // console.log("fetch");
     
     if (response.ok) {
     const comments = await response.json();
@@ -153,16 +151,10 @@ export const postComment = ({ comment, userId, articleId, parentCommentId }) => 
     });
     const myComment = await response.json();
     dispatch(createComment(myComment));
-    console.log(response);
     return response;
   };
 
   export const updateComment = ({ commentId, commentbody, user_id, article_id, parent_comment_id }) => async dispatch => {
-    console.log("====TEST====");
-    console.log(commentId);
-    console.log(commentbody);
-
-    
     const response = await csrfFetch(`/api/comments/${commentId}`, {
       method: "PATCH",
       body: JSON.stringify({ commentbody, user_id, article_id, parent_comment_id })
@@ -174,7 +166,6 @@ export const postComment = ({ comment, userId, articleId, parentCommentId }) => 
   };
 
 export const deleteComment = (commentId) => async dispatch => {
-    // console.log("HIT!");
     const response = await csrfFetch(`/api/comments/${commentId}`, {
         method: "DELETE"
     });
@@ -223,9 +214,7 @@ const commentReducer = (state = {}, action) => {
             return newState;
 
         case RECEIVE_COMMENT:
-            console.log(action.payload);
-            // newState.comment.comments[action.payload.comment.id]
-            // newState[action.payload.comment.id] = action.payload.article;
+            // console.log(action.payload);
             return newState;
     
         case RECEIVE_COMMENTS:

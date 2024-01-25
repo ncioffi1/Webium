@@ -9,6 +9,7 @@ import * as popupmodalActions from "../../store/popupmodals.js";
 import * as clapActions from "../../store/claps.js";
 import * as modalActions from "../../store/modals.js";
 import * as userActions from "../../store/users.js";
+import * as followActions from "../../store/follows.js";
 
 import TopBar from "../Navigation/TopBar";
 import SidebarModal from "../SessionModal/SidebarModal";
@@ -30,6 +31,13 @@ function ArticleForm() {
     const [articleClaps, setArticleClaps] = useState(null);
     const [articleComments, setArticleComments] = useState(null);
     const [errors, setErrors] = useState(null);
+
+    const user = useSelector(state => state.users.user);
+    const followers = useSelector(state => state.users.followers);
+    const following = useSelector(state => state.users.following);
+    const [userFollowers, setUserFollowers] = useState(null);
+    const created = useSelector(state => state.follow.create);
+    const deleted = useSelector(state => state.follow.delete);
 
     const [goToUserPage, setGoToUserPage] = useState(null);
 
@@ -82,6 +90,33 @@ function ArticleForm() {
           });
         // console.log("Clapped!");
     }
+
+    useEffect(() => {
+        if (writerId !== null) {
+            dispatch(userActions.fetchUser(writerId));
+            setUserFollowers(null);
+        }
+    }, [writerId]);
+
+    useEffect(() => {
+        if (created !== null && created !== undefined) {
+            dispatch(followActions.clearCreatedFollow());
+            dispatch(userActions.fetchUser(writerId));
+        }
+    }, [created]);
+
+    useEffect(() => {
+        if (deleted !== null && deleted !== undefined) {
+            dispatch(followActions.clearDeletedFollow());
+            dispatch(userActions.fetchUser(writerId));
+        }
+    }, [deleted]);
+
+    useEffect(() => {
+        if (followers !== null && followers !== undefined) {
+            setUserFollowers(followers);
+        }
+    }, [followers])
 
     useEffect(() => {
         if (claps !== undefined && claps !== null) {
@@ -197,6 +232,40 @@ function ArticleForm() {
             return articleClaps.length;
         }
     }
+    function handleFollow(e) {
+        e.preventDefault();
+        let status = "FOLLOW";
+        let followId = null;
+
+        for (let i = 0; i < followers.length; i++) {
+            if (followers[i].followerId === sessionUser.id) {
+                if (followers[i].followingId === parseInt(writerId)) {
+                    status = "UNFOLLOW";
+                    followId = followers[i].id;
+                }
+            }
+        }
+
+        if (status === "FOLLOW") {
+            let follower_id = sessionUser.id;
+            let following_id = writerId;  
+            dispatch(followActions.postFollow({follower_id, following_id}));
+        } else if (status === "UNFOLLOW") {
+            dispatch(followActions.deleteFollow(followId));
+        }
+    }
+
+    function checkIfAlreadyFollowing() {
+        for (let i = 0; i < followers.length; i++) {
+            if (followers[i].followerId === sessionUser.id) {
+                if (followers[i].followingId === parseInt(writerId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     function handleUserClick(e) {
         e.preventDefault();
@@ -211,6 +280,11 @@ function ArticleForm() {
     if (articleComments === null || articleComments === undefined) {
         return null;
     }
+
+    if (userFollowers === undefined || userFollowers === null) {
+        return;
+    }
+
 
     return (
         <>
@@ -245,8 +319,25 @@ function ArticleForm() {
                                 <div className='profileTexts'>
                                     <div className="userTopLine">
                                         <p className='articleusername' onClick={(e) => handleUserClick(e)}>{getUserName()}</p>
-                                        <p className='divider'>·</p>
-                                        <p className='articleuserfollow'>Follow </p>
+                                        
+                                        {sessionUser.id === parseInt(writerId) ? (
+                                            <>
+                                            </>
+                                        ) : (
+                                            <>
+                                                {checkIfAlreadyFollowing() ? (
+                                                    <>
+                                                        <p className='divider'>·</p>
+                                                        <p onClick={(e) => handleFollow(e)} className='articleuserfollow2'>Following</p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p className='divider'>·</p>
+                                                        <p onClick={(e) => handleFollow(e)} className='articleuserfollow'>Follow </p>
+                                                    </>
+                                                )}
+                                            </>
+                                        )}
                                     </div>
                                     <div className="userBotLine">
                                         <p className='articledate'>{getDatePosted()}</p>

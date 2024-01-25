@@ -20,14 +20,14 @@ class Api::FollowsController < ApplicationController
     end
 
     def destroy
-        @follow = Comment.find(params[:id])
+        @follow = Follow.find(params[:id])
         @follow.destroy
         
         render json: {message: 'success'}
     end
 
     private
-    def clap_params
+    def follow_params
         params.require(:follow).permit(:following_id, :follower_id)
     end
 

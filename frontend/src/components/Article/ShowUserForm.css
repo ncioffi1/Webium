@@ -234,7 +234,7 @@
     font-family: "Roboto";
     font-weight: 300;
     font-size: 14px;
-    width: 76px;
+    width: 74px;
     height: 38px;
     border-radius: 80px;
     background-color: green;
@@ -243,6 +243,21 @@
     margin-left: 40px;
     margin-top:  24px;
 }
+.pButton2 {
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 14px;
+    width: 88px;
+    height: 36px;
+    border-radius: 80px;
+    background-color: white;
+    color: green;
+    border: 1px solid green;
+    text-align: center;
+    margin-left: 40px;
+    margin-top:  24px;
+}
+
 .pFollowing {
     font-family: "Roboto";
     font-weight: 500;

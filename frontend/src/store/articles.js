@@ -144,7 +144,6 @@ export const fetchWriter = (userId) => async(dispatch) => {
 
 export const fetchWriters = (writerIds) => async(dispatch) => {
   let users = [];
-  // console.log(writerIds);
   for (let i = 0; i < writerIds.length; i++) {
     let response = await csrfFetch(`/api/users/${writerIds[i]}`)
 
@@ -153,10 +152,7 @@ export const fetchWriters = (writerIds) => async(dispatch) => {
       users.push(user);
     }
   }
-  // console.log("! ! ! ===== ! ! !");
-  // console.log(users);
   if (users.length === writerIds.length) {
-    // console.log("ready.");
     dispatch(receiveUsers(users));
   }
   // dispatch(receiveUsers(users));
@@ -183,19 +179,12 @@ export const fetchArticles = () => async(dispatch) => {
 const initialState = { article: null};
 
 export const postArticle = ({ title, content, photo }) => async dispatch => {
-  console.log(title);
-  console.log(content);
-  console.log(photo);
-  console.log("===========");
   const formData = new FormData();
   formData.append('article[title]', title);
   formData.append('article[content]', content);
   if (photo) {
     formData.append('article[photo]', photo);
   }
-  console.log("===========");
-  console.log(formData);
-  console.log("===========");
 
   const response = await csrfFetch("/api/articles/", {
     method: "POST",
@@ -247,8 +236,6 @@ const articleReducer = (state = {}, action) => {
       return newState;
 
     case RECEIVE_USERS:
-      // console.log("!!!====!!!")
-      // console.log(action.payload);
       newState["writers"] = action.payload;
       return newState;
       // return newState;

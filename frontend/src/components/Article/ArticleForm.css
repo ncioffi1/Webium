@@ -95,6 +95,15 @@
     padding-left: 10px;
     cursor: pointer;
 }
+.articleuserfollow2 {
+    font-size: 16px;
+    font-family:  "Roboto";
+    font-weight: 400;
+    padding-right: 20px;
+    color:  gray;
+    padding-left: 10px;
+    cursor: pointer;
+}
 
 .articledate {
     font-size: 16px;

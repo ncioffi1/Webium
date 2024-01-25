@@ -50,7 +50,7 @@ export const fetchClaps = () => async(dispatch) => {
     
     if (response.ok) {
     const allClaps = await response.json();
-    console.log(allClaps);
+    // console.log(allClaps);
     dispatch(receiveClaps(allClaps));
     }
 }
@@ -66,7 +66,6 @@ export const postClap = ({ userId, articleId, commentId }) => async dispatch => 
 
     const myClap = await response.json();
     dispatch(createClap(myClap));
-    // console.log(response);
     return response;
   };
 
@@ -76,17 +75,13 @@ const clapReducer = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_ARTICLE:
             newState["articleClaps"] = {...action.payload.claps};
-            // newState["articleClaps"] = {...action.payload.claps};
             return newState;
 
         case RECEIVE_CLAP:
-            console.log(action.payload);
-            // newState.comment.comments[action.payload.comment.id]
-            // newState[action.payload.comment.id] = action.payload.article;
+            // console.log(action.payload);
             return newState;
     
         case RECEIVE_CLAPS:
-            // newState = {...action.payload};
             newState["allClaps"] = {...action.payload.claps};
             return newState;
     
