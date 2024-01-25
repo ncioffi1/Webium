@@ -93,7 +93,7 @@ function ShowUserForm() {
                 }
             }
         }
-        return "User Name";
+        return "";
     }
     function getFollowingIcon(followingId) {
         if (users !== null && users !== undefined) {

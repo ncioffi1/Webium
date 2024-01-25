@@ -263,7 +263,7 @@
     width: 20px;
     min-height: 20px;
     min-width: 20px;
-    background-color: red;
+    /* background-color: red; */
     border-radius: 50px;
 }
 .pFollowName {
