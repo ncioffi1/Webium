@@ -6,6 +6,7 @@ import * as userActions from "../../store/users";
 import { Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
+import "../UserPage.css";
 import './ShowUserForm.css';
 
 function ShowUserForm() {
@@ -14,6 +15,7 @@ function ShowUserForm() {
     const { userId } = useParams();
 
     const [goArticle, setGoArticle] = useState(null);
+    const [goUser, setGoUser] = useState(null);
     const [userArticles, setUserArticles] = useState(null);
     const [userName, setUserName] = useState(null);
     const articles = useSelector(articleActions.selectArticlesArray());
@@ -21,9 +23,11 @@ function ShowUserForm() {
     const user = useSelector(state => state.users.user);
     const followers = useSelector(state => state.users.followers);
     const following = useSelector(state => state.users.following);
+    const users = useSelector(state => state.users.users);
 
     useEffect(() => {
         dispatch(articleActions.fetchArticles());
+        dispatch(userActions.fetchUsers());
         // dispatch(articleActions.clearArticleWriters());
     }, [])
 
@@ -31,6 +35,9 @@ function ShowUserForm() {
         if (userId !== null) {
             dispatch(articleActions.fetchWriter(userId));
             dispatch(userActions.fetchUser(userId));
+            console.log("CHANGE DETECTED");
+            setGoUser(null);
+            setGoArticle(null);
         }
     }, [userId])
 
@@ -63,14 +70,57 @@ function ShowUserForm() {
         // console.log(date3);
         return date3;
     }
+    function getFollowersCount() {
+        if (followers !== null && followers !== undefined) {
+            return followers.length;
+        } else {
+            return 0;
+        }
+    }
+    function getFollowingCount() {
+        if (following !== null && following !== undefined) {
+            return following.length;
+        } else {
+            return 0;
+        }
+    }
+
+    function getFollowingName(followingId) {
+        if (users !== null && users !== undefined) {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].id === followingId) {
+                    return users[i].name;
+                }
+            }
+        }
+        return "User Name";
+    }
+    function getFollowingIcon(followingId) {
+        if (users !== null && users !== undefined) {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].id === followingId) {
+                    return users[i].photoUrl;
+                }
+            }
+        }        
+        return null;
+    }
 
     function goToArticle(articleId) {
         console.log(articleId);
         setGoArticle(articleId);
     }
+    function goToUser(e, userId) {
+        e.preventDefault();
+        setGoUser(userId);
+    }
 
     if (goArticle !== null) {
         return <Navigate to={`/articles/${goArticle}`} replace={true} />
+    }
+
+    if (goUser !== null) {
+        return <Navigate to={`/users/${goUser}`} replace={true} />
     }
 
     if (writer === undefined || writer === null) {
@@ -92,8 +142,13 @@ function ShowUserForm() {
                     </>
                     ) : (
                         <>
-                            <div className="sParent">
-                                <div className="sParent2">
+                            <div className="uRow">
+                                <div className="uColumn">
+                                    <div className="uHolder">
+                                        <p className='uText'>{userName}</p>
+                                        <div className='uLine'></div>
+                                    </div>
+                                    <div className="uHolder">
                                         {userArticles.map(article => 
                                             <div key={article.id + "zz"}  className="sP4">
                                                 <div key={article.id + "z"} className="sP3">
@@ -119,10 +174,45 @@ function ShowUserForm() {
                                                 <div key={article.id + "m"} className='sLine'></div>
                                             </div>
                                         )}
+                                    </div>
+                                </div>
+                                <div className="sVerticalLine"></div>
+                                <div className="sProfileHolder">
+                                    <div className="pLine1"></div>
+                                    <img src={getPhotoUrl()} className="pUserdot"></img>
+                                    {/* <div className="pUserdot"></div> */}
+                                    <p className="pUsername">{userName}</p>
+                                    <p className="pThin">{getFollowersCount()} Followers</p>
+
+                                    <button className="pButton">Follow</button>
+
+                                    <p className="pFollowing">Following ({getFollowingCount()})</p>
+                                    {getFollowingCount() === 0 ? (
+                                        <>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {following.map((follow) => 
+                                                <>
+                                                    <div onClick={(e) => goToUser(e, follow.followingId)} className="pFollowHolder">
+                                                        <img src={getFollowingIcon(follow.followingId)} className="pFollowIcon"/>
+                                                        <p className="pFollowName">{getFollowingName(follow.followingId)}</p>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </>
+                                    )}
+                                    {/* {following.map((follow) => {
+                                        <>
+                                            <div>{getUserIcon(following.following_id)}</div>
+                                            <p>{getUserName(following.following_id)}</p>
+                                        </>
+                                    })} */}
+                                    
+
                                 </div>
                             </div>
-                            <div className="sVerticalLine"></div>
-                            <div className="sProfileHolder"></div>
+                            
                         </>
                     )};
                 </>

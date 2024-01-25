@@ -1,3 +1,4 @@
+import { csrfFetch, storeCSRFToken } from './csrf';
 
 const SHOW_MODAL = 'popupmodalcomment/showPopupModal';
 const HIDE_MODAL = 'popupmodalcomment/hidePopupModal';

@@ -36,10 +36,6 @@ function UserPage() {
             ) : (
                 <>
                     <TopBar canNav={true}/>
-                    <div className="uHolder">
-                        <p className='uText'>{userName}</p>
-                        <div className='uLine'></div>
-                    </div>
                     <ShowUserForm />
                 </>
             )}

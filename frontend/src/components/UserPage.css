@@ -1,6 +1,12 @@
 .uHolder {
-    width: 50%;
-    margin-left: 200px;
+    width: 100%;
+    position: relative;
+    /* position: fixed; */
+    /* min-width: 80%; */
+    /* padding-left: 200px; */
+    /* margin-left: 200px; */
+    /* display: flex;
+    flex-direction: row; */
     /* border: 5px solid salmon; */
 }
 

@@ -115,11 +115,11 @@ function ShowForm() {
                             <TopBar canNav={false}/>
                         )}
                     </>
-                    <div className="sParent">
-                        <div className="sParent2">
+                    <div className="zParent">
+                        <div className="zParent2">
                                 {articles.map(article => 
-                                    <div key={article.id + "zz"}  className="sP4">
-                                        <div key={article.id + "z"} className="sP3">
+                                    <div key={article.id + "zz"}  className="zP4">
+                                        <div key={article.id + "z"} className="zP3">
                                             <div key={article.id + "a"} className="sContentHolder">
                                                 <div key={article.id + "b"} className="sPad1"></div>
                                                 <div key={article.id + "c"} className="sPhotoLine">
@@ -137,7 +137,7 @@ function ShowForm() {
                                             </div> 
                                             {/* to reactivate add article.photoUrl */}
                                             {/* to deactivate add "https://placehold.co/800x800" */}
-                                            <img src={article.photoUrl} key={article.id + "l"} className="sPhoto" />
+                                            <img src={article.photoUrl} key={article.id + "l"} className="zPhoto" />
                                         </div> 
                                         <div key={article.id + "m"} className='sLine'></div>
                                     </div>
