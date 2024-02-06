@@ -74,13 +74,13 @@ function CommentModal() {
             }
 
             if (data?.errors) {
-                setErrors(data.errors);
+                // setErrors(data.errors);
                 return;
             } else if (data) {
-                setErrors([data]);
+                // setErrors([data]);
                 return;
             } else {
-                setErrors([res.statusText]);
+                // setErrors([res.statusText]);
                 return;
             }
           });
@@ -206,6 +206,7 @@ function CommentModal() {
             return;
         }
 
+        setErrors([]);
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(commentmodalActions.hideCommentModal());
     }
@@ -277,7 +278,8 @@ function CommentModal() {
                 return;
             }
           });
-        
+
+        setErrors([]);
         setNewComment("");
     }
 
@@ -304,6 +306,11 @@ function CommentModal() {
         } else {
             return false;
         }
+    }
+    function getDatePosted(commentDate) {
+        let d1 = new Date(commentDate);
+        let d2 = d1.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+        return d2;
     }
 
     function getPhotoUrl(userId) {
@@ -342,8 +349,16 @@ function CommentModal() {
                         <textarea className="cComment" placeholder="What are your thoughts?" onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
                         <button onClick={handlePublish} className="cPostComment">Respond</button>
                     </span>
-
-                    <span className="commentLine"></span>
+                    {errors.length === 0 ? (
+                        <>
+                            <span className="commentLine"></span>
+                        </>
+                    ) : (
+                        <>
+                            {errors.map(error => <p className="cErrors">{error}</p>)}
+                            <span className="commentLineB"></span>
+                        </>
+                    )}
                     {articleComments.map((comment) => 
                             <div className='aComment'>
                                 {checkEditing() && editing.id === comment.id ? (
@@ -366,7 +381,7 @@ function CommentModal() {
                                             {/* <div className="cCommentUserdot"></div> */}
                                             <div className="cCommentVertical">
                                                 <p className="cCommentUsername">{getUserName(comment.userId)}</p>
-                                                <p className='cCommentDatePosted'>Date Posted</p>
+                                                <p className='cCommentDatePosted'>{getDatePosted(comment.updatedAt)}</p>
                                             </div>
                                             <PopupModalComment id={comment.id} comment={comment}/>
                                             {comment.userId === sessionUser.id ? (
@@ -385,7 +400,7 @@ function CommentModal() {
                                                 <p className='commentIconAmount'>{getClapAmount(comment)}</p>
                                             </div>
                                             <div className='commentReplyHolder'>
-                                                <p className='cCommentReply'>Reply</p>
+                                                {/* <p className='cCommentReply'>Reply</p> */}
                                             </div>
                                         </div>
                                         <span className="commentLine2"></span>

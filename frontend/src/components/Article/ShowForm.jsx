@@ -23,10 +23,8 @@ function ShowForm() {
     useEffect(() => {
         console.log("dispatching clearWriters");
         console.log("testing testing");
-        dispatch(articleActions.fetchArticles());
-
         dispatch(articleActions.clearArticleWriters());
-
+        dispatch(articleActions.fetchArticles());
         dispatch(modalActions.hideModal());
     }, [])
 

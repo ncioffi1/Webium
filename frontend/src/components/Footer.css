@@ -1,0 +1,44 @@
+
+
+.fHolder1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+
+    padding-top: 60px;
+    padding-bottom: 60px;
+    /* border: 2px solid red; */
+}
+.fHolder2 {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: row;
+    /* border: 2px solid red; */
+}
+.fText1 {
+    font-family: 'Merriweather';
+    font-size: 16px;
+    padding-bottom: 5px;
+    
+}
+#fLogo1 {
+    font-size: 40px;
+    margin-right: 5px;
+    color: gray;
+    transition: all 0.3s ease
+}
+#fLogo2 {
+    font-size: 40px;
+    margin-left: 5px;
+    color: gray;
+    transition: all 0.3s ease
+}
+#fLogo1:hover {
+    color: rgb(68, 68, 68);
+    transform: scale(1.1);
+}
+#fLogo2:hover {
+    color: rgb(68, 68, 68);
+    transform: scale(1.1);
+}

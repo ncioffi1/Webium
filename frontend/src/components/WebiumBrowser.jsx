@@ -11,6 +11,7 @@ import './WebiumBrowser.css'
 import '../reset.css'
 import LoginModal from './session/LoginModal';
 import ShowForm from './Article/ShowForm.jsx';
+import Footer from './Footer.jsx';
 
 function WebiumBrowser({ values }) {
     // const [modalActive, setModalActive] = useState(false);
@@ -75,10 +76,12 @@ function WebiumBrowser({ values }) {
                         </div>
                         <div className="line"></div>
                     </div>
+                    <Footer />
                 </>
             ) : (
                 <>
                     <ShowForm />
+                    <Footer />
                 </>
             ) }
         </>
