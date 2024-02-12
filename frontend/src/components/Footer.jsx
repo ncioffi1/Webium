@@ -17,7 +17,6 @@ function Footer() {
                     <i class="fa-brands fa-linkedin" id="fLogo2"></i>
                 </a>
             </div>
-
         </div>
     )
 }
