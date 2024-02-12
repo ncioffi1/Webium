@@ -6,6 +6,7 @@ import * as modalActions from "../../store/modals";
 import { Navigate } from 'react-router-dom';
 
 import TopBar from '../Navigation/TopBar';
+import Footer from '../Footer';
 
 import './ShowForm.css';
 
@@ -14,8 +15,10 @@ function ShowForm() {
     const dispatch = useDispatch();
     const [writerIds, setWriterIds] = useState([]);
     const [goArticle, setGoArticle] = useState(null);
-    const articles = useSelector(articleActions.selectArticlesArray());
+    const pulledArticles = useSelector(articleActions.selectArticlesArray())
+    const [articles, setArticles] = useState(null);
     const writers = useSelector(articleActions.selectWriters());
+    const filter = useSelector(state => state.article.filter);
 
     const [pageUserId, setPageUserId] = useState(null);
     const [goToUserPage, setGoToUserPage] = useState(null);
@@ -24,9 +27,24 @@ function ShowForm() {
         console.log("dispatching clearWriters");
         console.log("testing testing");
         dispatch(articleActions.clearArticleWriters());
+        dispatch(articleActions.clearingFilter());
         dispatch(articleActions.fetchArticles());
         dispatch(modalActions.hideModal());
+        console.log("=====");
+        console.log(filter);
     }, [])
+    useEffect(() => {
+        if (filter !== null && filter !== undefined) {
+            let newArticles = pulledArticles.filter(article => article.title.toLowerCase().includes(filter.toLowerCase()) || article.content.toLowerCase().includes(filter.toLowerCase()));
+            console.log(newArticles);
+            setArticles(newArticles);
+        }
+    }, [filter])
+    useEffect(() => {
+        if (pulledArticles !== null && pulledArticles !== undefined) {
+            setArticles(pulledArticles);
+        }
+    }, [pulledArticles])
 
     useEffect(() => {
         if (writerIds.length !== 0) {
@@ -113,11 +131,12 @@ function ShowForm() {
                             <>
                             </>
                         ) : (
-                            <TopBar canNav={false}/>
+                            <TopBar canNav={false} hasSearch={true}/>
                         )}
                     </>
-                    <div className="zParent">
-                        <div className="zParent2">
+                    {articles !== null && articles.length > 0 ? (
+                         <div className="zParent">
+                            <div className="zParent2">
                                 {articles.map(article => 
                                     <div key={article.id + "zz"}  className="zP4">
                                         <div key={article.id + "z"} className="zP3">
@@ -143,8 +162,17 @@ function ShowForm() {
                                         <div key={article.id + "m"} className='sLine'></div>
                                     </div>
                                 )}
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <>
+                            <p className="sTextError">No articles found with this search query.</p>
+                            <div className='sLineError'></div>
+                        </>
+                        
+                    )}
+                   
+                    <Footer />
                     
                 </>
             )}

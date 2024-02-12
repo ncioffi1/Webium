@@ -10,6 +10,8 @@ const CLEAR_EDIT = 'articles/CLEAR_EDIT';
 const CLEAR_WRITERS = 'articles/CLEAR_WRITERS';
 const RECEIVE_ARTICLES = 'articles/RECEIVE_ARTICLES';
 const REMOVE_ARTICLE = 'articles/REMOVE_ARTICLE';
+const SET_FILTER = 'articles/SET_FILTER';
+const CLEAR_FILTER = 'articles/CLEAR_FILTER';
 // const SET_ARTICLES = 'article/setArticles';
 // const REMOVE_ARTICLE = 'article/removeArticle';
 
@@ -43,6 +45,16 @@ const clearEdit = () => ({
   payload: null
 })
 
+const clearFilter = () => ({
+  type: CLEAR_FILTER,
+  payload: null
+})
+
+const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+})
+
 const clearWriters = () => ({
   type: CLEAR_WRITERS,
   payload: null
@@ -72,6 +84,7 @@ const removeArticle = (articleId) => ({
 //   dispatch(setUser(data.user));
 //   return response;
 // };
+
 
 export const selectArticle = (articleId) => (state) => {
   if (state.article[articleId] === undefined) {
@@ -107,6 +120,14 @@ export const clearEditedArticle = () => async(dispatch) => {
 
 export const clearArticleWriters = () => async(dispatch) => {
   dispatch(clearWriters());
+}
+
+export const clearingFilter = ()=> async(dispatch) =>  {
+  dispatch(clearFilter());
+}
+
+export const settingFilter = (filter) => async(dispatch) =>  {
+  dispatch(setFilter(filter));
 }
 
 export const selectWriter = (userId) => (state) => {
@@ -259,7 +280,12 @@ const articleReducer = (state = {}, action) => {
     case CLEAR_WRITERS:
       newState["writers"] = undefined;
       return newState;
-
+    case CLEAR_FILTER: 
+      newState["filter"] = undefined;
+      return newState;
+    case SET_FILTER:
+      newState["filter"] = action.payload;
+      return newState;
     case RECEIVE_ARTICLE:
       newState[action.payload.article.id] = action.payload.article;
       newState["author"] = action.payload.author;

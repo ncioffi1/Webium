@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  require "open-uri"
+
   wrap_parameters include: User.attribute_names + ['password']
 
   def index
@@ -9,6 +11,11 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+
+    @user.photo.attach(
+      io: URI.open("https://webium-seeds.s3.amazonaws.com/demo.jpg"), 
+      filename: "demo.jpg"
+    )
 
     if @user.save
       login!(@user)

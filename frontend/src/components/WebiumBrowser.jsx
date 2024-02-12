@@ -81,7 +81,7 @@ function WebiumBrowser({ values }) {
             ) : (
                 <>
                     <ShowForm />
-                    <Footer />
+                    
                 </>
             ) }
         </>

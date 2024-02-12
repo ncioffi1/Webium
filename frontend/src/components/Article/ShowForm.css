@@ -22,6 +22,32 @@
     z-index: -1;
 }
 
+.sLineError {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: left; 
+    align-items: left; */
+    display: block;
+
+    text-align: center;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /* border: 5px solid red; */
+    border-bottom: 1px solid rgb(240, 240, 240);
+    z-index: -1;
+}
+.fTextError {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: 'Merriweather';
+    font-size: 16px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding-bottom: 5px;
+}
+
 .sTitle {
     font-family: 'Roboto';
     font-weight:  700;

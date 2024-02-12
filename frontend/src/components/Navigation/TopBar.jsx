@@ -7,6 +7,7 @@ import '../../reset.css';
 import SidebarModal from '../SessionModal/SidebarModal.jsx';
 import * as sidemodalActions from '../../store/sidemodals.js';
 import * as modalActions from '../../store/modals.js';
+import * as articleActions from '../../store/articles.js'
 
 import { Navigate, Link } from 'react-router-dom';
 
@@ -53,6 +54,19 @@ function TopBar(props) {
         setClickedWebium(true);
     }
 
+    function handleKeyDown(e) {
+        if (e.key === "Enter") {
+            console.log("enter key hit");
+            runSearch(e);
+        }
+    }
+
+    function runSearch(e) {
+        e.preventDefault();
+        console.log('running search...');
+        dispatch(articleActions.settingFilter(searchValue));
+    }
+
     // function goHome() {
     //     setGoToHome(true);
     // }
@@ -86,12 +100,20 @@ function TopBar(props) {
                         <div className='topbarleft3'>
                             {/* <Link to={"/"} className="splashtextlogo">Webium</Link> */}
                             <p className="splashtextlogo" onClick={(e) => clickWebium(e)}>Webium</p>
-                            <div className='searchbarholder'>
-                                <div className='usersearchbar'>
-                                <i className="fa-solid fa-magnifying-glass" id="searchIcon"></i>
-                                    <input className='search' value={searchValue} placeholder="Search" onChange={(e) => setSearchValue(e.target.value)}/>
-                                </div>
-                            </div>
+                            {props.hasSearch ? (
+                                <>
+                                    <div className='searchbarholder'>
+                                        <div className='usersearchbar'>
+                                        <i onClick={(e) => runSearch(e)} className="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+                                            <input className='search' value={searchValue} placeholder="Search" onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setSearchValue(e.target.value)}/>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                </>
+                            )}
+                            
                             
         
                         </div>
