@@ -45,7 +45,6 @@ function PopupModal() {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        // console.log("clicked");
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(popupmodalActions.hidePopupModal());
     }
@@ -57,7 +56,6 @@ function PopupModal() {
 
     function handleDelete(e) {
         e.preventDefault();
-        console.log('delete');
         dispatch(articleActions.deleteArticle(articleId));
         setDeleting(true);
         // delete article
@@ -65,7 +63,6 @@ function PopupModal() {
     }
 
     if (editing) {
-        // console.log("WORK!");
         return <Navigate to={`/articles/${articleId}/edit`} replace={true}></Navigate>
     }
     

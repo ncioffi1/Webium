@@ -36,9 +36,7 @@ export const clearDeletedFollow = () => async(dispatch) => {
 }
 
 export const postFollow = ({follower_id, following_id}) => async dispatch => {
-    // console.log("POSTING FOLLOW");
-    // console.log(following_id);
-    // console.log(follower_id);
+   
     const response = await csrfFetch("/api/follows/", {
         method: "POST",
         body: JSON.stringify({ following_id, follower_id })

@@ -50,7 +50,7 @@ function ArticleForm() {
     function handleCommentClick(e) {
         e.preventDefault();
         dispatch(commentmodalActions.showCommentModal("comment"));
-        console.log("CLICKED!!!!");
+        
     }
 
     function handleClapClick(e) {
@@ -58,8 +58,7 @@ function ArticleForm() {
 
         // max 50 claps.
         let userClaps = articleClaps.filter((clap) => clap.userId === sessionUser.id);
-        // console.log("++++++++++++++");
-        // console.log(userClaps.length);
+     
         if (userClaps.length >= 50) {
             return;
         }
@@ -88,7 +87,7 @@ function ArticleForm() {
                 return;
             }
           });
-        // console.log("Clapped!");
+        
     }
 
     useEffect(() => {
@@ -138,11 +137,11 @@ function ArticleForm() {
         if (comments !== null && comments !== undefined) {
             let mComments = comments.filter((comment) => parseInt(comment.articleId) === parseInt(articleId));
             let sComments = mComments.sort(function(a, b) {return (a.id - b.id); })
-            // console.log("HIT: comments being set");
+    
             setArticleComments(sComments);
         } 
         else if (comments === undefined) {
-            // console.log("HIT: comments undefined");
+
             setArticleComments([]);
         }
     }, [comments])
@@ -158,11 +157,11 @@ function ArticleForm() {
     }, [articleId])
 
     useEffect(() => {
-        // console.log(article);
+
         if (article !== null) {
             let arr1 = article.content.split("\n");
             let arr2 = arr1.filter((paragraph) => /[a-z0-9]/i.test(paragraph));
-            // console.log(arr2);
+  
             setArticleContent(arr2);
             setWriterId(article.userId);
         }
@@ -182,13 +181,9 @@ function ArticleForm() {
 
     function getDatePosted() {
         let date0 = article.datePosted;
-        // console.log(date0);
         let date1 = Date.parse(date0 + " 12:00:00 GMT");
-        // console.log(date1);
         let date2 = new Date(date1);
-        // console.log(date2);
         let date3 = date2.toLocaleDateString('en-US');
-        // console.log(date3);
         return date3;
     }
 
@@ -214,7 +209,7 @@ function ArticleForm() {
         } else if (batch6.includes(letter)) {
             return "batch6";
         } else {
-            console.log("NOT FOUND");
+            
         }
     }
 
@@ -234,7 +229,6 @@ function ArticleForm() {
     }
     function handleFollow(e) {
         e.preventDefault();
-        // console.log("CLICKED FOLLOW!");
 
         let status = "FOLLOW";
         let followId = null;

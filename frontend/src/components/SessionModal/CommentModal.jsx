@@ -94,9 +94,6 @@ function CommentModal() {
     }, [clapped])
 
     function getClapAmount(comment) {
-        // console.log("!============!");
-        // console.log(comment);
-        // console.log(claps);
         let aClaps = Object.values(allClaps);
         let commentClaps = aClaps.filter((clap) => clap.commentId === comment.id);
         if (commentClaps.length === 0) {
@@ -117,7 +114,6 @@ function CommentModal() {
 
     useEffect(() => {
         if (deleted !== null && deleted !== undefined) {
-            // console.log("FOUND DELETE!");
             // dispatch(commentActions.fetchComments());
             dispatch(articleActions.fetchArticle(articleId));
             dispatch(commentActions.clearDeletedComment());
@@ -126,7 +122,6 @@ function CommentModal() {
 
     useEffect(() => {
         if (edit !== null && edit !== undefined) {
-            // console.log("found edit!");
             // dispatch(commentActions.fetchComments());
             dispatch(articleActions.fetchArticle(articleId));
             dispatch(commentActions.clearEditComment());
@@ -162,7 +157,6 @@ function CommentModal() {
     }, [articleComments])
 
     useEffect(() => {
-        // console.log("$$$$$");
         dispatch(commentActions.clearCreatedComment());
         dispatch(commentActions.clearDeletedComment());
         dispatch(commentActions.clearEditingComment());
@@ -212,8 +206,6 @@ function CommentModal() {
     }
 
     function getUserName(userId) {
-        // console.log("CALL!!!");
-        // console.log(writers);
         
         if (writers !== undefined) {
             for (let i = 0; i < writers.length; i++) {
@@ -227,21 +219,16 @@ function CommentModal() {
 
     function handlePopupModalComment(e, comment) {
         e.preventDefault();
-        // console.log("CLICKY!");
-        // console.log(comment);
         dispatch(popupModalCommentActions.showPopupModalComment(comment));
 
-        // console.log(e.target);
         let rect = e.target.getBoundingClientRect();
-        console.log(rect.top, rect.right, rect.bottom, rect.left);
+        // console.log(rect.top, rect.right, rect.bottom, rect.left);
     }
 
     function offsetValue() {
         // e.preventDefault();
-        // console.log("CLICKY!");
         // dispatch(popupModalCommentActions.showPopupModalComment("comment"));
 
-        // console.log(e.target);
         let rect = e.target.getBoundingClientRect();
         return rect.top;
         // console.log(rect.top, rect.right, rect.bottom, rect.left);
@@ -251,11 +238,6 @@ function CommentModal() {
         let userId = sessionUser.id;
         let comment = newComment;
         let parentCommentId = newParentCommentId;
-
-        // console.log(newComment);
-        // console.log(userId);
-        // console.log(articleId);
-        // console.log(newParentCommentId);
 
         dispatch(commentActions.postComment({comment, userId, articleId, parentCommentId}))
         .catch(async (res) => {
@@ -329,11 +311,8 @@ function CommentModal() {
     }
 
     if (!commentmodalType) {
-        // console.log("commentmodal type");
         return null;
     } else if (articleComments === undefined || articleComments === null) {
-        // console.log("article commments");
-        // console.log(articleComments);
         return null;
     } else {
         return (

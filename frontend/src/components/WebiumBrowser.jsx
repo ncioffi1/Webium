@@ -21,13 +21,12 @@ function WebiumBrowser({ values }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("TEST!!!");
+        
     })
     // const handleClose = () => setModalActive(false);
 
     function getFirstLetter() {
-        console.log(sessionUser);
-        console.log(sessionUser.name);
+        
         return sessionUser.name[0];
     }
     function handleSignupClick(e) {

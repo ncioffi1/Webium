@@ -15,7 +15,6 @@ export const hideCommentModal = () => ({
 
 
 function commentModalsReducer(state = { type: null }, action) {
-    // console.log("HIT REDUCER");
 
     switch (action.type) {
       case SHOW_MODAL: {

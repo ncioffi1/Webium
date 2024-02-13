@@ -25,19 +25,16 @@ export const fetchUser = (userId) => async(dispatch) => {
 export const fetchUsers = () => async(dispatch) => {
   const response = await csrfFetch(`/api/users/`);
 
-  console.log("RESPONSE:");
-  console.log(response);
+  
   if (response.ok) {
     const users = await response.json();
-    console.log("USERS:");
-    console.log(users);
+    
     dispatch(receiveUsers(users));
   }
 }
 
 export const selectWriter = (userId) => (state) => {
-    // console.log("=====");
-    // console.log(state.users[userId]);
+   
     if (state.users[userId] === null) {
       return null;
     } else {

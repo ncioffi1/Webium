@@ -117,7 +117,7 @@ function handleHide(e) {
 }
 function goBack(e) {
     e.preventDefault();
-    console.log(e.target);
+   
     clearModal();
     dispatch(modalActions.hideModal());
     document.removeEventListener("click", handleHide, {capture: true});

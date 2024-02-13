@@ -292,8 +292,6 @@ const articleReducer = (state = {}, action) => {
       return newState;
 
     case RECEIVE_ARTICLES:
-      // console.log("!!!!!!!!");
-      // console.log(action.payload);
       newState["articles"] = action.payload.articles;
       // newState = {...action.payload};
       return newState;

@@ -29,15 +29,12 @@ function FileInput() {
         var upload = s3
         .putObject(params)
         .on("httpUploadProgress", (evt) => {
-            console.log(
-            "Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-            );
+            // console.log("Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%");
         })
         .promise();
 
         await upload.then((err, data) => {
-        console.log(err);
-        alert("File uploaded successfully.");
+          alert("File uploaded successfully.");
         });
   };
 

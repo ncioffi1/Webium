@@ -50,7 +50,6 @@ export const fetchClaps = () => async(dispatch) => {
     
     if (response.ok) {
     const allClaps = await response.json();
-    // console.log(allClaps);
     dispatch(receiveClaps(allClaps));
     }
 }

@@ -45,7 +45,7 @@ function SidebarModal() {
     }, [sidemodalType])
 
     function handleLogoutClick(e) {
-        console.log("handle logout");
+        
         e.preventDefault();
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(sidemodalActions.hideSidebarModal());
@@ -62,20 +62,18 @@ function SidebarModal() {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        // console.log("clicked");
+
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(sidemodalActions.hideSidebarModal());
     }
 
     function handleProfileClick(e) {
         e.preventDefault();
-        // console.log("CLICK!!!!");
-        // console.log(sessionUser);
+
         setGoToProfile(true);
     }
 
     if (goToProfile) {
-        // console.log(goToProfile);
         return <Navigate to={`/users/${sessionUser.id}`} replace={true}></Navigate>
     }
 

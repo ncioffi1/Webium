@@ -24,19 +24,17 @@ function ShowForm() {
     const [goToUserPage, setGoToUserPage] = useState(null);
 
     useEffect(() => {
-        console.log("dispatching clearWriters");
-        console.log("testing testing");
+        
         dispatch(articleActions.clearArticleWriters());
         dispatch(articleActions.clearingFilter());
         dispatch(articleActions.fetchArticles());
         dispatch(modalActions.hideModal());
-        console.log("=====");
-        console.log(filter);
+       
     }, [])
     useEffect(() => {
         if (filter !== null && filter !== undefined) {
             let newArticles = pulledArticles.filter(article => article.title.toLowerCase().includes(filter.toLowerCase()) || article.content.toLowerCase().includes(filter.toLowerCase()));
-            console.log(newArticles);
+            
             setArticles(newArticles);
         }
     }, [filter])
@@ -48,7 +46,7 @@ function ShowForm() {
 
     useEffect(() => {
         if (writerIds.length !== 0) {
-            console.log(writerIds);
+            
             dispatch(articleActions.fetchWriters(writerIds));
         }
     }, [writerIds])
@@ -85,18 +83,13 @@ function ShowForm() {
 
     function getDatePosted(datePosted) {
         let date0 = datePosted;
-        // console.log(date0);
         let date1 = Date.parse(date0 + " 12:00:00 GMT");
-        // console.log(date1);
         let date2 = new Date(date1);
-        // console.log(date2);
         let date3 = date2.toLocaleDateString('en-US');
-        // console.log(date3);
         return date3;
     }
 
     function goToArticle(articleId) {
-        console.log(articleId);
         setGoArticle(articleId);
     }
 
@@ -112,7 +105,6 @@ function ShowForm() {
     }
 
     if (goToUserPage) {
-        console.log(goToUserPage);
         return <Navigate to={`/users/${pageUserId}`} />
     }
     if (sessionUser === null) {

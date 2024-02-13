@@ -33,7 +33,7 @@ function PopupModalComment(props) {
 
     useEffect(() => {
         if (popupmodalType) {
-            console.log(popupmodalType);
+            
             document.addEventListener("click", handleHide, {capture: true});
         } else {
             document.removeEventListener("click", handleHide, {capture: true});
@@ -56,15 +56,13 @@ function PopupModalComment(props) {
         if(modalRef.current && modalRef.current.contains(e.target)) {
             return;
         }
-        // console.log("clicked");
         document.removeEventListener('click', handleHide, {capture: true});
         dispatch(popupModalCommentActions.hidePopupModalComment());
     }
 
     function handleEdit(e) {
         e.preventDefault();
-        console.log('edit comment');
-        console.log(props);
+        
         dispatch(commentActions.editingComment(props.comment));
         dispatch(popupModalCommentActions.hidePopupModalComment());
         // setEditing(true);
@@ -72,7 +70,7 @@ function PopupModalComment(props) {
 
     function handleDelete(e) {
         e.preventDefault();
-        console.log('delete comment');
+        
         dispatch(commentActions.deleteComment(props.id));
         dispatch(popupModalCommentActions.hidePopupModalComment());
         // setDeleting(true);
@@ -82,7 +80,6 @@ function PopupModalComment(props) {
     }
 
     if (editing) {
-        // console.log("WORK!");
         return <Navigate to={`/articles/${articleId}/edit`} replace={true}></Navigate>
     }
     

@@ -38,11 +38,7 @@ function TopBar(props) {
     }
 
     function getFirstLetter() {
-        // console.log(sessionUser);
-        // console.log(sessionUser.name);
         if (sessionUser !== null && sessionUser !== undefined) {
-            // console.log("SESSION USER:");
-            // console.log(sessionUser);
             return sessionUser.name[0];
         }
     }
@@ -50,20 +46,20 @@ function TopBar(props) {
     function clickWebium(e) {
         e.preventDefault();
 
-        console.log("clicked webium!!!");
+     
         setClickedWebium(true);
     }
 
     function handleKeyDown(e) {
         if (e.key === "Enter") {
-            console.log("enter key hit");
+        
             runSearch(e);
         }
     }
 
     function runSearch(e) {
         e.preventDefault();
-        console.log('running search...');
+        
         dispatch(articleActions.settingFilter(searchValue));
     }
 
@@ -73,8 +69,6 @@ function TopBar(props) {
 
     // if (goToHome !== false) {
     //     // // setGoToHome(false);
-    //     // console.log("NAVIGATING");
-    //     // // console.log(window.location);
     //     // return <Navigate to={`/`} replace={true} />
     // }
     if (sessionUser === null || sessionUser === undefined) {
@@ -82,13 +76,12 @@ function TopBar(props) {
     }
 
     if (writing) {
-        console.log("GO TO NEW ARTICLE!");
+        
         // return <Navigate to={"/"}/>
         return <Navigate to={"/articles/new"}/>
     } 
     else if (clickedWebium && props.canNav) {
-        console.log("GO TO HOME PAGE!");
-        console.log(clickedWebium);
+        
         return <Navigate to={"/"}/>
     }
     else {

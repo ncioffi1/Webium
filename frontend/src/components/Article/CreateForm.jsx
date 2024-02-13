@@ -30,7 +30,7 @@ function CreateForm() {
     const [file, setFile] = useState(null);
     const [photoUrlPreview, setPhotoUrlPreview] = useState(null);
     const handleFileChange = (e) => {
-        console.log("HIT!!!");
+       
         const file = e.target.files[0];
         setFile(file);
         if (file) {
@@ -42,12 +42,11 @@ function CreateForm() {
         }
       };
     const uploadFile = (e) => {
-        console.log(file);
+        
     }
 
     useEffect(() => {
-        // console.log("!!=======!!");
-        // console.log(photoUrlPreview);
+     
     }, [photoUrlPreview])
 
     let preview = null;
@@ -72,8 +71,6 @@ function CreateForm() {
         if (ref2.current) {
             ref2.current.style.height = "auto";
             ref2.current.style.height = `${e.target.scrollHeight}px`;
-            console.log(ref2.current.style.height);
-            console.log(e.target.scrollHeight);
         }
     };
 
@@ -85,23 +82,18 @@ function CreateForm() {
     }
 
     function getFirstLetter() {
-        // console.log(sessionUser);
-        // console.log(sessionUser.name);
         if (sessionUser !== null && sessionUser !== undefined) {
             return sessionUser.name[0];
         }
     }
 
     function handlePublish() {
-        // console.log("&&&&&&&&&&&");
-        // console.log(title);
-        // console.log(content);
+
         let photo = null;
         if (file) {
             photo = file;
         }
-        // console.log(photo);
-        // console.log("&&&&&&&&&&&");
+
 
         dispatch(articleActions.postArticle({ title, content, photo }))
         .catch(async (res) => {

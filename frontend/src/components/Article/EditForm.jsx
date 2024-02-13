@@ -47,12 +47,11 @@ function EditForm() {
         }
       };
     const uploadFile = (e) => {
-        console.log(file);
+        
     }
 
     useEffect(() => {
-        // console.log("!!=======!!");
-        // console.log(photoUrlPreview);
+        
     }, [photoUrlPreview])
 
     let preview = null;
@@ -71,8 +70,7 @@ function EditForm() {
         if (ref.current) {
           ref.current.style.height = "auto";
           ref.current.style.height = `${e.target.scrollHeight}px`;
-          console.log(ref.current.style.height);
-          console.log(e.target.scrollHeight);
+          
         }
     };
 
@@ -80,8 +78,7 @@ function EditForm() {
         if (ref2.current) {
             ref2.current.style.height = "auto";
             ref2.current.style.height = `${e.target.scrollHeight}px`;
-            console.log(ref2.current.style.height);
-            console.log(e.target.scrollHeight);
+            
         }
     }
 
@@ -91,7 +88,7 @@ function EditForm() {
             setTitle(article.title);
             setContent(article.content);
             setPhotoUrl(article.photoUrl);
-            // console.log(article.photoUrl);
+            
         }
     }, [article])
 
@@ -163,10 +160,9 @@ function EditForm() {
         return <Navigate to={`/articles/${editedArticle.id}`} replace={true} />
     } else if (article !== null) {
         if (article.userId !== sessionUser.id) {
-            // console.log("ERROR:  user not same!");
             return <Navigate to={`/articles/${articleId}`} replace={true} />
         } else {
-            // console.log("SUCCESS:  user is same!");
+            
         }
     }
 

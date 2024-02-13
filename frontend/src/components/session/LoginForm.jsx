@@ -14,10 +14,9 @@ function LoginForm() {
 
   
   if (sessionUser) {
-    // console.log("already logged in, rerouting");
     return <Navigate to="/" replace={true} />
   } else {
-    // console.log("not yet logged in");
+    
   }
 
   const handleSubmit = (e) => {

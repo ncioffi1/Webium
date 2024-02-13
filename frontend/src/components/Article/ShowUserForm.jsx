@@ -90,11 +90,8 @@ function ShowUserForm() {
     }
     function getFollowersCount() {
         if (followers !== null && followers !== undefined) {
-            // console.log("FOUND FOLLOWERS");
-            // console.log(followers.length);
             return followers.length;
         } else {
-            // console.log("UNFOUND...");
             return 0;
         }
     }
@@ -128,7 +125,6 @@ function ShowUserForm() {
     }
     function handleFollow(e) {
         e.preventDefault();
-        // console.log("CLICKED FOLLOW!");
 
         let status = "FOLLOW";
         let followId = null;
@@ -137,7 +133,6 @@ function ShowUserForm() {
         for (let i = 0; i < followers.length; i++) {
             if (followers[i].followerId === sessionUser.id) {
                 if (followers[i].followingId === parseInt(userId)) {
-                    // console.log("HEY!  You're already following this user.");
                     status = "UNFOLLOW";
                     followId = followers[i].id;
                 }
@@ -145,12 +140,10 @@ function ShowUserForm() {
         }
 
         if (status === "FOLLOW") {
-            // console.log("Following!");
             let follower_id = sessionUser.id;
             let following_id = userId;  
             dispatch(followActions.postFollow({follower_id, following_id}));
         } else if (status === "UNFOLLOW") {
-            // console.log("Unfollowing!");
             dispatch(followActions.deleteFollow(followId));
         }
     }
@@ -183,8 +176,6 @@ function ShowUserForm() {
     }
 
     if (writer === undefined || writer === null) {
-        // console.log("No writer :(");
-        // console.log(writer);
         return;
     }
     if (user === undefined || user === null) {
